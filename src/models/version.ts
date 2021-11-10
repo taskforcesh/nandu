@@ -1,0 +1,127 @@
+import { DataTypes, Model } from "sequelize";
+import { db } from "./db";
+import { Author } from "./author";
+import { DistTag } from "../models/dist-tag";
+import { Version as IVersion, Attachment } from "../interfaces";
+import { uploadAttachment } from "../storage";
+import { Storage } from "../interfaces";
+
+export interface Dist {
+  tarball: string;
+  shasum: string;
+  integrity: string;
+}
+
+export class Version extends Model {
+  static addVersions(
+    storage: Storage,
+    packageId: string,
+    versions: Record<string, IVersion>,
+    attachments: Record<string, Attachment>,
+    tarballPrefix: string,
+    tagName: string
+  ) {
+    return Promise.all(
+      Object.keys(versions).map(async (ver) => {
+        const version = versions[ver];
+
+        const versionFile = `${version.name}-${version.version}.tgz`;
+        const attachment = attachments[versionFile];
+
+        const { shasum, integrity } = await uploadAttachment(
+          storage,
+          versionFile,
+          attachment
+        );
+
+        await Version.create({
+          ...version,
+          packageId,
+          dist: {
+            shasum,
+            integrity,
+            tarball: `${tarballPrefix}${versionFile}`,
+          },
+        });
+
+        await DistTag.upsert({
+          key: `${packageId}-${tagName}`,
+          name: tagName,
+          version: version.version,
+          packageId,
+        });
+      })
+    );
+  }
+}
+
+Version.init(
+  {
+    _id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    version: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: DataTypes.STRING,
+    repository: DataTypes.JSON,
+    keywords: DataTypes.STRING, // Not the best solution if we want to do searches.
+
+    author: DataTypes.UUID,
+
+    dist: DataTypes.JSON,
+
+    license: DataTypes.STRING,
+  },
+  {
+    sequelize: db,
+    modelName: "Version",
+    // Other model options go here
+  }
+);
+
+Version.belongsTo(Author, { foreignKey: "authorId" });
+// Version.belongsTo(Package, { foreignKey: "packageId" });
+
+/*
+export class Version {
+    _id: string;
+    name: string;
+    version: string;
+    description: string;
+    main: string;
+    scripts: string;
+    repository: {
+        type: string;
+        url: string;
+    };
+    files: string;
+    keywords: string[];
+    author: {
+        name: string;
+        email: string;
+        url: string;
+    },
+    license: string;
+    bugs: string;
+    homepage: string;
+    devDependencies: object;
+    dependencies: object;
+    dist: {
+        shasum: string;
+        tarball: string; // "https://registry.npmjs.org/koa-bodyparser/-/koa-bodyparser-0.0.1.tgz"
+    },
+    _from: string;
+    _npmVersion: string;
+    _npmUser: { "name": string, "email": string };
+    maintainers: [{ "name": "dead_horse", "email": "dead_horse@qq.com" }];
+    directories: {};
+}
+*/

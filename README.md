@@ -18,12 +18,8 @@ Nandu is secured by default, focusing on user, team and organization management,
 corporate use cases where user access management is important as well as other popular
 use cases such as providing subscription based licenses for commercial packages.
 
-Furthermore, we are currently also aiming at doocumenting the NPM Apis, for which there are
+Furthermore, we are currently also aiming at documenting the NPM Apis, for which there are
 currently no documetation available.
-
-which requires reverse engineering, although since the client
-libraries are open source, we can easily acomplish this. However no Npm API documentation effort has
-been initiated, so Nandu also aims to provide a complete documentation of the APIs.
 
 ## Architecture
 

@@ -2,12 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { Token, User, TokenAccess } from "../models";
+import config from "../../config";
 
 import pino from "pino";
 
-const logger = pino();
-
-export type Right = "owner" | "publish" | "unpublish" | "read";
+const logger = pino({ name: "auth.ts", level: config.logLevel });
 
 export interface LocalsAuth extends Request {
   user: User;
@@ -21,7 +20,7 @@ export interface LocalsAuth extends Request {
  *
  */
 export const authToken =
-  (scope?: Right[]) =>
+  () =>
   async (req: Request, res: Response<any, LocalsAuth>, next: NextFunction) => {
     const { authorization } = req.headers;
 
@@ -86,7 +85,7 @@ export const authPassword =
 
     const user = res.locals.user as User;
 
-    if (!user.checkPassword(password)) {
+    if (!password || !user.checkPassword(password)) {
       return res.status(StatusCodes.UNAUTHORIZED).send("Invalid password");
     }
 

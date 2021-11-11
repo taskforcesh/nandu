@@ -182,7 +182,7 @@ export class Team extends Model {
         { transaction }
       );
 
-      transaction.commit();
+      await transaction.commit();
     } catch (err) {
       await transaction.rollback();
       throw err;

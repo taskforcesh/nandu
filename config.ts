@@ -1,19 +1,29 @@
 export default {
   /**
-   * Define a username that would act as root and have special priviledges.
-   *
+   * Log level
    */
-  rootUser: process.env["NANDU_ROOT_USER"] || "root",
+  logLevel:
+    process.env["NANDU_LOG_LEVEL"] || process.env["NODE_ENV"] !== "production"
+      ? "debug"
+      : "info",
 
-  /*
-   * Comma separated list of usernames
-   * that would act as admin users and have special priviledges,
-   * like for example creating users in the system.
-   *
+  /**
+   * When Nandu registry starts it will create a root user if none exists already.
+   * Otherwise these variables will be ignored.
    */
-  admins: (process.env["NANDU_ADMIN_USERS"] || "")
-    .split(",")
-    .map((user) => user.trim()),
+  root: {
+    /**
+     * Define a username that would act as root and have special priviledges.
+     *
+     */
+    user: process.env["NANDU_ROOT_USER"] || "root",
+
+    /**
+     * Define a password that would act as root and have special priviledges.
+     *
+     */
+    password: process.env["NANDU_ROOT_PASSWD"] || "root",
+  },
 
   /**
    * The number of saltrounds for user's passwords. Note, changing this value
@@ -33,7 +43,7 @@ export default {
    */
   aws: {
     s3: {
-      bucket: process.env["NANDU_REGISTRY_BUCKET"] || "nandu-registry",
+      bucket: process.env["NANDU_S3_BUCKET"] || "nandu-registry",
     },
   },
 
@@ -41,6 +51,7 @@ export default {
    * Location of the packages files when using the local storage.
    */
   local: {
-    baseDir: `${__dirname}/storage/packages`,
+    baseDir:
+      process.env["NANDU_LOCAL_STORAGE_DIR"] || `${__dirname}/storage/packages`,
   },
 };

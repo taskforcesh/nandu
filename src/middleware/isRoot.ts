@@ -3,6 +3,6 @@ import config from "../../config";
 
 export const isRoot =
   () => (req: Request, res: Response, next: NextFunction) => {
-    res.locals.isRoot = res.locals.user?.name === config.rootUser;
+    res.locals.isRoot = res.locals.user?.name === config.root.user;
     next();
   };

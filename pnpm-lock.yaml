@@ -7,6 +7,7 @@ specifiers:
   '@types/pino-http': ^5.8.0
   '@types/sqlite3': ^3.1.7
   '@types/uuid': ^8.3.1
+  '@types/validator': ^13.6.6
   bcrypt: ^5.0.1
   express: ^4.17.1
   http-status-codes: ^2.1.4
@@ -37,6 +38,7 @@ devDependencies:
   '@types/pino-http': 5.8.0
   '@types/sqlite3': 3.1.7
   '@types/uuid': 8.3.1
+  '@types/validator': 13.6.6
   nodemon: 2.0.14
   ts-node: 10.4.0_0cb88d80cb04d25b21fa3ec194608c65
   tslib: 2.3.1
@@ -194,6 +196,10 @@ packages:
 
   /@types/uuid/8.3.1:
     resolution: {integrity: sha512-Y2mHTRAbqfFkpjldbkHGY8JIzRN6XqYRliG8/24FcHm2D2PwW24fl5xMRTVGdrb7iMrwCaIEbLWerGIkXuFWVg==}
+    dev: true
+
+  /@types/validator/13.6.6:
+    resolution: {integrity: sha512-+qogUELb4gMhrMjSh/seKmGVvN+uQLfyqJAqYRWqVHsvBsUO2xDBCL8CJ/ZSukbd8vXaoYbpIssAmfLEzzBHEw==}
     dev: true
 
   /abbrev/1.1.1:

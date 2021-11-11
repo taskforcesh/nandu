@@ -26,11 +26,11 @@ currently no documetation available.
 The registry is both a package metadata store, for which you can use any SQL based database (even SQLlite), as well as a package store which is based on a file storage. The package store can be anything capable of storing files but currently we are shipping support for local files as well as S3, it is easy to add other file storages by implementing a simple interface if needed.
 
 All settings are controlled by environment variables, so no configuration files are used which makes it easier
-to deploy following the 12 factor app principles (https://12factor.net/).
+to deploy following the [12 factor app principles](https://12factor.net/).
 
 ## Used by
 
-Currently used by (Taskforce.sh)[https://taskforce.sh] to provide the BullMQ Pro package to licensed users.
+Currently used by [Taskforce.sh](https://taskforce.sh) to provide the BullMQ Pro package to licensed users.
 
 ## Features
 
@@ -43,8 +43,12 @@ authorization, organizations and teams.
 - Store packages in disk-storages or S3.
 - publish
 - scoped packages
-- (access)[https://docs.npmjs.com/cli/v7/commands/npm-access]
+- [access](https://docs.npmjs.com/cli/v7/commands/npm-access)
 - organizations and teams
+
+## How to use
+
+In order to use Nandu you should use the [Nandu-cli](https://github.com/taskforcesh/nandu-cli) tool and following the instructions there.
 
 ## License
 

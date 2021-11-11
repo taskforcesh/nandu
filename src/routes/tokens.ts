@@ -16,12 +16,12 @@ router.get(
   "/-/npm/v1/tokens/:userId?",
   isRoot(),
   asyncWrap(async (req: Request, res: Response) => {
-    const { userId } = res.locals.user;
+    const { _id: userId } = res.locals.user;
     const targetUserId = req.params.userId || userId;
 
     if (userId && userId !== targetUserId && !res.locals.isRoot) {
       // Only roots can list other users tokens.
-      res.status(StatusCodes.FORBIDDEN).end("Missing rights to create token");
+      res.status(StatusCodes.FORBIDDEN).end("Missing rights to list tokens");
     }
 
     // TODO: Implement pagination
@@ -40,14 +40,22 @@ router.post(
   authPassword(),
   isRoot(),
   asyncWrap(async (req: Request, res: Response) => {
-    const { userId } = res.locals.user;
+    const { _id: userId } = res.locals.user;
     const targetUserId = req.params.userId || userId;
 
     const { readonly, cidr_whitelist: cidrWhitelist } = req.body;
 
+    if (cidrWhitelist && !Array.isArray(cidrWhitelist)) {
+      return res
+        .status(StatusCodes.NOT_ACCEPTABLE)
+        .end("cidr-whitelist must be an array");
+    }
+
     if (userId && userId !== targetUserId && !res.locals.isRoot) {
       // Only roots can create tokens on behalf of other users
-      res.status(StatusCodes.FORBIDDEN).end("Missing rights to create token");
+      return res
+        .status(StatusCodes.FORBIDDEN)
+        .end("Missing rights to create token");
     }
 
     const [uuid, token] = await Token.createTokenForUser(targetUserId, {

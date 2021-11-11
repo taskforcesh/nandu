@@ -73,19 +73,13 @@
           "npmPublish": true
         }
       ],
-      [
-        "@semantic-release/exec",
-        {
-          "prepareCmd": "yarn docs"
-        }
-      ],
       "@semantic-release/github",
       [
         "@semantic-release/git",
         {
           "assets": [
             "package.json",
-            "yarn.lock",
+            "pnpm-lock.yaml",
             "docs/gitbook/changelog.md"
           ],
           "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"

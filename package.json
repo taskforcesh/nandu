@@ -55,6 +55,9 @@
     "url": "https://github.com/taskforcesh/nandu.git"
   },
   "release": {
+    "branches": [
+      "main"
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",

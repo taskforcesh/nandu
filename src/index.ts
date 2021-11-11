@@ -3,7 +3,9 @@ import { Request, Response, NextFunction, json } from "express";
 import pino from "pino";
 
 import { authToken } from "./middleware";
+import { initDb } from "./models";
 import {
+  loginRouter,
   packagesRouter,
   userRouter,
   tokensRouter,
@@ -11,17 +13,20 @@ import {
   teamsRouter,
 } from "./routes";
 
-const logger = pino();
+import { Application } from "express";
 const express = require("express");
 
-const app = express();
-const port = 4567;
+const logger = pino();
+
+const app = express() as Application;
 
 app.set("trust proxy", true);
 
 app.get("/-/ping", (req: Request, res: Response) => {
   res.status(200).send("OK");
 });
+
+app.use(loginRouter);
 
 app.use(authToken());
 app.use(packagesRouter);
@@ -31,13 +36,15 @@ app.use(orgsRouter);
 app.use(teamsRouter);
 
 app.use("*", json(), (req: Request, res: Response, next: NextFunction) => {
-  logger.debug(
-    "Unhandled route:",
-    req.method,
-    req.path,
-    req.params,
-    req.headers,
-    req.body
+  logger.info(
+    {
+      method: req.method,
+      path: req.path,
+      params: req.params,
+      headers: req.headers,
+      body: req.body,
+    },
+    "Unhandled route"
   );
 
   // Npm cli does not react to 501 (Not implemented) status code
@@ -47,8 +54,10 @@ app.use("*", json(), (req: Request, res: Response, next: NextFunction) => {
 // Application error logging.
 app.on("error", logger.error);
 
-app.listen(port, () => {
-  logger.info(`Nandu is running on port ${port}.`);
-});
+export async function startServer(port: number = 4567) {
+  app.listen(port, () => {
+    console.log(`Nandu is running on port ${port}.`);
+  });
 
-export default app;
+  await initDb();
+}

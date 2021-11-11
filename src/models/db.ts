@@ -1,18 +1,28 @@
 import { Sequelize } from "sequelize";
+import pino from "pino";
+
 import config from "../../config";
 
-export const db = new Sequelize(config.sequelize.uri);
+const logger = pino({ name: "Sequelize", level: config.logLevel });
 
-const testConnection = async () => {
+export const db = new Sequelize(config.sequelize.uri, {
+  logging: (msg) => logger.debug(msg),
+});
+
+export const initDb = async () => {
   try {
     await db.authenticate();
-    console.log("Connection has been established successfully.");
+    logger.debug("Connection has been established successfully.");
 
     await db.sync();
-    console.log("Synced models");
+    logger.debug("Synced models");
+
+    /**
+     * Add root user if needed.
+     */
+    const { User } = await import("../models/user");
+    await User.addRootUser();
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    logger.error(error, "Unable to connect to the database");
   }
 };
-
-testConnection();

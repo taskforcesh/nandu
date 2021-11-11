@@ -31,6 +31,13 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.1",
+    "@semantic-release/exec": "^6.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/npm": "^8.0.3",
+    "@semantic-release/release-notes-generator": "^10.0.2",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/node": "*",
@@ -46,5 +53,41 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/taskforcesh/nandu.git"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "docs/gitbook/changelog.md"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "yarn docs"
+        }
+      ],
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "yarn.lock",
+            "docs/gitbook/changelog.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
   }
 }

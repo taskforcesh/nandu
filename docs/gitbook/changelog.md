@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/taskforcesh/nandu/compare/v1.1.1...v1.1.2) (2021-11-12)
+
+
+### Bug Fixes
+
+* read package.json from correct path ([e1e2042](https://github.com/taskforcesh/nandu/commit/e1e20425b9d02d3032210dc268f05084262eb416))
+
 ## [1.1.1](https://github.com/taskforcesh/nandu/compare/v1.1.0...v1.1.1) (2021-11-12)
 
 

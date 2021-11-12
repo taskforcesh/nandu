@@ -54,6 +54,12 @@ export const authToken =
         where: { _id: tokenInstance.getDataValue("userId") },
       });
 
+      if (!user) {
+        return res
+          .status(StatusCodes.UNAUTHORIZED)
+          .send("Invalid user for token");
+      }
+
       res.locals.user = user;
       res.locals.auth = {
         access: tokenInstance.getDataValue("access"),

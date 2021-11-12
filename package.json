@@ -44,7 +44,6 @@
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/node": "*",
-    "@types/pino-http": "^5.8.0",
     "@types/sqlite3": "^3.1.7",
     "@types/uuid": "^8.3.1",
     "@types/validator": "^13.6.6",

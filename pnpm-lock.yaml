@@ -11,7 +11,6 @@ specifiers:
   '@types/bcrypt': ^5.0.0
   '@types/express': ^4.17.13
   '@types/node': '*'
-  '@types/pino-http': ^5.8.0
   '@types/sqlite3': ^3.1.7
   '@types/uuid': ^8.3.1
   '@types/validator': ^13.6.6
@@ -49,7 +48,6 @@ devDependencies:
   '@types/bcrypt': 5.0.0
   '@types/express': 4.17.13
   '@types/node': 16.11.6
-  '@types/pino-http': 5.8.0
   '@types/sqlite3': 3.1.7
   '@types/uuid': 8.3.1
   '@types/validator': 13.6.6
@@ -453,33 +451,6 @@ packages:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
     dev: true
 
-  /@types/pino-http/5.8.0:
-    resolution: {integrity: sha512-/gKFhkzVotTl61mMacH5qptjBOGGqZyVXCRhDDVPg76JdmYYO0bftZV0lcAY7sAzCCZQciTsGdQcv0/B1X3C9Q==}
-    dependencies:
-      '@types/pino': 6.3.12
-    dev: true
-
-  /@types/pino-pretty/4.7.1:
-    resolution: {integrity: sha512-l1ntNXdpVWsnPYUk5HyO5Lxfr38zLCgxVfEn/9Zhhm+nGF04/BiIou/m8XPwvoVZLV+livUo79VdHXMJPfUYxA==}
-    dependencies:
-      '@types/pino': 6.3.12
-    dev: true
-
-  /@types/pino-std-serializers/2.4.1:
-    resolution: {integrity: sha512-17XcksO47M24IVTVKPeAByWUd3Oez7EbIjXpSbzMPhXVzgjGtrOa49gKBwxH9hb8dKv58OelsWQ+A1G1l9S3wQ==}
-    dependencies:
-      '@types/node': 16.11.6
-    dev: true
-
-  /@types/pino/6.3.12:
-    resolution: {integrity: sha512-dsLRTq8/4UtVSpJgl9aeqHvbh6pzdmjYD3C092SYgLD2TyoCqHpTJk6vp8DvCTGGc7iowZ2MoiYiVUUCcu7muw==}
-    dependencies:
-      '@types/node': 16.11.6
-      '@types/pino-pretty': 4.7.1
-      '@types/pino-std-serializers': 2.4.1
-      sonic-boom: 2.3.1
-    dev: true
-
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
     dev: true
@@ -678,6 +649,7 @@ packages:
   /atomic-sleep/1.0.0:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
     engines: {node: '>=8.0.0'}
+    dev: false
 
   /aws-sign2/0.7.0:
     resolution: {integrity: sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=}
@@ -3112,6 +3084,7 @@ packages:
     resolution: {integrity: sha512-o0vJPsRiCW5Q0EmRKjNiiYGy2DqSXcxk4mY9vIBSPwmkH/e/vJ2Tq8EECd5NTiO77x8vlVN+ykDjRQJTqf7eKg==}
     dependencies:
       atomic-sleep: 1.0.0
+    dev: false
 
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}

@@ -6,7 +6,9 @@
   "types": "dist/src/index.d.ts",
   "source": "src/index.ts",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "README.md"
   ],
   "keywords": [
     "npm",
@@ -16,7 +18,8 @@
     "test": "test",
     "dev:server": "nodemon --watch './src/**/*.ts' --exec 'ts-node' ./server.ts",
     "build": "tsc",
-    "build:watch": "tsc --watch"
+    "build:watch": "tsc --watch",
+    "prepare": "yarn build"
   },
   "author": "Taskforce.sh Inc.",
   "license": "AGPL",

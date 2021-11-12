@@ -72,8 +72,11 @@ export class Token extends Model {
         },
         { token: hashedToken },
       ],
-      userId: !isRoot ? userId : void 0,
     };
+
+    if (!isRoot) {
+      (<any>where).userId = userId;
+    }
 
     const numDeleted = await Token.destroy({
       where,

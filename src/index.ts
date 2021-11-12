@@ -16,7 +16,7 @@ import {
 import { Application } from "express";
 const express = require("express");
 
-const pkg = require("../package.json");
+const pkg = require(`${getPkgJsonDir()}/package.json`);
 
 const logger = pino();
 
@@ -68,4 +68,18 @@ export async function startServer(port: number = 4567) {
   });
 
   await initDb();
+}
+
+// Source: https://stackoverflow.com/questions/10265798/determine-project-root-from-a-running-node-js-application
+function getPkgJsonDir() {
+  const { dirname } = require("path");
+  const { constants, accessSync } = require("fs");
+
+  for (let path of module.paths) {
+    try {
+      let prospectivePkgJsonDir = dirname(path);
+      accessSync(path, constants.F_OK);
+      return prospectivePkgJsonDir;
+    } catch (e) {}
+  }
 }

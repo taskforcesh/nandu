@@ -64,7 +64,7 @@ router.post(
     });
 
     res.status(StatusCodes.CREATED).send({
-      id: token.getDataValue("key"),
+      key: token.getDataValue("key"),
       token: uuid,
       cidr_whitelist: token.getDataValue("cidrWhitelist"),
       readonly: token.getDataValue("access")?.includes("readonly"),

@@ -16,14 +16,22 @@ import {
 import { Application } from "express";
 const express = require("express");
 
+const pkg = require("../package.json");
+
 const logger = pino();
 
 const app = express() as Application;
 
 app.set("trust proxy", true);
 
+const versionString = `Nandu NPM Registry v${pkg.version}`;
+
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).send(versionString);
+});
+
 app.get("/-/ping", (req: Request, res: Response) => {
-  res.status(200).send("OK");
+  res.status(200).send(versionString);
 });
 
 app.use(loginRouter);

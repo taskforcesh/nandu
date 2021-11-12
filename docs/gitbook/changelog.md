@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/taskforcesh/nandu/compare/v1.0.0...v1.1.0) (2021-11-12)
+
+
+### Bug Fixes
+
+* **auth:** check that user owning token exists ([c520ab4](https://github.com/taskforcesh/nandu/commit/c520ab4cce2d388021a48098726d4d2bc03b7838))
+* **token:** do not set userId to undefined ([a5fc5ac](https://github.com/taskforcesh/nandu/commit/a5fc5ac8f4e400d47c383d1bf1c461184d1997ee))
+* **tokens:** return key as key ([a3fb4ec](https://github.com/taskforcesh/nandu/commit/a3fb4ec01097626438c3a7b36f80f208bfa6f5bb))
+
+
+### Features
+
+* add version string to ping endpoint ([a467b43](https://github.com/taskforcesh/nandu/commit/a467b43484f58b3a1fc431dfc4228cf2dbfddd8f))
+
 # 1.0.0 (2021-11-11)
 
 

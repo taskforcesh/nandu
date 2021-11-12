@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/taskforcesh/nandu/compare/v1.1.0...v1.1.1) (2021-11-12)
+
+
+### Bug Fixes
+
+* **package:** add build prepare step ([338ad6e](https://github.com/taskforcesh/nandu/commit/338ad6e9dc364a6f7833330c4b37a1af5083952c))
+* remove @types/pino-http ([8393695](https://github.com/taskforcesh/nandu/commit/83936959c96661afd15cf1e40913cbe044781b7f))
+
 # [1.1.0](https://github.com/taskforcesh/nandu/compare/v1.0.0...v1.1.0) (2021-11-12)
 
 

@@ -1,4 +1,10 @@
-# Nandu - NPM Registry
+![nandu](https://github.com/taskforcesh/nandu/blob/assets/nandu.png?raw=true)
+
+[![Version](https://img.shields.io/npm/v/nandu-cli.svg)](https://npmjs.org/package/nandu)
+[![Downloads/week](https://img.shields.io/npm/dw/nandu.svg)](https://npmjs.org/package/nandu)
+[![License](https://img.shields.io/npm/l/nandu-cli.svg)](https://github.com/taskforcesh/nandu/blob/main/package.json)
+
+## Introduction
 
 Nandu is an open source NPM registry compatible with Npm, Yarn and Pnpm.
 

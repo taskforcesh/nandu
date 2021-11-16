@@ -2,6 +2,15 @@
 
 ## npm adduser (https://docs.npmjs.com/cli/v7/commands/npm-adduser)
 
+The npm adduser as originally implemented in the npm server is unsecure by design. When you use this command,
+npm will create a new "publish read-write" token (without communicating this back to the user) and store this
+token on the users global .npmrc (again silently).
+
+This behaviour is not supported in Nandu by design. Instead you can use the npm adduser command to add 
+
+Due to The npm adduser command as implemented by the original npm server is not supported by Nandu by design. 
+
+
 User creation is secured by default so only root users can add new users to the system.
 
 In Nandu you can add users if you are a root user. Otherwise it is not possible to add new users.

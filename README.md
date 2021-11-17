@@ -1,8 +1,8 @@
 ![nandu](https://github.com/taskforcesh/nandu/blob/assets/nandu.png?raw=true)
 
-[![Version](https://img.shields.io/npm/v/nandu-cli.svg)](https://npmjs.org/package/nandu)
+[![Version](https://img.shields.io/npm/v/nandu.svg)](https://npmjs.org/package/nandu)
 [![Downloads/week](https://img.shields.io/npm/dw/nandu.svg)](https://npmjs.org/package/nandu)
-[![License](https://img.shields.io/npm/l/nandu-cli.svg)](https://github.com/taskforcesh/nandu/blob/main/package.json)
+[![License](https://img.shields.io/npm/l/nandu.svg)](https://github.com/taskforcesh/nandu/blob/main/package.json)
 
 ## Introduction
 

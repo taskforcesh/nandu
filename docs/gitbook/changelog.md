@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/taskforcesh/nandu/compare/v1.2.0...v1.2.1) (2021-11-18)
+
+
+### Bug Fixes
+
+* remove debug console.logs ([27dedda](https://github.com/taskforcesh/nandu/commit/27deddad05f22efd6476d1ffe1b9c531d51e4cd7))
+
 # [1.2.0](https://github.com/taskforcesh/nandu/compare/v1.1.2...v1.2.0) (2021-11-18)
 
 

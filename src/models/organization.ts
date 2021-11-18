@@ -1,6 +1,22 @@
 import { DataTypes, Model, Transaction } from "sequelize";
 import { db } from "./db";
 import { User } from "./user";
+import { OrganizationRole, OrganizationAction } from "../enums";
+
+const roleActions = {
+  owner: new Set(Object.values(OrganizationAction)),
+  admin: new Set([
+    OrganizationAction.createTeam,
+    OrganizationAction.listTeams,
+    OrganizationAction.listTeamMembers,
+    OrganizationAction.deleteTeam,
+    OrganizationAction.addMemberToTeam,
+    OrganizationAction.removeMemberFromTeam,
+    OrganizationAction.manageTeamPackageAccess,
+    OrganizationAction.publishPackage,
+  ]),
+  developer: new Set([OrganizationAction.publishPackage]),
+};
 
 /**
  * Organization's membership
@@ -18,7 +34,14 @@ export const UserOrganization = db.define(
  *
  */
 export class Organization extends Model {
-  static async ownsOrganization(
+  static checkPermissions(
+    role: OrganizationRole,
+    ...actions: OrganizationAction[]
+  ) {
+    return actions.every((action) => roleActions[role].has(action));
+  }
+
+  static async getMemberRole(
     organizationId: string,
     userId: string,
     transaction?: Transaction
@@ -31,11 +54,9 @@ export class Organization extends Model {
       transaction,
     });
 
-    if (!membership || membership.getDataValue("role") !== "owner") {
-      return false;
+    if (membership) {
+      return membership.getDataValue("role") as OrganizationRole;
     }
-
-    return true;
   }
 }
 

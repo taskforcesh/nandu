@@ -48,7 +48,7 @@ All access commands implemented except 2fa-required, 2fa-not-required and ls-col
 
 ## npm-publish
 
-Publish implementing honoring access rights both of tokens and team ownership.
+Publish implementing access rights both of tokens and team ownership.
 
 ## npm whoami
 

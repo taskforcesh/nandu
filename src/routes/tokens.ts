@@ -19,6 +19,7 @@ router.get(
     const { _id: userId } = res.locals.user;
     const targetUserId = req.params.userId || userId;
 
+    console.log({ userId, targetUserId });
     if (userId && userId !== targetUserId && !res.locals.isRoot) {
       // Only roots can list other users tokens.
       res.status(StatusCodes.FORBIDDEN).end("Missing rights to list tokens");

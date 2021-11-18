@@ -7,19 +7,20 @@ import pino from "pino";
 
 import { asyncWrap, canWrite } from "../middleware";
 import { Version, Attachment } from "../interfaces";
-import { LocalStorage, downloadPackage } from "../storage";
+import { getStorage, downloadPackage } from "../storage";
 import { Package } from "../models/package";
 import { Version as VersionModel } from "../models/version";
 import { Team } from "../models/team";
+import { Organization } from "../models/organization";
+import { OrganizationAction } from "../enums";
+
 import { isScoped, isValidPackageName } from "../utils";
 
 const logger = pino();
 
-import config from "../../config";
+const storage = getStorage();
 
 export const router = Router();
-
-const storage = new LocalStorage(config.local.baseDir);
 
 async function getPackageMeta(res: Response, packageId: string) {
   const pkg = await Package.getPackage(packageId);
@@ -107,7 +108,7 @@ router.put(
   canWrite(),
   asyncWrap(async (req: Request, res: Response) => {
     logger.debug({ path: req.path }, "Publish");
-
+    console.log(1)
     const {
       _id,
       name,
@@ -127,19 +128,46 @@ router.put(
       return res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name");
     }
 
+    
+    console.log(2)
     try {
-      if (!(await Team.checkPermissions(userId, _id, ["read-write"]))) {
-        res.status(StatusCodes.FORBIDDEN).end();
+      let canAccess = false;
+      const scope = isScoped(_id) ? _id.split("/")[0].substr(1) : void 0;
+
+      if (scope) {
+        const role = await Organization.getMemberRole(scope, userId);
+        if (role) {
+          if (
+            await Organization.checkPermissions(
+              role,
+              OrganizationAction.publishPackage
+            )
+          ) {
+            canAccess = true;
+          }
+        }
+      }
+
+      if (
+        !canAccess &&
+        (await Team.checkPermissions(userId, _id, ["read-write"]))
+      ) {
+        canAccess = true;
+      }
+
+      if (!canAccess) {
+        return res.status(StatusCodes.FORBIDDEN).end();
       }
 
       const pkg = await Package.addPackage(_id, userId, name, access);
 
-      const tarballPrefix = `${req.protocol}://${req.hostname}:4567/${_id}/-/`;
+      const port = req.socket.localPort;
+      const tarballPrefix = `${req.protocol}://${req.hostname}:${port}/${_id}/-/`;
 
       const distTags = Object.entries(req.body["dist-tags"]);
       const [[tagName]] = distTags;
 
-      await VersionModel.addVersions(
+      const result = await VersionModel.addVersions(
         storage,
         _id,
         versions,

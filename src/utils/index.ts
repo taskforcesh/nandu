@@ -1,3 +1,6 @@
+import { Response } from "express";
+import config from "../../config";
+
 export const scopeRegEx = "^@[a-z\\d][\\w-.]+/[a-z\\d][\\w-.]*$";
 
 export function isScoped(pkgName: string) {
@@ -10,3 +13,6 @@ export const packageName =
 export function isValidPackageName(pgkName: string) {
   return packageName.test(pgkName);
 }
+
+export const isRoot = (res: Response) =>
+  res.locals.user?.name === config.root.user;

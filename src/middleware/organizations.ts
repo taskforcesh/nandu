@@ -1,27 +1,32 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import { OrganizationAction } from "../enums";
 import { Organization } from "../models/organization";
-import config from "../../config";
+import { isRoot } from "../utils";
 
 export const canAccessOrganization =
-  () => async (req: Request, res: Response, next: NextFunction) => {
+  (...actions: OrganizationAction[]) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     const { _id: ownerId } = res.locals.user;
-    const { isRoot } = res.locals;
 
-    if (isRoot) {
+    if (isRoot(res)) {
       return next();
     }
 
-    const canAccess = await Organization.ownsOrganization(
-      req.params.scope,
-      ownerId,
-    );
+    const role = await Organization.getMemberRole(req.params.scope, ownerId);
 
-    if (!canAccess) {
+    if (role) {
+      if (Organization.checkPermissions(role, ...actions)) {
+        return next();
+      } else {
+        return res
+          .status(StatusCodes.FORBIDDEN)
+          .send("Member's role has not right to perform the action");
+      }
+    } else {
       return res
         .status(StatusCodes.FORBIDDEN)
         .send("Requires organization access");
     }
-    next();
   };

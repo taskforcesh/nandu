@@ -6,6 +6,7 @@ import { Request, Response, Router, json } from "express";
 
 import { asyncWrap, canWrite, canAccessOrganization } from "../middleware";
 import { Team } from "../models/team";
+import { OrganizationAction } from "../enums";
 
 export const router = Router();
 
@@ -15,7 +16,7 @@ export const router = Router();
 router.delete(
   "/-/team/:scope/:team",
   canWrite(),
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.deleteTeam),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope, team } = req.params;
 
@@ -30,7 +31,7 @@ router.delete(
  */
 router.get(
   "/-/team/:scope/:teamName/user",
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.listTeamMembers),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope, teamName } = req.params;
 
@@ -51,7 +52,7 @@ router.put(
   "/-/team/:scope/:team/user",
   json(),
   canWrite(),
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.addMemberToTeam),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope, team } = req.params;
     const { user: userName } = req.body;
@@ -69,7 +70,7 @@ router.delete(
   "/-/team/:scope/:team/user",
   json(),
   canWrite(),
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.removeMemberFromTeam),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope, team } = req.params;
     const { user: userName } = req.body;
@@ -85,7 +86,7 @@ router.delete(
  */
 router.get(
   "/-/team/:scope/:team/package",
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.manageTeamPackageAccess),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope, team } = req.params;
 
@@ -102,7 +103,7 @@ router.put(
   "/-/team/:scope/:team/package",
   json(),
   canWrite(),
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.manageTeamPackageAccess),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope, team } = req.params;
     const { package: pkg, permissions } = req.body;
@@ -120,7 +121,7 @@ router.delete(
   "/-/team/:scope/:team/package",
   json(),
   canWrite(),
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.manageTeamPackageAccess),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope, team } = req.params;
     const { package: pkg } = req.body;

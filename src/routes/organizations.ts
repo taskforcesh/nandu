@@ -8,14 +8,15 @@ import { asyncWrap } from "../middleware/asyncWrap";
 import { Team } from "../models/team";
 import { UserOrganization } from "../models/organization";
 import { User } from "../models/user";
+import { OrganizationAction } from "../enums";
 
-import { isRoot, canWrite, canAccessOrganization } from "../middleware";
+import { canWrite, canAccessOrganization } from "../middleware";
 
 export const router = Router();
 
 router.get(
   "/-/org/:scope/user",
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.listMembers),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
 
@@ -40,7 +41,10 @@ router.put(
   "/-/org/:scope/user",
   json(),
   canWrite(),
-  canAccessOrganization(),
+  canAccessOrganization(
+    OrganizationAction.addMember,
+    OrganizationAction.changeMemberRole
+  ),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
     const { user: username, role } = req.body;
@@ -80,7 +84,7 @@ router.delete(
   "/-/org/:scope/user",
   json(),
   canWrite(),
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.removeMember),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
     const { user: username } = req.body;
@@ -112,20 +116,21 @@ router.delete(
  * Note: An organization will created automatically if not existing yet,
  * however, only "root" users have the right to create organizations.
  *
- * Note: Only organization owner or root users are able to add teams
+ * Note: Only organization owner, admins or root users are able to add teams
  * to any organization.
  */
 router.put(
   "/-/org/:scope/team",
   json(),
   canWrite(),
-  canAccessOrganization(),
-  isRoot(),
+  canAccessOrganization(OrganizationAction.createTeam),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
     const { name, description } = req.body;
     const { _id: ownerId } = res.locals.user;
     const { isRoot } = res.locals;
+
+    console.log({ isRoot });
 
     try {
       const team = await Team.createTeam(
@@ -149,7 +154,7 @@ router.put(
  */
 router.get(
   "/-/org/:scope/team",
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.listTeams),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
 
@@ -170,7 +175,7 @@ router.get(
  */
 router.get(
   "/-/org/:scope/package",
-  canAccessOrganization(),
+  canAccessOrganization(OrganizationAction.manageTeamPackageAccess),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
 

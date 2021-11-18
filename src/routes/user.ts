@@ -122,13 +122,35 @@ router.post(
 );
 
 /**
- * Get public user data
+ * Get own user data
  */
 router.get(
   "/-/npm/v1/user",
   asyncWrap(async (req: Request, res: Response) => {
     const { _id, password, ...user } = res.locals.user;
     res.json(user);
+  })
+);
+
+/**
+ * Get a different user's data
+ */
+router.get(
+  "/-/npm/v1/user/:userId",
+  isRoot(),
+  asyncWrap(async (req: Request, res: Response) => {
+    if (res.locals.isRoot) {
+      const user = await User.findOne({ where: { _id: req.params.userId } });
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(StatusCodes.NOT_FOUND).end();
+      }
+    } else {
+      res.status(StatusCodes.FORBIDDEN).json({
+        error: "Missing rights",
+      });
+    }
   })
 );
 

@@ -43,7 +43,7 @@ export default {
    */
   aws: {
     s3: {
-      bucket: process.env["NANDU_S3_BUCKET"] || "nandu-registry",
+      bucket: process.env["NANDU_S3_BUCKET"],
     },
   },
 

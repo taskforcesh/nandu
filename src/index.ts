@@ -24,6 +24,13 @@ const app = express() as Application;
 
 app.set("trust proxy", true);
 
+if (process.env.NODE_ENV !== "production") {
+  app.use("*", (req, res, next) => {
+    logger.info({ method: req.method, path: req.path });
+    next();
+  });
+}
+
 const versionString = `Nandu NPM Registry v${pkg.version}`;
 
 app.get("/", (req: Request, res: Response) => {

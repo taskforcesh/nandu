@@ -46,11 +46,12 @@ authorization, organizations and teams.
 - Secured by default, only registered users can access the registry.
 - Complete authorization tokens and passwords support including cidr whitelisting.
 - Use any SQL database (including SQLite) for storing persistent metadata.
-- Store packages in disk-storages or S3.
+- Store packages in a disk base storage or S3.
 - publish
 - scoped packages
 - [access](https://docs.npmjs.com/cli/v7/commands/npm-access)
-- organizations and teams
+- [teams](https://docs.npmjs.com/cli/v8/commands/npm-team)
+- [organizations](https://docs.npmjs.com/cli/v8/commands/npm-org)
 
 ## How to use
 

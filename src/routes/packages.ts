@@ -108,7 +108,6 @@ router.put(
   canWrite(),
   asyncWrap(async (req: Request, res: Response) => {
     logger.debug({ path: req.path }, "Publish");
-    console.log(1)
     const {
       _id,
       name,
@@ -128,8 +127,6 @@ router.put(
       return res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name");
     }
 
-    
-    console.log(2)
     try {
       let canAccess = false;
       const scope = isScoped(_id) ? _id.split("/")[0].substr(1) : void 0;

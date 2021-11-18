@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/taskforcesh/nandu/compare/v1.1.2...v1.2.0) (2021-11-18)
+
+
+### Features
+
+* add s3 storage support ([a70dff4](https://github.com/taskforcesh/nandu/commit/a70dff46083efab7c144f62b38e902bf1ea8d0e3))
+* add support for all organization actions ([f89d360](https://github.com/taskforcesh/nandu/commit/f89d3601daaaae581ed85f84a49de093abccb86b))
+
 ## [1.1.2](https://github.com/taskforcesh/nandu/compare/v1.1.1...v1.1.2) (2021-11-12)
 
 

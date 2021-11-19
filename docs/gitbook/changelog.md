@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/taskforcesh/nandu/compare/v1.2.1...v1.2.2) (2021-11-19)
+
+
+### Bug Fixes
+
+* **teams:** send an object with packages ([d0c4a4e](https://github.com/taskforcesh/nandu/commit/d0c4a4e5f5b274a8af9f1d02200e4975c7f80e33))
+
 ## [1.2.1](https://github.com/taskforcesh/nandu/compare/v1.2.0...v1.2.1) (2021-11-18)
 
 

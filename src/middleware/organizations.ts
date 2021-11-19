@@ -8,13 +8,13 @@ import { isRoot } from "../utils";
 export const canAccessOrganization =
   (...actions: OrganizationAction[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
-    const { _id: ownerId } = res.locals.user;
+    const { _id: memberId } = res.locals.user;
 
     if (isRoot(res)) {
       return next();
     }
 
-    const role = await Organization.getMemberRole(req.params.scope, ownerId);
+    const role = await Organization.getMemberRole(req.params.scope, memberId);
 
     if (role) {
       if (Organization.checkPermissions(role, ...actions)) {

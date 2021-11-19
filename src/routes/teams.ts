@@ -92,7 +92,7 @@ router.get(
 
     const packages = await Team.listPackages(scope, team);
 
-    res.status(StatusCodes.OK).json(packages);
+    res.status(StatusCodes.OK).json({ packages });
   })
 );
 

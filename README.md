@@ -11,6 +11,9 @@ Nandu is an open source NPM registry compatible with Npm, Yarn and Pnpm.
 Note: Although quite functional, this software cannot be classified as production ready just yet,
 so be careful for production critical projects.
 
+You are still encouraged to test it (it is quite functional already!) and report any issues you may
+find. As the project is currently under heavy development expect quick resolution of the issues.
+
 ## Motivation
 
 NPM is the core of all the NodeJS Ecosystem, and even though all NPM clients are open source,

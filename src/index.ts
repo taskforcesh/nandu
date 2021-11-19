@@ -26,7 +26,7 @@ app.set("trust proxy", true);
 
 if (process.env.NODE_ENV !== "production") {
   app.use("*", (req, res, next) => {
-    logger.info({ method: req.method, path: req.path });
+    logger.info({ method: req.method, path: req.path, params: req.params });
     next();
   });
 }
@@ -44,6 +44,7 @@ app.get("/-/ping", (req: Request, res: Response) => {
 app.use(loginRouter);
 
 app.use(authToken());
+
 app.use(packagesRouter);
 app.use(userRouter);
 app.use(tokensRouter);

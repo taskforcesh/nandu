@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/taskforcesh/nandu/compare/v1.2.2...v1.2.3) (2021-11-21)
+
+
+### Bug Fixes
+
+* correct how root user is authorised ([7a9b4b7](https://github.com/taskforcesh/nandu/commit/7a9b4b74ab628155f82fb1920b9d961d42d4ce16))
+* remove unnecessary dependency ([099b963](https://github.com/taskforcesh/nandu/commit/099b963a345ed069f6838d24d6f8aff1aa557889))
+
 ## [1.2.2](https://github.com/taskforcesh/nandu/compare/v1.2.1...v1.2.2) (2021-11-19)
 
 

@@ -11,7 +11,6 @@ import {
 } from "@aws-sdk/client-s3";
 
 import { Storage } from "../interfaces/storage";
-import { builtinModules } from "module";
 
 const client = new S3({}) || new S3Client({});
 

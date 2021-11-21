@@ -1,5 +1,6 @@
 import { Response } from "express";
 import config from "../../config";
+import { User } from "../models";
 
 export const scopeRegEx = "^@[a-z\\d][\\w-.]+/[a-z\\d][\\w-.]*$";
 
@@ -14,5 +15,4 @@ export function isValidPackageName(pgkName: string) {
   return packageName.test(pgkName);
 }
 
-export const isRoot = (res: Response) =>
-  res.locals.user?.name === config.root.user;
+export const isRoot = (user: User) => user.getDataValue("type") === "root";

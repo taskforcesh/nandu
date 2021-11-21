@@ -10,7 +10,7 @@ export const canAccessOrganization =
   async (req: Request, res: Response, next: NextFunction) => {
     const { _id: memberId } = res.locals.user;
 
-    if (isRoot(res)) {
+    if (isRoot(res.locals.user)) {
       return next();
     }
 

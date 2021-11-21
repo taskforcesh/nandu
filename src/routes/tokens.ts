@@ -4,7 +4,9 @@
 import { StatusCodes } from "http-status-codes";
 import { Request, Response, Router, json } from "express";
 
-import { asyncWrap, authPassword, canWrite, isRoot } from "../middleware";
+import { asyncWrap, authPassword, canWrite } from "../middleware";
+import { isRoot } from "../utils";
+
 import { Token } from "../models";
 
 export const router = Router();
@@ -14,13 +16,11 @@ export const router = Router();
  */
 router.get(
   "/-/npm/v1/tokens/:userId?",
-  isRoot(),
   asyncWrap(async (req: Request, res: Response) => {
     const { _id: userId } = res.locals.user;
     const targetUserId = req.params.userId || userId;
 
-    console.log({ userId, targetUserId });
-    if (userId && userId !== targetUserId && !res.locals.isRoot) {
+    if (userId && userId !== targetUserId && !isRoot(res.locals.user)) {
       // Only roots can list other users tokens.
       res.status(StatusCodes.FORBIDDEN).end("Missing rights to list tokens");
     }
@@ -39,7 +39,6 @@ router.post(
   json(),
   canWrite(),
   authPassword(),
-  isRoot(),
   asyncWrap(async (req: Request, res: Response) => {
     const { _id: userId } = res.locals.user;
     const targetUserId = req.params.userId || userId;
@@ -52,7 +51,7 @@ router.post(
         .end("cidr-whitelist must be an array");
     }
 
-    if (userId && userId !== targetUserId && !res.locals.isRoot) {
+    if (userId && userId !== targetUserId && !isRoot(res.locals.user)) {
       // Only roots can create tokens on behalf of other users
       return res
         .status(StatusCodes.FORBIDDEN)
@@ -80,7 +79,6 @@ router.post(
 router.delete(
   "/-/npm/v1/tokens/token/:tokenOrKey",
   canWrite(),
-  isRoot(),
   asyncWrap(async (req: Request, res: Response) => {
     const { tokenOrKey } = req.params;
     const { _id: userId } = res.locals.user;
@@ -88,7 +86,7 @@ router.delete(
     const hasRevoked = await Token.revokeToken(
       userId,
       tokenOrKey,
-      res.locals.isRoot
+      isRoot(res.locals.user)
     );
 
     if (!hasRevoked) {

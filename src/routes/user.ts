@@ -6,7 +6,8 @@ import { Request, Response, Router, json } from "express";
 
 import { User } from "../models/user";
 import { db } from "../models";
-import { asyncWrap, canWrite, isRoot } from "../middleware";
+import { asyncWrap, canWrite } from "../middleware";
+import { isRoot } from "../utils";
 
 export const router = Router();
 
@@ -25,7 +26,6 @@ router.put(
   "/-/user/:userId",
   json(),
   canWrite(),
-  isRoot(),
   asyncWrap(async (req: Request, res: Response) => {
     // Currently we do not use the scope, left here for reference.
     const { "npm-scope": scope } = req.headers;
@@ -64,7 +64,7 @@ router.put(
         );
       }
       res.status(StatusCodes.OK).json({});
-    } else if (res.locals.isRoot) {
+    } else if (isRoot(res.locals.user)) {
       const transaction = await db.transaction();
       try {
         const user = await User.findOne({
@@ -137,9 +137,8 @@ router.get(
  */
 router.get(
   "/-/npm/v1/user/:userId",
-  isRoot(),
   asyncWrap(async (req: Request, res: Response) => {
-    if (res.locals.isRoot) {
+    if (isRoot(res.locals.user)) {
       const user = await User.findOne({ where: { _id: req.params.userId } });
       if (user) {
         res.json(user);

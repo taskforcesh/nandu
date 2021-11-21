@@ -127,10 +127,8 @@ router.put(
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
     const { name, description } = req.body;
-    const { _id: ownerId } = res.locals.user;
-    const { isRoot } = res.locals;
-
-    console.log({ isRoot });
+    const { _id: ownerId, type } = res.locals.user;
+    const isRoot = type === "root";
 
     try {
       const team = await Team.createTeam(

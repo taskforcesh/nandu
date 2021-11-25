@@ -49,19 +49,11 @@ router.put(
           error: "Invalid password",
         });
       } else {
-        User.update(
-          {
-            name,
-            email,
-            password,
-            type,
+        User.update(data, {
+          where: {
+            _id: userId,
           },
-          {
-            where: {
-              _id: userId,
-            },
-          }
-        );
+        });
       }
       res.status(StatusCodes.OK).json({});
     } else if (isRoot(res.locals.user)) {

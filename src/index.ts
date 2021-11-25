@@ -26,7 +26,7 @@ app.set("trust proxy", true);
 
 if (process.env.NODE_ENV !== "production") {
   app.use("*", (req, res, next) => {
-    logger.info({ method: req.method, path: req.path, params: req.params });
+    logger.trace({ method: req.method, path: req.path, params: req.params });
     next();
   });
 }

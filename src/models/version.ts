@@ -66,6 +66,9 @@ Version.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    readme: {
+      type: DataTypes.TEXT,
+    },
     version: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -74,7 +77,12 @@ Version.init(
     repository: DataTypes.JSON,
     keywords: DataTypes.STRING, // Not the best solution if we want to do searches.
 
-    author: DataTypes.UUID,
+    author: DataTypes.JSON,
+
+    maintainers: DataTypes.JSON,
+
+    devDependencies: DataTypes.JSON,
+    dependencies: DataTypes.JSON,
 
     dist: DataTypes.JSON,
 

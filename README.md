@@ -28,7 +28,7 @@ corporate use cases where user access management is important as well as other p
 use cases such as providing subscription based licenses for commercial packages.
 
 Furthermore, we are currently also aiming at documenting the NPM Apis, for which there are
-currently no documetation available.
+currently no documentation available.
 
 ## Architecture
 

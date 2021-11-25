@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/taskforcesh/nandu/compare/v1.3.0...v1.4.0) (2021-11-25)
+
+
+### Features
+
+* add more fields to the Version model ([3c86b47](https://github.com/taskforcesh/nandu/commit/3c86b4704682ad81d05eb2ca83138d1c484bad47))
+
 # [1.3.0](https://github.com/taskforcesh/nandu/compare/v1.2.4...v1.3.0) (2021-11-25)
 
 

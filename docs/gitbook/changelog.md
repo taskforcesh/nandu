@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/taskforcesh/nandu/compare/v1.4.0...v1.4.1) (2021-11-25)
+
+
+### Bug Fixes
+
+* return "UNPROCESSABLE_ENTITY" if republishing package ([d88f644](https://github.com/taskforcesh/nandu/commit/d88f644ffdc4b553a47d15429021a75892afd416))
+
 # [1.4.0](https://github.com/taskforcesh/nandu/compare/v1.3.0...v1.4.0) (2021-11-25)
 
 

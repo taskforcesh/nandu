@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/taskforcesh/nandu/compare/v1.2.3...v1.2.4) (2021-11-25)
+
+
+### Bug Fixes
+
+* remove unused dependencies ([1596790](https://github.com/taskforcesh/nandu/commit/159679058bff20e24f5e3190ddb002b2c5824831))
+
 ## [1.2.3](https://github.com/taskforcesh/nandu/compare/v1.2.2...v1.2.3) (2021-11-21)
 
 

@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/taskforcesh/nandu/compare/v1.4.1...v1.4.2) (2021-11-25)
+
+
+### Bug Fixes
+
+* use remotePort for the tarball url ([a7dc28d](https://github.com/taskforcesh/nandu/commit/a7dc28d9820d03cd3532e64b0d01673385fdc10c))
+
 ## [1.4.1](https://github.com/taskforcesh/nandu/compare/v1.4.0...v1.4.1) (2021-11-25)
 
 

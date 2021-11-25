@@ -177,7 +177,10 @@ router.put(
       res.status(StatusCodes.OK).end();
     } catch (err) {
       logger.error(err, "Error adding package or versions");
-      if ((<any>err).code === "EEXIST") {
+      if (
+        (<any>err).code === "EEXIST" ||
+        (<any>err).type === "UniqueConstraintError"
+      ) {
         res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
       } else {
         throw err;

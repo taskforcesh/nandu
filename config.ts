@@ -54,4 +54,13 @@ export default {
     baseDir:
       process.env["NANDU_LOCAL_STORAGE_DIR"] || `${__dirname}/storage/packages`,
   },
+
+  /**
+   * Max package size, default 100Mb
+   *
+   */
+
+  storage: {
+    maxPackageSize: process.env["NANDU_MAX_PACKAGE_SIZE"] || "100mb",
+  },
 };

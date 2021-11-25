@@ -15,6 +15,7 @@ import { Organization } from "../models/organization";
 import { OrganizationAction } from "../enums";
 
 import { isScoped, isValidPackageName } from "../utils";
+import config from "../../config";
 
 const logger = pino();
 
@@ -104,7 +105,7 @@ router.get(
 
 router.put(
   "/:package",
-  json(),
+  json({ limit: config.storage.maxPackageSize }),
   canWrite(),
   asyncWrap(async (req: Request, res: Response) => {
     logger.debug({ path: req.path }, "Publish");

@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/taskforcesh/nandu/compare/v1.2.4...v1.3.0) (2021-11-25)
+
+
+### Features
+
+* make package size limit configurable ([ccc2db3](https://github.com/taskforcesh/nandu/commit/ccc2db36fbdb867c1622161ffe7a43005fa58e62))
+
 ## [1.2.4](https://github.com/taskforcesh/nandu/compare/v1.2.3...v1.2.4) (2021-11-25)
 
 

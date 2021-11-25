@@ -1,5 +1,3 @@
-import { Response } from "express";
-import config from "../../config";
 import { User } from "../models";
 
 export const scopeRegEx = "^@[a-z\\d][\\w-.]+/[a-z\\d][\\w-.]*$";

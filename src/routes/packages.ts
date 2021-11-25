@@ -159,7 +159,7 @@ router.put(
 
       const pkg = await Package.addPackage(_id, userId, name, access);
 
-      const port = req.socket.localPort;
+      const port = req.socket.remotePort;
       const tarballPrefix = `${req.protocol}://${req.hostname}:${port}/${_id}/-/`;
 
       const distTags = Object.entries(req.body["dist-tags"]);

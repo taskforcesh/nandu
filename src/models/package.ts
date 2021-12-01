@@ -51,7 +51,6 @@ export class Package extends Model {
       let pkg = await Package.findOne({
         where: {
           _id: packageId,
-          userId,
         },
         transaction,
       });

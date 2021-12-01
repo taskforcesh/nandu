@@ -1,3 +1,11 @@
+## [1.4.3](https://github.com/taskforcesh/nandu/compare/v1.4.2...v1.4.3) (2021-12-01)
+
+
+### Bug Fixes
+
+* **packages:** remove userId from package existence query ([b69f50a](https://github.com/taskforcesh/nandu/commit/b69f50a04308f0d6580aebf6a8ade29676b9d3ad))
+* **packages:** try to correctly get the host for the packages url ([d5ab082](https://github.com/taskforcesh/nandu/commit/d5ab0828d4a0c0d28c1e9cadb9b607937f263ba1))
+
 ## [1.4.2](https://github.com/taskforcesh/nandu/compare/v1.4.1...v1.4.2) (2021-11-25)
 
 

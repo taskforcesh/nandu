@@ -7,7 +7,7 @@ import pino from "pino";
 
 import { asyncWrap, canWrite } from "../middleware";
 import { Version, Attachment } from "../interfaces";
-import { getStorage, downloadPackage } from "../storage";
+import { getStorage, downloadPackage } from "../services/storage";
 import { Package } from "../models/package";
 import { Version as VersionModel } from "../models/version";
 import { Team } from "../models/team";
@@ -159,8 +159,7 @@ router.put(
 
       const pkg = await Package.addPackage(_id, userId, name, access);
 
-      const port = req.socket.remotePort;
-      const tarballPrefix = `${req.protocol}://${req.hostname}:${port}/${_id}/-/`;
+      const tarballPrefix = `${req.protocol}://${req.get("host")}/${_id}/-/`;
 
       const distTags = Object.entries(req.body["dist-tags"]);
       const [[tagName]] = distTags;

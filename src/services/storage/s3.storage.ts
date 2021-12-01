@@ -1,5 +1,3 @@
-import * as https from "https";
-
 import { Readable } from "stream";
 
 import { Upload } from "@aws-sdk/lib-storage";
@@ -10,7 +8,7 @@ import {
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 
-import { Storage } from "../interfaces/storage";
+import { Storage } from "../../interfaces/storage";
 
 const client = new S3({}) || new S3Client({});
 

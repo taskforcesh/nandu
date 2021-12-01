@@ -2,7 +2,7 @@ import * as path from "path";
 import * as fs from "fs";
 import { Readable } from "stream";
 
-import { Storage } from "../interfaces/storage";
+import { Storage } from "../../interfaces/storage";
 
 export class LocalStorage implements Storage {
   constructor(private dirName: string) {

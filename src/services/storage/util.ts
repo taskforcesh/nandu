@@ -3,9 +3,9 @@ import { Readable } from "stream";
 import { StatusCodes } from "http-status-codes";
 import { Response } from "express";
 
-import config from "../../config";
-import { Attachment } from "../interfaces";
-import { Storage } from "../interfaces";
+import config from "../../../config";
+import { Attachment } from "../../interfaces";
+import { Storage } from "../../interfaces";
 import { S3Storage, LocalStorage } from "./index";
 
 export async function uploadAttachment(

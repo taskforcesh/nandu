@@ -3,7 +3,7 @@ import { db } from "./db";
 import { Author } from "./author";
 import { DistTag } from "../models/dist-tag";
 import { Version as IVersion, Attachment } from "../interfaces";
-import { uploadAttachment } from "../storage";
+import { uploadAttachment } from "../services/storage";
 import { Storage } from "../interfaces";
 
 export interface Dist {

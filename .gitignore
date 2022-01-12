@@ -2,3 +2,4 @@ node_modules
 /dist
 /storage
 .DS_Store
+yarn-error.log

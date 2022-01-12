@@ -14,4 +14,5 @@ export enum OrganizationAction {
   removeMemberFromTeam,
   manageTeamPackageAccess,
   publishPackage,
+  manageHooks
 }

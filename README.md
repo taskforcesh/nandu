@@ -52,6 +52,7 @@ authorization, organizations and teams.
 - Store packages in a disk base storage or S3.
 - publish
 - scoped packages
+- [hooks](https://docs.npmjs.com/cli/v7/commands/npm-hook)
 - [access](https://docs.npmjs.com/cli/v7/commands/npm-access)
 - [teams](https://docs.npmjs.com/cli/v8/commands/npm-team)
 - [organizations](https://docs.npmjs.com/cli/v8/commands/npm-org)

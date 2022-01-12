@@ -5,6 +5,7 @@ import { DistTag } from "../models/dist-tag";
 import { Version as IVersion, Attachment } from "../interfaces";
 import { uploadAttachment } from "../services/storage";
 import { Storage } from "../interfaces";
+import { Hook, HookEvent } from "./hook";
 
 export interface Dist {
   tarball: string;
@@ -42,6 +43,19 @@ export class Version extends Model {
             integrity,
             tarball: `${tarballPrefix}${versionFile}`,
           },
+        });
+
+        await Hook.notifyHooks("package", packageId, {
+          event: HookEvent.PackagePublish,
+          name: packageId,
+          type: "package",
+          version: version.version,
+          // hookOwner: { username: string };
+          //payload: object; // PackageMetadata
+          change: {
+            version: version.version,
+          },
+          time: Date.now(),
         });
 
         await DistTag.upsert({

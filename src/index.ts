@@ -11,6 +11,7 @@ import {
   tokensRouter,
   orgsRouter,
   teamsRouter,
+  hooksRouter,
 } from "./routes";
 
 import { Application } from "express";
@@ -45,6 +46,7 @@ app.use(loginRouter);
 
 app.use(authToken());
 
+app.use(hooksRouter);
 app.use(packagesRouter);
 app.use(userRouter);
 app.use(tokensRouter);

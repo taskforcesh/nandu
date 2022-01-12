@@ -14,6 +14,7 @@ const roleActions = {
     OrganizationAction.removeMemberFromTeam,
     OrganizationAction.manageTeamPackageAccess,
     OrganizationAction.publishPackage,
+    OrganizationAction.manageHooks,
   ]),
   developer: new Set([OrganizationAction.publishPackage]),
 };

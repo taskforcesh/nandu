@@ -33,20 +33,18 @@ async function getPackageMeta(res: Response, packageId: string) {
 }
 
 /**
- * Get package metadata.
+ * Get a scoped package metadata.
  *
  */
 router.get(
-  "/:packageId",
+  "/@:scope/:name",
   asyncWrap(async (req: Request, res: Response) => {
-    const { packageId } = req.params;
-
+    const { type, _id } = res.locals.user;
+    const packageId = `@${req.params.scope}/${req.params.name}`;
     if (
       !isScoped(packageId) ||
-      (await Team.checkPermissions(res.locals.user._id, packageId, [
-        "read-only",
-        "read-write",
-      ]))
+      type === "root" ||
+      (await Team.checkPermissions(_id, packageId, ["read-only", "read-write"]))
     ) {
       await getPackageMeta(res, packageId);
     } else {
@@ -56,14 +54,22 @@ router.get(
 );
 
 /**
- * Get a scoped package metadata.
- * Note: This endpoint does not seem to be needed
+ * Get package metadata.
+ *
  */
 router.get(
-  "/@:scope/:name",
+  "/:packageId",
   asyncWrap(async (req: Request, res: Response) => {
-    const packageId = `@${req.params.scope}/${req.params.name}`;
-    res.status(StatusCodes.FORBIDDEN).end();
+    const { packageId } = req.params;
+    const { type, _id } = res.locals.user;
+    if (
+      type === "root" ||
+      (await Team.checkPermissions(_id, packageId, ["read-only", "read-write"]))
+    ) {
+      await getPackageMeta(res, packageId);
+    } else {
+      res.status(StatusCodes.FORBIDDEN).end();
+    }
   })
 );
 

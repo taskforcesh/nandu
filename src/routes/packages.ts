@@ -131,64 +131,65 @@ router.put(
     const { _id: userId } = res.locals.user;
 
     if (!isValidPackageName(name)) {
-      return res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name");
-    }
+      res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name");
+    } else {
+      try {
+        let canAccess = false;
+        const scope = isScoped(_id) ? _id.split("/")[0].substr(1) : void 0;
 
-    try {
-      let canAccess = false;
-      const scope = isScoped(_id) ? _id.split("/")[0].substr(1) : void 0;
-
-      if (scope) {
-        const role = await Organization.getMemberRole(scope, userId);
-        if (role) {
-          if (
-            await Organization.checkPermissions(
-              role,
-              OrganizationAction.publishPackage
-            )
-          ) {
-            canAccess = true;
+        if (scope) {
+          const role = await Organization.getMemberRole(scope, userId);
+          if (role) {
+            if (
+              await Organization.checkPermissions(
+                role,
+                OrganizationAction.publishPackage
+              )
+            ) {
+              canAccess = true;
+            }
           }
         }
-      }
 
-      if (
-        !canAccess &&
-        (await Team.checkPermissions(userId, _id, ["read-write"]))
-      ) {
-        canAccess = true;
-      }
+        if (
+          !canAccess &&
+          (await Team.checkPermissions(userId, _id, ["read-write"]))
+        ) {
+          canAccess = true;
+        }
 
-      if (!canAccess) {
-        return res.status(StatusCodes.FORBIDDEN).end();
-      }
+        if (!canAccess) {
+          res.status(StatusCodes.FORBIDDEN).end();
+        } else {
+          const pkg = await Package.addPackage(_id, userId, name, access);
 
-      const pkg = await Package.addPackage(_id, userId, name, access);
+          const tarballPrefix = `${req.protocol}://${req.get(
+            "host"
+          )}/${_id}/-/`;
 
-      const tarballPrefix = `${req.protocol}://${req.get("host")}/${_id}/-/`;
+          const distTags = Object.entries(req.body["dist-tags"]);
+          const [[tagName]] = distTags;
 
-      const distTags = Object.entries(req.body["dist-tags"]);
-      const [[tagName]] = distTags;
-
-      const result = await VersionModel.addVersions(
-        storage,
-        _id,
-        versions,
-        _attachments,
-        tarballPrefix,
-        tagName
-      );
-
-      res.status(StatusCodes.OK).end();
-    } catch (err) {
-      logger.error(err, "Error adding package or versions");
-      if (
-        (<any>err).code === "EEXIST" ||
-        (<any>err).type === "UniqueConstraintError"
-      ) {
-        res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
-      } else {
-        throw err;
+          const result = await VersionModel.addVersions(
+            storage,
+            _id,
+            versions,
+            _attachments,
+            tarballPrefix,
+            tagName
+          );
+          res.status(StatusCodes.OK).end();
+        }
+      } catch (err) {
+        logger.error(err, "Error adding package or versions");
+        if (
+          (<any>err).code === "EEXIST" ||
+          (<any>err).type === "UniqueConstraintError"
+        ) {
+          res.status(StatusCodes.UNPROCESSABLE_ENTITY).end();
+        } else {
+          throw err;
+        }
       }
     }
   })

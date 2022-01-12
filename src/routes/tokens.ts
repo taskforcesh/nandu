@@ -46,16 +46,16 @@ router.post(
     const { readonly, cidr_whitelist: cidrWhitelist } = req.body;
 
     if (cidrWhitelist && !Array.isArray(cidrWhitelist)) {
-      return res
+      res
         .status(StatusCodes.NOT_ACCEPTABLE)
         .end("cidr-whitelist must be an array");
+      return;
     }
 
     if (userId && userId !== targetUserId && !isRoot(res.locals.user)) {
       // Only roots can create tokens on behalf of other users
-      return res
-        .status(StatusCodes.FORBIDDEN)
-        .end("Missing rights to create token");
+      res.status(StatusCodes.FORBIDDEN).end("Missing rights to create token");
+      return;
     }
 
     const [uuid, token] = await Token.createTokenForUser(targetUserId, {

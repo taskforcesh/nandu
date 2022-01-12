@@ -180,7 +180,12 @@ router.get(
     // We assume all packages at least are part of one team (as developers)
     const packages = await Team.listOrganizationPackages(scope);
 
-    res.status(StatusCodes.OK).json(packages);
+    const result = packages.reduce((prev: any, pkg) => {
+      prev[pkg.getDataValue("packageId")] = pkg.getDataValue("permissions");
+      return prev;
+    }, {});
+
+    res.status(StatusCodes.OK).json(result);
   })
 );
 

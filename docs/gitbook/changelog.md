@@ -1,3 +1,18 @@
+# [1.5.0](https://github.com/taskforcesh/nandu/compare/v1.4.4...v1.5.0) (2022-01-12)
+
+
+### Features
+
+* add hooks support ([5ad7267](https://github.com/taskforcesh/nandu/commit/5ad7267b92d3521efebeefd90adc7e2bd546630c))
+
+## [1.4.4](https://github.com/taskforcesh/nandu/compare/v1.4.3...v1.4.4) (2022-01-12)
+
+
+### Bug Fixes
+
+* fix compiling error ([19ae9cd](https://github.com/taskforcesh/nandu/commit/19ae9cd34f34b2ca84a0c3b5314e521128283c1f))
+* **org-packages:** list following same format as npm registry ([4c7139e](https://github.com/taskforcesh/nandu/commit/4c7139eb473cf95a82895c2ab84b03f4b885ffaf))
+
 ## [1.4.3](https://github.com/taskforcesh/nandu/compare/v1.4.2...v1.4.3) (2021-12-01)
 
 

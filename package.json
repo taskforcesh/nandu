@@ -26,6 +26,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.41.0",
     "@aws-sdk/lib-storage": "^3.41.0",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "http-status-codes": "^2.1.4",

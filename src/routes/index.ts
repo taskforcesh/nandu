@@ -4,3 +4,4 @@ export { router as packagesRouter } from "./packages";
 export { router as teamsRouter } from "./teams";
 export { router as tokensRouter } from "./tokens";
 export { router as userRouter } from "./user";
+export { router as hooksRouter } from "./hooks";

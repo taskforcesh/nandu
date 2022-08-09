@@ -15,7 +15,7 @@ import {
 } from "./routes";
 
 import { Application } from "express";
-const express = require("express");
+import express = require("express");
 
 const pkg = require(`${getPkgJsonDir()}/package.json`);
 

@@ -1,6 +1,7 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model, CreationOptional } from "sequelize";
 import * as bcrypt from "bcrypt";
 import pino from "pino";
+import { sign } from "jsonwebtoken";
 
 import config from "../../config";
 import { db } from "./db";
@@ -52,6 +53,19 @@ export class User extends Model {
   checkPassword(password: string) {
     return bcrypt.compareSync(password, this.getDataValue("password"));
   }
+
+  generateToken() {
+    // Create a JWT token.
+    return sign({ name: this.name, email: this.email }, config.jwt.secret, {
+      algorithm: "HS256",
+    });
+  }
+
+  declare _id: CreationOptional<string>;
+  declare type: string;
+  declare name: string;
+  declare email: string;
+  declare password: string;
 }
 
 User.init(

@@ -98,6 +98,31 @@ export const authPassword =
     next();
   };
 
+export const authUserPassword =
+  () => async (req: Request, res: Response, next: NextFunction) => {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({
+      where: { name: username },
+    });
+
+    if (!user) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .send("Invalid user or password");
+    }
+
+    if (!password || !user.checkPassword(password)) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .send("Invalid user or password");
+    }
+
+    res.locals.user = user;
+
+    next();
+  };
+
 export const canWrite =
   () =>
   async (req: Request, res: Response<any, LocalsAuth>, next: NextFunction) => {

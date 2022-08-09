@@ -1,0 +1,24 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.4",
+    "vite-plugin-solid": "^2.2.6"
+  },
+  "dependencies": {
+    "solid-app-router": "^0.3.3",
+    "solid-js": "^1.4.2"
+  }
+}

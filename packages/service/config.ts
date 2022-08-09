@@ -59,8 +59,14 @@ export default {
    * Max package size, default 100Mb
    *
    */
-
   storage: {
     maxPackageSize: process.env["NANDU_MAX_PACKAGE_SIZE"] || "100mb",
+  },
+
+  /**
+   * JWT settings
+   */
+  jwt: {
+    secret: process.env["NANDU_JWT_SECRET"] || "nandu-secret",
   },
 };

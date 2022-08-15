@@ -12,10 +12,12 @@ import {
   orgsRouter,
   teamsRouter,
   hooksRouter,
+  apiRouter,
 } from "./routes";
 
 import { Application } from "express";
 import express = require("express");
+import cors = require("cors");
 
 const pkg = require(`${getPkgJsonDir()}/package.json`);
 
@@ -43,6 +45,7 @@ app.get("/-/ping", (req: Request, res: Response) => {
 });
 
 app.use(loginRouter);
+app.use("/api", cors(), apiRouter);
 
 app.use(authToken());
 

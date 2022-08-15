@@ -5,6 +5,7 @@ const Login = lazy(() => import("./components/login"));
 
 // import logo from './logo.svg';
 import styles from "./App.module.css";
+import Dashboard from "./components/Dashboard";
 
 const logo =
   "https://github.com/taskforcesh/nandu/blob/assets/nandu.png?raw=true";
@@ -13,7 +14,7 @@ const App: Component = () => {
     <div class={styles.App}>
       <nav>
         <Link href="/about">About</Link>
-        <Link href="/">Home</Link>
+        <Link href="/">Dashboard</Link>
         <Link href="/login">Login</Link>
       </nav>
       {/*        <header class={styles.header}>
@@ -37,6 +38,7 @@ const App: Component = () => {
           path="/about"
           element={<div>This site was made with Solid</div>}
         />
+        <Route path="/" element={<Dashboard />} />
       </Routes>
     </div>
   );

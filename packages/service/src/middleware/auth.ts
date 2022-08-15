@@ -102,6 +102,12 @@ export const authUserPassword =
   () => async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body;
 
+    if (!username || !password) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .send("Missing username or password");
+    }
+
     const user = await User.findOne({
       where: { name: username },
     });
@@ -119,7 +125,6 @@ export const authUserPassword =
     }
 
     res.locals.user = user;
-
     next();
   };
 

@@ -1,13 +1,13 @@
 import { Component, createSignal } from "solid-js";
-import { createStore } from "solid-js/store";
 import { useNavigate } from "solid-app-router";
 
 import { Session } from "../services/session";
+import { useForm } from "../services/form";
 
 // We need to use the store for the session so that it can be accessed from many places
 // inclusive the router.
 
-const [state, setState] = createStore<{ session?: Session }>({});
+import { setState } from "../store/state";
 
 /**
  * Login Component.
@@ -21,20 +21,23 @@ const [state, setState] = createStore<{ session?: Session }>({});
  *
  */
 const Login: Component = () => {
-  const [email, setEmail] = createSignal("");
-  const [password, setPassword] = createSignal("");
   const navigate = useNavigate();
+
+  const { form, updateFormField } = useForm({ username: "", password: "" });
 
   const login = async (event: any) => {
     event.preventDefault();
     try {
-      console.log(`Login: ${email()}, Password: ${password()}`);
-      const session = await Session.login(email(), password());
+      const { username, password } = form;
+      const session = await Session.login(
+        username as string,
+        password as string
+      );
 
       setState({ session });
 
       if (session) {
-        navigate("/dashboard", { replace: true });
+        navigate("/", { replace: true });
       } else {
         // TODO: Show error message.
       }
@@ -58,7 +61,9 @@ const Login: Component = () => {
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="username"
               type="text"
+              value={form.username as string}
               placeholder="Username"
+              onChange={updateFormField("username")}
             />
           </div>
           <div class="mb-6">
@@ -72,7 +77,9 @@ const Login: Component = () => {
               class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
+              value={form.password as string}
               placeholder="******************"
+              onChange={updateFormField("password")}
             />
             <p class="text-red-500 text-xs italic">Please choose a password.</p>
           </div>

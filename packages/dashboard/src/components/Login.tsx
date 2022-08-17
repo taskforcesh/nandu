@@ -1,5 +1,5 @@
 import { Component, createSignal } from "solid-js";
-import { useNavigate } from "solid-app-router";
+import { useNavigate } from "@solidjs/router";
 
 import { Session } from "../services/session";
 import { useForm } from "../services/form";

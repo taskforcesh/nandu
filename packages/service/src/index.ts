@@ -27,6 +27,8 @@ const app = express() as Application;
 
 app.set("trust proxy", true);
 
+app.use(cors());
+
 if (process.env.NODE_ENV !== "production") {
   app.use("*", (req, res, next) => {
     logger.trace({ method: req.method, path: req.path, params: req.params });

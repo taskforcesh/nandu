@@ -1951,6 +1951,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solidjs/router@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@solidjs/router@npm:0.4.2"
+  peerDependencies:
+    solid-js: ^1.3.5
+  checksum: 582f7d0954c2326d9c96ed8d87b1e706d07006254f4038b2fd454f71c57d92487e9337634992f65442247f0e6723ab4fddf4d01f9f677aeaa41b21722d184fc6
+  languageName: node
+  linkType: hard
+
 "@szmarczak/http-timer@npm:^1.1.2":
   version: 1.1.2
   resolution: "@szmarczak/http-timer@npm:1.1.2"
@@ -8129,16 +8138,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solid-app-router@npm:^0.3.3":
-  version: 0.3.3
-  resolution: "solid-app-router@npm:0.3.3"
+"solid-heroicons@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "solid-heroicons@npm:2.0.3"
+  dependencies:
+    solid-js: ^1.3.10
   peerDependencies:
-    solid-js: ^1.3.5
-  checksum: 878748a828c1e149523b7a11f324129c7e0ce176edea8884278057482ddee87ea13bcf094efb624a0a51471afa465bc2dc69c238a00f307015cc8845a6a9c694
+    solid-js: "*"
+  checksum: 63a0aa463d4de9dea42ab6675b42f99370c9b118b9651aede575731933176e1222affac480fff9f6a496f5f6feb37964cbc44028be1ce0260fbad759f1ca1c8b
   languageName: node
   linkType: hard
 
-"solid-js@npm:^1.3.3, solid-js@npm:^1.4.2":
+"solid-js@npm:^1.3.10, solid-js@npm:latest":
+  version: 1.4.8
+  resolution: "solid-js@npm:1.4.8"
+  checksum: deb79463dab3af7889fffaa15f1be92be0c0732d46e74bd2848208d974389e967d69462eb940fbfc0cdbdf7d0a3677a7c9517da5fe6e2a25534e077b555d5704
+  languageName: node
+  linkType: hard
+
+"solid-js@npm:^1.3.3":
   version: 1.4.3
   resolution: "solid-js@npm:1.4.3"
   checksum: c542491e4d91054f0781eddd6a54254da1272c888c0559dbadac47293b573234906ebdf0e9c1a45e23fa6fed35bc380aaff24663fa1b114760715ff3e99ceaa2
@@ -9043,10 +9061,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-template-solid@workspace:packages/dashboard"
   dependencies:
+    "@solidjs/router": ^0.4.2
     autoprefixer: latest
     postcss: latest
-    solid-app-router: ^0.3.3
-    solid-js: ^1.4.2
+    solid-heroicons: ^2.0.3
+    solid-js: latest
     tailwindcss: latest
     typescript: ^4.6.4
     vite: ^3.0.4

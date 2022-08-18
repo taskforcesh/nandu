@@ -24,6 +24,7 @@ const Login: Component = () => {
   const navigate = useNavigate();
 
   const { form, updateFormField } = useForm({ username: "", password: "" });
+  const [errorMessage, setErrorMessage] = createSignal("");
 
   const login = async (event: any) => {
     event.preventDefault();
@@ -39,7 +40,7 @@ const Login: Component = () => {
       if (session) {
         navigate("/", { replace: true });
       } else {
-        // TODO: Show error message.
+        setErrorMessage("The username or password you entered is incorrect")
       }
     } catch (error) {
       console.error(error);
@@ -66,7 +67,7 @@ const Login: Component = () => {
               onChange={updateFormField("username")}
             />
           </div>
-          <div class="mb-6">
+          <div>
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="password"
@@ -74,28 +75,31 @@ const Login: Component = () => {
               Password
             </label>
             <input
-              class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               value={form.password as string}
-              placeholder="******************"
+              placeholder="*********"
               onChange={updateFormField("password")}
             />
-            <p class="text-red-500 text-xs italic">Please choose a password.</p>
+          </div>
+          <div class="mb-10 peer-invalid:visible text-pink-600 text-sm">
+            {errorMessage}
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="bg-amber-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded active:bg-orange-700 focus:outline-none focus:ring focus:ring-amber-400"
               type="button"
               onClick={(e) => login(e)}
             >
-              Sign In
+              Login
             </button>
+
             <a
-              class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              class="inline-block align-baseline font-bold text-sm text-orange-400 hover:text-orange-600"
               href="#"
             >
-              Forgot Password?
+              Forgot password?
             </a>
           </div>
         </form>

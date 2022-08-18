@@ -33,8 +33,6 @@ export class Session {
     }).then(async (response) => {
       if (response.status === 200) {
         return new Session(await response.json());
-      } else {
-        throw new Error("Invalid credentials");
       }
     });
   }

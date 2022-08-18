@@ -138,9 +138,12 @@ const SidePanel: Component<any> = (props: any) => {
             <div class="flex flex-row">
               <Select
                 class="org-select bg-gray-600 text-white mb-2 w-full"
-                options={organizations
-                  .map((org: Organization) => org.organizationId)
-                  .sort()}
+                options={
+                  organizations &&
+                  organizations
+                    .map((org: Organization) => org.organizationId)
+                    .sort()
+                }
                 placeholder="Choose organization"
               />
 

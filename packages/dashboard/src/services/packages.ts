@@ -1,5 +1,8 @@
 const host = "http://localhost:4567";
 
+interface Package {
+  name: string;
+}
 export class PackagesService {
   static listPackages(organizationId: string, token: string) {
     return fetch(`${host}/-/org/${organizationId}/package`, {
@@ -10,7 +13,7 @@ export class PackagesService {
       },
     }).then(async (response) => {
       if (response.status === 200) {
-        return response.json();
+        return response.json() as Promise<Package[]>;
       } else {
         throw new Error("Invalid credentials");
       }

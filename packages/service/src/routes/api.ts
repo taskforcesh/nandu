@@ -1,8 +1,18 @@
+/**
+ * This route provides some special APIs that are required by the Dashboard, but that are not part of the
+ * NPM registry API (i.e. not used by the NPM CLI).
+ *
+ *
+ */
 import { expressjwt as jwt, Request } from "express-jwt";
 import { Router, Response, NextFunction, json } from "express";
+import { StatusCodes } from "http-status-codes";
+
 import config from "../../config";
 import { authUserPassword } from "../middleware";
-import { User } from "../models";
+import { Organization, User, UserOrganization } from "../models";
+
+import { authToken } from "../middleware";
 
 export const router = Router();
 
@@ -20,7 +30,8 @@ router.post("/login", json(), authUserPassword(), async (req, res) => {
   });
 });
 
-router.use(
+router.use(authToken());
+/*
   jwt({
     secret: config.jwt.secret,
     algorithms: ["HS256"],
@@ -37,3 +48,39 @@ router.use(
     }
   }
 );
+*/
+
+/**
+ * List all the organizations that the user is a member of.
+ */
+router.get("/users/:userId/organizations", async (req, res) => {
+  const { user } = res.locals;
+  const isRoot = user.type === "root";
+
+  if (user._id !== req.params.userId && !isRoot) {
+    return res
+      .status(StatusCodes.FORBIDDEN)
+      .end("You are not allowed to access this resource");
+  }
+
+  const organizations = await UserOrganization.findAll({
+    where: {
+      userId: req.params.userId,
+    },
+    attributes: ["organizationId", "role"],
+  });
+
+  res.status(StatusCodes.OK).json(organizations);
+});
+
+/**
+ * Create organization for the user.
+ * TODO: Restrict this to root users.
+ */
+router.post("/organizations", json(), async (req, res) => {
+  const organization = await Organization.createOrganization(
+    req.body.name,
+    res.locals.user._id
+  );
+  res.status(StatusCodes.CREATED).json(organization);
+});

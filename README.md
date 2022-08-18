@@ -65,4 +65,4 @@ In order to use Nandu you should use the [Nandu-cli](https://github.com/taskforc
 
 This project is provided as open source and licensed under GNU's AGPL license terms.
 
-(c) 2021 Taskforce.sh Inc.
+(c) 2022 Taskforce.sh Inc.

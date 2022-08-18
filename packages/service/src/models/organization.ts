@@ -59,6 +59,47 @@ export class Organization extends Model {
       return membership.getDataValue("role") as OrganizationRole;
     }
   }
+
+  static async createOrganization(scope: string, ownerId: string) {
+    const transaction = await db.transaction();
+
+    try {
+      let organization = await Organization.findOne({
+        where: {
+          name: scope,
+        },
+        transaction,
+      });
+
+      if (organization) {
+        throw new Error("Organization already exists");
+      }
+
+      organization = await Organization.create(
+        {
+          name: scope,
+        },
+        { transaction }
+      );
+
+      // Add owner as member of the organization
+      await UserOrganization.create(
+        {
+          organizationId: scope,
+          userId: ownerId,
+          role: "owner",
+        },
+        { transaction }
+      );
+
+      await transaction.commit();
+
+      return organization;
+    } catch (err) {
+      await transaction.rollback();
+      throw err;
+    }
+  }
 }
 
 Organization.init(

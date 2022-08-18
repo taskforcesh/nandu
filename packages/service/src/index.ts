@@ -47,7 +47,7 @@ app.get("/-/ping", (req: Request, res: Response) => {
 });
 
 app.use(loginRouter);
-app.use("/api", cors(), apiRouter);
+app.use("/api", apiRouter);
 
 app.use(authToken());
 

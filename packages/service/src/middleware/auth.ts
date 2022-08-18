@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
+import pino from "pino";
 
 import { Token, User, TokenAccess } from "../models";
 import config from "../../config";
-
-import pino from "pino";
+import { isJwt } from "../utils/isJwt";
+import * as Jwt from "jsonwebtoken";
 
 const logger = pino({ name: "auth.ts", level: config.logLevel });
 
@@ -13,6 +14,14 @@ export interface LocalsAuth extends Request {
   auth: {
     access: TokenAccess[];
   };
+}
+
+async function decodeJwtToken(token: string) {
+  try {
+    return Jwt.verify(token, config.jwt.secret, {
+      algorithms: ["HS256"],
+    }) as Jwt.JwtPayload | undefined;
+  } catch (err) {}
 }
 
 /**
@@ -37,33 +46,57 @@ export const authToken =
     }
 
     if (authType === "Bearer") {
-      const tokenHash = Token.hashToken(token);
-      const tokenInstance = await Token.findOne({
-        where: { token: tokenHash },
-      });
+      if (isJwt(token)) {
+        const decoded = await decodeJwtToken(token);
+        if (!decoded) {
+          return res
+            .status(StatusCodes.UNAUTHORIZED)
+            .send("Invalid authorization token");
+        }
 
-      if (!tokenInstance) {
-        return res.status(StatusCodes.UNAUTHORIZED).send("Invalid token");
+        const user = await User.findOne({
+          where: { _id: decoded.key },
+        });
+
+        if (!user) {
+          return res
+            .status(StatusCodes.UNAUTHORIZED)
+            .send("Invalid authorization token");
+        }
+
+        res.locals.user = user;
+        res.locals.auth = {
+          access: ["readonly"],
+        };
+      } else {
+        const tokenHash = Token.hashToken(token);
+        const tokenInstance = await Token.findOne({
+          where: { token: tokenHash },
+        });
+
+        if (!tokenInstance) {
+          return res.status(StatusCodes.UNAUTHORIZED).send("Invalid token");
+        }
+
+        if (!tokenInstance.checkCIDR(req.ip)) {
+          return res.status(StatusCodes.UNAUTHORIZED).send("Invalid IP");
+        }
+
+        const user = await User.findOne({
+          where: { _id: tokenInstance.getDataValue("userId") },
+        });
+
+        if (!user) {
+          return res
+            .status(StatusCodes.UNAUTHORIZED)
+            .send("Invalid user for token");
+        }
+
+        res.locals.user = user;
+        res.locals.auth = {
+          access: tokenInstance.getDataValue("access"),
+        };
       }
-
-      if (!tokenInstance.checkCIDR(req.ip)) {
-        return res.status(StatusCodes.UNAUTHORIZED).send("Invalid IP");
-      }
-
-      const user = await User.findOne({
-        where: { _id: tokenInstance.getDataValue("userId") },
-      });
-
-      if (!user) {
-        return res
-          .status(StatusCodes.UNAUTHORIZED)
-          .send("Invalid user for token");
-      }
-
-      res.locals.user = user;
-      res.locals.auth = {
-        access: tokenInstance.getDataValue("access"),
-      };
     } else if (authType === "Basic") {
       const [username, password] = Buffer.from(token, "base64")
         .toString()

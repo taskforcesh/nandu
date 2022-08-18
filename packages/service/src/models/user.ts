@@ -56,9 +56,13 @@ export class User extends Model {
 
   generateToken() {
     // Create a JWT token.
-    return sign({ name: this.name, email: this.email }, config.jwt.secret, {
-      algorithm: "HS256",
-    });
+    return sign(
+      { key: this._id, name: this.name, email: this.email },
+      config.jwt.secret,
+      {
+        algorithm: "HS256",
+      }
+    );
   }
 
   declare _id: CreationOptional<string>;

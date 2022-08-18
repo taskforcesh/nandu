@@ -18,8 +18,13 @@
     "vite-plugin-solid": "^2.2.6"
   },
   "dependencies": {
+    "@hope-ui/solid": "^0.6.7",
     "@solidjs/router": "^0.4.2",
+    "@stitches/core": "^1.2.8",
+    "@thisbeyond/solid-select": "^0.12.0",
     "solid-heroicons": "^2.0.3",
-    "solid-js": "latest"
+    "solid-js": "latest",
+    "solid-transition-group": "^0.0.10",
+    "whatwg-fetch": "^3.6.2"
   }
 }

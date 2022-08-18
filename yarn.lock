@@ -1339,6 +1339,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@floating-ui/core@npm:^0.6.1":
+  version: 0.6.2
+  resolution: "@floating-ui/core@npm:0.6.2"
+  checksum: b3e1844da852fe141cfa4163026a7c5ffb4399a96105340dffdd5b76dcafea72c6221a06b4674c2b500bc776adc9d9e4ed39dba55e7d844d9507d994c0af743a
+  languageName: node
+  linkType: hard
+
+"@floating-ui/dom@npm:0.4.4":
+  version: 0.4.4
+  resolution: "@floating-ui/dom@npm:0.4.4"
+  dependencies:
+    "@floating-ui/core": ^0.6.1
+  checksum: 1031cf3b5c18a9fe1edafafac1920ce882e50767a7b16ffed35807ccb84f5ff72b8247d94c7c680f6e8d913a0efe2d8906e051dbfa49c2633d2fc809d77e69b6
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
@@ -1350,6 +1366,23 @@ __metadata:
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
   checksum: 4059f790e2d07bf3c3ff3e0fec0daa8144fe35c1f6e0111c9921bd32106adaa97a4ab096ad7dab1e28ee6a9060083c4d1a4ada42a7f5f3f7a96b8812e2b757c1
+  languageName: node
+  linkType: hard
+
+"@hope-ui/solid@npm:^0.6.7":
+  version: 0.6.7
+  resolution: "@hope-ui/solid@npm:0.6.7"
+  dependencies:
+    "@floating-ui/dom": 0.4.4
+    csstype: 3.0.11
+    focus-trap: 6.7.3
+    lodash.merge: 4.6.2
+    scroll-lock: 2.1.5
+  peerDependencies:
+    "@stitches/core": ^1.2.8
+    solid-js: ^1.4.0
+    solid-transition-group: ^0.0.10
+  checksum: b5f564b43554afc9d6756dbd1aa59c85eb37980ca506b7b73b918c3c1fba3b63c613f3a7c19891a36f85bc3e09da2ed61bf8a85a74614972a8e8e1944f2fb339
   languageName: node
   linkType: hard
 
@@ -1960,12 +1993,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stitches/core@npm:^1.2.8":
+  version: 1.2.8
+  resolution: "@stitches/core@npm:1.2.8"
+  checksum: 3a76a697b1d71ffb212e8b166f923c8f66ef99de93689dd417571f90fbba5692abb9a92220acd102baf5298896f0fdfeaa721da2d61adee1247531a26f67a15f
+  languageName: node
+  linkType: hard
+
 "@szmarczak/http-timer@npm:^1.1.2":
   version: 1.1.2
   resolution: "@szmarczak/http-timer@npm:1.1.2"
   dependencies:
     defer-to-connect: ^1.0.1
   checksum: 4d9158061c5f397c57b4988cde33a163244e4f02df16364f103971957a32886beb104d6180902cbe8b38cb940e234d9f98a4e486200deca621923f62f50a06fe
+  languageName: node
+  linkType: hard
+
+"@thisbeyond/solid-select@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "@thisbeyond/solid-select@npm:0.12.0"
+  peerDependencies:
+    solid-js: ^1.1.0
+  checksum: be295f18b37dd0f1566c3a03605efd1b5c0b82ec79e96b1291148d0febc395462bdf410d41ae8bec44cc26439a82c142edc55dbc3bc49438f04f685ff9723c2f
   languageName: node
   linkType: hard
 
@@ -3339,6 +3388,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csstype@npm:3.0.11":
+  version: 3.0.11
+  resolution: "csstype@npm:3.0.11"
+  checksum: 95e56abfe9ca219ae065acb4e43f61771a03170eed919127f558dfa168240867aba7629c8d98a201a0dd06d9a5ce82686f0570031c928516c61816adbc7c877f
+  languageName: node
+  linkType: hard
+
 "dashdash@npm:^1.12.0":
   version: 1.14.1
   resolution: "dashdash@npm:1.14.1"
@@ -4391,6 +4447,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"focus-trap@npm:6.7.3":
+  version: 6.7.3
+  resolution: "focus-trap@npm:6.7.3"
+  dependencies:
+    tabbable: ^5.2.1
+  checksum: 900c8fe94a7e0bcda7f0bf2c86dff174e997a1101f685833484cde721c8893729260b7a9f1f2c3a2c8560f5f84c332ba7d45695c7d4862f8f9340f6caceace3a
+  languageName: node
+  linkType: hard
+
 "follow-redirects@npm:^1.14.4":
   version: 1.14.7
   resolution: "follow-redirects@npm:1.14.7"
@@ -5207,6 +5272,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-jwt@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "is-jwt@npm:1.0.0"
+  checksum: 214009752b64cbfbfaae7360d822cbe96eb1b64b6b245030e4f29b03b3092af70db7ab0d913db295f9f6cbb0079be62d6d61f14814fe240ce7c3112ac7eaa085
+  languageName: node
+  linkType: hard
+
 "is-lambda@npm:^1.0.1":
   version: 1.0.1
   resolution: "is-lambda@npm:1.0.1"
@@ -5743,6 +5815,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.merge@npm:4.6.2":
+  version: 4.6.2
+  resolution: "lodash.merge@npm:4.6.2"
+  checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
+  languageName: node
+  linkType: hard
+
 "lodash.once@npm:^4.0.0":
   version: 4.1.1
   resolution: "lodash.once@npm:4.1.1"
@@ -6256,6 +6335,7 @@ __metadata:
     "@types/bcrypt": ^5.0.0
     "@types/cors": ^2.8.12
     "@types/express": ^4.17.13
+    "@types/jsonwebtoken": ^8.5.8
     "@types/node": "*"
     "@types/sqlite3": ^3.1.7
     "@types/uuid": ^8.3.1
@@ -6266,6 +6346,7 @@ __metadata:
     express: ^4.17.1
     express-jwt: ^7.7.5
     http-status-codes: ^2.1.4
+    is-jwt: ^1.0.0
     jsonwebtoken: ^8.5.1
     nodemon: ^2.0.14
     passport: ^0.6.0
@@ -7910,6 +7991,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"scroll-lock@npm:2.1.5":
+  version: 2.1.5
+  resolution: "scroll-lock@npm:2.1.5"
+  checksum: f18e9b93084bde8c8f56f749a49ad5d2b4ca8aadbfcb640c025bb273ca041c465a08b79fa07eb378d3d4d69c95c5fed5d6881f8af0dc3ee03b60ed7012e61b2b
+  languageName: node
+  linkType: hard
+
 "secure-json-parse@npm:^2.4.0":
   version: 2.5.0
   resolution: "secure-json-parse@npm:2.5.0"
@@ -8173,6 +8261,15 @@ __metadata:
   peerDependencies:
     solid-js: ^1.3.0
   checksum: 84852c896ca237001431585b141ebad30fd06387bb5a25100b106a4742fffd9e437b4dcd5dd4e3569c4d0acf50f8b652e9a299af9a31fed4e8d9b46855ed7485
+  languageName: node
+  linkType: hard
+
+"solid-transition-group@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "solid-transition-group@npm:0.0.10"
+  peerDependencies:
+    solid-js: ^1.0.0
+  checksum: ad87da0b35222e0764e1b5d47f59a54c106c8de4124362e0957764b3afc5e14b3341e8aa7a5c00bdcef00b6e01ad3eb5521f69ff8e74ba8cad257e728d27e2d9
   languageName: node
   linkType: hard
 
@@ -8466,6 +8563,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"tabbable@npm:^5.2.1":
+  version: 5.3.3
+  resolution: "tabbable@npm:5.3.3"
+  checksum: 1aa56e1bb617cc10616c407f4e756f0607f3e2d30f9803664d70b85db037ca27e75918ed1c71443f3dc902e21dc9f991ce4b52d63a538c9b69b3218d3babcd70
   languageName: node
   linkType: hard
 
@@ -9061,15 +9165,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-template-solid@workspace:packages/dashboard"
   dependencies:
+    "@hope-ui/solid": ^0.6.7
     "@solidjs/router": ^0.4.2
+    "@stitches/core": ^1.2.8
+    "@thisbeyond/solid-select": ^0.12.0
     autoprefixer: latest
     postcss: latest
     solid-heroicons: ^2.0.3
     solid-js: latest
+    solid-transition-group: ^0.0.10
     tailwindcss: latest
     typescript: ^4.6.4
     vite: ^3.0.4
     vite-plugin-solid: ^2.2.6
+    whatwg-fetch: ^3.6.2
   languageName: unknown
   linkType: soft
 

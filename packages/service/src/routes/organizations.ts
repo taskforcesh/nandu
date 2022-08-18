@@ -14,6 +14,10 @@ import { canWrite, canAccessOrganization } from "../middleware";
 
 export const router = Router();
 
+/**
+ * Get all the users belonging to an organization.
+ *
+ */
 router.get(
   "/-/org/:scope/user",
   canAccessOrganization(OrganizationAction.listMembers),
@@ -27,7 +31,7 @@ router.get(
       attributes: ["userId", "role"],
     });
 
-    res.status(StatusCodes.CREATED).json(
+    res.status(StatusCodes.OK).json(
       members.reduce((prev, member) => {
         const [_, username] = member.getDataValue("userId").split(":");
         prev[username] = member.getDataValue("role");
@@ -37,6 +41,10 @@ router.get(
   })
 );
 
+/**
+ * Add a user to a given organizationp
+ *
+ */
 router.put(
   "/-/org/:scope/user",
   json(),
@@ -80,6 +88,10 @@ router.put(
   })
 );
 
+/**
+ * Remove a user from a given organization
+ *
+ */
 router.delete(
   "/-/org/:scope/user",
   json(),
@@ -163,7 +175,7 @@ router.get(
     });
 
     res
-      .status(StatusCodes.CREATED)
+      .status(StatusCodes.OK)
       .json(teams.map((team) => team.getDataValue("name")));
   })
 );

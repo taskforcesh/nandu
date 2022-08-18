@@ -35,12 +35,11 @@ const Login: Component = () => {
         password as string
       );
 
-      setState({ session });
-
       if (session) {
+        setState({ session });
         navigate("/", { replace: true });
       } else {
-        setErrorMessage("The username or password you entered is incorrect")
+        setErrorMessage("The username or password you entered is incorrect");
       }
     } catch (error) {
       console.error(error);
@@ -104,7 +103,7 @@ const Login: Component = () => {
           </div>
         </form>
         <p class="text-center text-gray-500 text-xs">
-          &copy;2020 Acme Corp. All rights reserved.
+          &copy;2022 Taskforce.sh Inc. All rights reserved.
         </p>
       </div>
     </div>

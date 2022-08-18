@@ -6,3 +6,4 @@ yarn-error.log
 .yarn/cache
 packages/service/storage
 .yarn/install-state.gz
+packages/service/dist

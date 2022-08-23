@@ -66,7 +66,7 @@ const navigation = [
     icon: HeroIcon(inbox),
   },
   {
-    name: "Reports",
+    name: "Help",
     href: "#",
     icon: HeroIcon(chartBar),
   },
@@ -225,7 +225,7 @@ const SidePanel: Component<any> = (props: any) => {
                   alt=""
                 />
               </div>
-              <div class="ml-3">
+              <div>
                 <p class="text-sm font-medium text-white text-left">
                   {state().session?.user.name}
                 </p>
@@ -234,7 +234,9 @@ const SidePanel: Component<any> = (props: any) => {
                 </p>
               </div>
               <div>
-                <button onClick={logout}>Logout</button>
+                <button 
+                class="text-sm ml-24 mt-0.5 bg-orange-500 hover:bg-orange-600 text-gray-100 font-bold py-1.5 px-5 rounded active:bg-orange-700 focus:outline-none focus:ring focus:ring-orange-300"
+                onClick={logout}>Logout</button>
               </div>
             </div>
           </a>

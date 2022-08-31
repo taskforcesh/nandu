@@ -18,6 +18,8 @@
     "vite-plugin-solid": "^2.2.6"
   },
   "dependencies": {
+    "@felte/solid": "^1.2.3",
+    "@felte/validator-yup": "^1.0.9",
     "@hope-ui/solid": "^0.6.7",
     "@solidjs/router": "^0.4.2",
     "@stitches/core": "^1.2.8",
@@ -25,6 +27,7 @@
     "solid-heroicons": "^2.0.3",
     "solid-js": "latest",
     "solid-transition-group": "^0.0.10",
-    "whatwg-fetch": "^3.6.2"
+    "whatwg-fetch": "^3.6.2",
+    "yup": "^0.32.11"
   }
 }

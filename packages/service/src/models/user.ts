@@ -84,7 +84,10 @@ User.init(
       type: DataTypes.STRING,
       unique: true,
     },
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
 
     password: {
       type: DataTypes.STRING, // Hash of the token

@@ -7,7 +7,7 @@ import { useForm } from "../services/form";
 // We need to use the store for the session so that it can be accessed from many places
 // inclusive the router.
 
-import { setState } from "../store/state";
+import { setSessionState } from "../store/state";
 
 /**
  * Login Component.
@@ -36,7 +36,7 @@ const Login: Component = () => {
       );
 
       if (session) {
-        setState({ session });
+        setSessionState({ session });
         navigate("/", { replace: true });
       } else {
         setErrorMessage("The username or password you entered is incorrect");

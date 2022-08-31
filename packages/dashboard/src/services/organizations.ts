@@ -32,10 +32,11 @@ export class OrganizationsService {
       body: JSON.stringify({ name: org }),
     });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.json();
     } else {
       throw new Error(response.statusText);
     }
   }
+
 }

@@ -42,7 +42,7 @@ router.get(
 );
 
 /**
- * Add a user to a given organizationp
+ * Add a user to a given organization
  *
  */
 router.put(
@@ -99,11 +99,11 @@ router.delete(
   canAccessOrganization(OrganizationAction.removeMember),
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
-    const { user: username } = req.body;
+    const { user: name } = req.body;
 
     const user = await User.findOne({
       where: {
-        name: username,
+        name,
       },
     });
 

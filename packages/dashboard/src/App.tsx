@@ -9,54 +9,68 @@ const Teams = lazy(() => import("./components/teams"));
 
 import { PackagesService } from "./services/packages";
 
-import { state } from "./store/state";
+import { sessionState, setState, state } from "./store/state";
 
 import styles from "./App.module.css";
 import { OrganizationsService } from "./services/organizations";
+import { UsersService } from "./services/users";
+import Users from "./components/Users";
+import Hooks from "./components/Hooks";
 
-function UserPackages({ params, location, navigate, data }: any) {
-  const [user] = createResource(() =>
-    PackagesService.listPackages(
-      state().session?.user._id!,
-      state().session?.token!
-    )
+function ScopePackages({ params, location, navigate, data }: any) {
+  const [packages] = createResource(() =>
+    PackagesService.listPackages(params.scope, sessionState().session?.token!)
   );
-  return user;
+  return packages;
+}
+
+function ScopeUsers({ params, location, navigate, data }: any) {
+  const [users, { mutate }] = createResource(() =>
+    UsersService.listUsers(params.scope, sessionState().session?.token!)
+  );
+  return [users, mutate];
 }
 
 function UserOrganizations({ params, location, navigate, data }: any) {
-  const [organizations, { mutate, refetch }] = createResource(() =>
-    OrganizationsService.listOrganizations(
-      state().session?.user._id!,
-      state().session?.token!
-    )
-  );
+  const [organizations, { mutate, refetch }] = createResource(async () => {
+    const organizations = await OrganizationsService.listOrganizations(
+      sessionState().session?.user._id!,
+      sessionState().session?.token!
+    );
+    setState({ currentOrganizationId: organizations[0]?.organizationId });
+    return organizations;
+  });
   return organizations;
 }
 
 const App: Component = () => {
   const navigate = useNavigate();
 
-  if (!state().session?.user) {
+  if (!sessionState().session?.user) {
     navigate("/login", { replace: true });
   }
-
-  console.log(state().session);
 
   return (
     <div class={styles.App}>
       <Routes>
         <Route path="/login" element={<Login />} />
 
-        <Show when={state().session?.user} fallback={<></>}>
+        <Show when={sessionState().session?.user} fallback={<></>}>
           <Route
             path="/about"
             element={<div>This site was made with Solid</div>}
           />
-          <Route path="/" element={<Dashboard />} data={UserOrganizations}>
+          <Route path="/" component={Dashboard} data={UserOrganizations}>
             <Route path="/" component={Profile} />
-            <Route path="/packages" component={Packages} data={UserPackages} />
-            <Route path="/teams" component={Teams} data={UserPackages} />
+            <Route path="/:scope" component={Profile} />
+            <Route
+              path="/:scope/packages"
+              component={Packages}
+              data={ScopePackages}
+            />
+            <Route path="/:scope/users" component={Users} data={ScopeUsers} />
+            <Route path="/:scope/teams" component={Teams} />
+            <Route path="/:scope/hooks" component={Hooks} />
           </Route>
         </Show>
       </Routes>

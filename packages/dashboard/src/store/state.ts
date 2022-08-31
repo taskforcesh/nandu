@@ -2,7 +2,9 @@ import { createStore } from "solid-js/store";
 import { Signal, createSignal } from "solid-js";
 import { Session } from "../services/session";
 
-// export const [state, setState] = createStore<{ session?: Session }>({});
+export const [state, setState] = createStore<{
+  currentOrganizationId?: string;
+}>({});
 
 function createLocalStorageSignal<T>(
   key: string,
@@ -23,6 +25,7 @@ function createLocalStorageSignal<T>(
   return [value, setValueAndStore];
 }
 
-export const [state, setState] = createLocalStorageSignal<{
+export const [sessionState, setSessionState] = createLocalStorageSignal<{
+  currentOrganizationId?: string;
   session?: Session;
 }>("nandu-session", {});

@@ -65,9 +65,11 @@ export const authToken =
         }
 
         res.locals.user = user;
+        /*
         res.locals.auth = {
           access: ["readonly"],
         };
+        */
       } else {
         const tokenHash = Token.hashToken(token);
         const tokenInstance = await Token.findOne({

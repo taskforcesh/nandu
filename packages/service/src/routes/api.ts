@@ -9,10 +9,16 @@ import { Router, Response, NextFunction, json } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import config from "../../config";
-import { authUserPassword } from "../middleware";
+import {
+  asyncWrap,
+  authUserPassword,
+  canAccessOrganization,
+  canWrite,
+} from "../middleware";
 import { Organization, User, UserOrganization } from "../models";
 
 import { authToken } from "../middleware";
+import { OrganizationAction } from "../enums";
 
 export const router = Router();
 
@@ -77,10 +83,53 @@ router.get("/users/:userId/organizations", async (req, res) => {
  * Create organization for the user.
  * TODO: Restrict this to root users.
  */
-router.post("/organizations", json(), async (req, res) => {
+router.post("/organizations", canWrite(), json(), async (req, res) => {
   const organization = await Organization.createOrganization(
     req.body.name,
     res.locals.user._id
   );
   res.status(StatusCodes.CREATED).json(organization);
 });
+
+/**
+ * Get all the users belonging to an organization.
+ *
+ */
+router.get(
+  "/organizations/:scope/users",
+  canAccessOrganization(OrganizationAction.listMembers),
+  asyncWrap(async (req: Request, res: Response) => {
+    const { scope } = req.params;
+
+    /*
+    const members = await UserOrganization.findAll({
+      where: {
+        organizationId: scope,
+      },
+      attributes: ["userId", "role"],
+    });
+    */
+
+    const organization = await Organization.findOne({
+      where: {
+        name: scope,
+      },
+      include: {
+        model: User,
+        attributes: ["_id", "name", "email", "type"],
+      },
+    });
+
+    const members: any[] = (<any>organization).Users.map((user: any) => {
+      return {
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+        type: user.type,
+        role: user.UserOrganization.role,
+      };
+    });
+
+    res.status(StatusCodes.OK).json(members);
+  })
+);

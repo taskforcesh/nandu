@@ -1284,6 +1284,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.15.4":
+  version: 7.18.9
+  resolution: "@babel/runtime@npm:7.18.9"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 36dd736baba7164e82b3cc9d43e081f0cb2d05ff867ad39cac515d99546cee75b7f782018b02a3dcf5f2ef3d27f319faa68965fdfec49d4912c60c6002353a2e
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.16.7":
   version: 7.16.7
   resolution: "@babel/template@npm:7.16.7"
@@ -1336,6 +1345,44 @@ __metadata:
   dependencies:
     "@cspotcode/source-map-consumer": 0.8.0
   checksum: 9faddda7757cd778b5fd6812137b2cc265810043680d6399acc20441668fafcdc874053be9dccd0d9110087287bfad27eb3bf342f72bceca9aa9059f5d0c4be8
+  languageName: node
+  linkType: hard
+
+"@felte/common@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@felte/common@npm:1.1.2"
+  checksum: 8ddaa16ce8af39de900e2bf3b7bceba263a81135a86e29cdf1b577de14b7f3db1bd2b50a54bf8cc4a28dd10c6760a47b99388306f73a97b0ac31c08c6285c903
+  languageName: node
+  linkType: hard
+
+"@felte/core@npm:1.3.3":
+  version: 1.3.3
+  resolution: "@felte/core@npm:1.3.3"
+  dependencies:
+    "@felte/common": 1.1.2
+  checksum: e59141acc0f3296a07a00f42602f5144ecdb6f75eef6dd9fc3b401e56edb4bc718cb31f27ee2c0379a554cfe2f28f91e16aa44b9be69f4274f45b5d558f5f106
+  languageName: node
+  linkType: hard
+
+"@felte/solid@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@felte/solid@npm:1.2.3"
+  dependencies:
+    "@felte/core": 1.3.3
+  peerDependencies:
+    solid-js: ^1.2.0
+  checksum: e834b776d438e765eb0a5bb7d833eecbaf63d1d530c163fae33e74a9f0486115c48c594700536731f707cfd9cc60acff7ea0a21b7d7603cdb0f791e95a1abd1c
+  languageName: node
+  linkType: hard
+
+"@felte/validator-yup@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "@felte/validator-yup@npm:1.0.9"
+  dependencies:
+    "@felte/common": 1.1.2
+  peerDependencies:
+    yup: ^0.32.9
+  checksum: f6c8dc89129f8a5323f56787a75b9b0c23a5ba5ee2930f3a21c3ec612af05c0d35aad6641a9fe7c3765b7b40953fadc2f5f1dfefbe98f4ffec3b7a949ae530b3
   languageName: node
   linkType: hard
 
@@ -2151,6 +2198,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: e009a2bfb50e90ca9b7c6e8f648f8464067271fd99116f881073fa6fa76dc8d0133181dd65e6614d5fb1220d671d67b0124aef7d97dc02d7e342ab143a47779d
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4.14.175":
+  version: 4.14.184
+  resolution: "@types/lodash@npm:4.14.184"
+  checksum: 6d9a4d67f7f9d0ec3fd21174f3dd3d00629dc1227eb469450eace53adbc1f7e2330699c28d0fe093e5f0fef0f0e763098be1f779268857213224af082b62be21
   languageName: node
   linkType: hard
 
@@ -5752,6 +5806,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
+  languageName: node
+  linkType: hard
+
 "lodash.capitalize@npm:^4.2.1":
   version: 4.2.1
   resolution: "lodash.capitalize@npm:4.2.1"
@@ -6368,6 +6429,13 @@ __metadata:
   resolution: "nandu@workspace:."
   languageName: unknown
   linkType: soft
+
+"nanoclone@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "nanoclone@npm:0.2.1"
+  checksum: 96b2954e22f70561f41e20d69856266c65583c2a441dae108f1dc71b716785d2c8038dac5f1d5e92b117aed3825f526b53139e2e5d6e6db8a77cfa35b3b8bf40
+  languageName: node
+  linkType: hard
 
 "nanoid@npm:^3.3.4":
   version: 3.3.4
@@ -7451,6 +7519,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"property-expr@npm:^2.0.4":
+  version: 2.0.5
+  resolution: "property-expr@npm:2.0.5"
+  checksum: 4ebe82ce45aaf1527e96e2ab84d75d25217167ec3ff6378cf83a84fb4abc746e7c65768a79d275881602ae82f168f9a6dfaa7f5e331d0fcc83d692770bcce5f1
+  languageName: node
+  linkType: hard
+
 "proxy-addr@npm:~2.0.7":
   version: 2.0.7
   resolution: "proxy-addr@npm:2.0.7"
@@ -7733,6 +7808,13 @@ __metadata:
     indent-string: ^4.0.0
     strip-indent: ^3.0.0
   checksum: fa1ef20404a2d399235e83cc80bd55a956642e37dd197b4b612ba7327bf87fa32745aeb4a1634b2bab25467164ab4ed9c15be2c307923dd08b0fe7c52431ae6b
+  languageName: node
+  linkType: hard
+
+"regenerator-runtime@npm:^0.13.4":
+  version: 0.13.9
+  resolution: "regenerator-runtime@npm:0.13.9"
+  checksum: 65ed455fe5afd799e2897baf691ca21c2772e1a969d19bb0c4695757c2d96249eb74ee3553ea34a91062b2a676beedf630b4c1551cc6299afb937be1426ec55e
   languageName: node
   linkType: hard
 
@@ -8750,6 +8832,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"toposort@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "toposort@npm:2.0.2"
+  checksum: d64c74b570391c9432873f48e231b439ee56bc49f7cb9780b505cfdf5cb832f808d0bae072515d93834dd6bceca5bb34448b5b4b408335e4d4716eaf68195dcb
+  languageName: node
+  linkType: hard
+
 "touch@npm:^3.1.0":
   version: 3.1.0
   resolution: "touch@npm:3.1.0"
@@ -9165,6 +9254,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-template-solid@workspace:packages/dashboard"
   dependencies:
+    "@felte/solid": ^1.2.3
+    "@felte/validator-yup": ^1.0.9
     "@hope-ui/solid": ^0.6.7
     "@solidjs/router": ^0.4.2
     "@stitches/core": ^1.2.8
@@ -9179,6 +9270,7 @@ __metadata:
     vite: ^3.0.4
     vite-plugin-solid: ^2.2.6
     whatwg-fetch: ^3.6.2
+    yup: ^0.32.11
   languageName: unknown
   linkType: soft
 
@@ -9415,5 +9507,20 @@ __metadata:
   version: 3.1.1
   resolution: "yn@npm:3.1.1"
   checksum: 2c487b0e149e746ef48cda9f8bad10fc83693cd69d7f9dcd8be4214e985de33a29c9e24f3c0d6bcf2288427040a8947406ab27f7af67ee9456e6b84854f02dd6
+  languageName: node
+  linkType: hard
+
+"yup@npm:^0.32.11":
+  version: 0.32.11
+  resolution: "yup@npm:0.32.11"
+  dependencies:
+    "@babel/runtime": ^7.15.4
+    "@types/lodash": ^4.14.175
+    lodash: ^4.17.21
+    lodash-es: ^4.17.21
+    nanoclone: ^0.2.1
+    property-expr: ^2.0.4
+    toposort: ^2.0.2
+  checksum: 43a16786b47cc910fed4891cebdd89df6d6e31702e9462e8f969c73eac88551ce750732608012201ea6b93802c8847cb0aa27b5d57370640f4ecf30f9f97d4b0
   languageName: node
   linkType: hard

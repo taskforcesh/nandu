@@ -5,7 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import { Request, Response, Router, json } from "express";
 
 import { User } from "../models/user";
-import { db } from "../models";
+import { db, Organization, UserOrganization } from "../models";
 import { asyncWrap, canWrite } from "../middleware";
 import { isRoot } from "../utils";
 
@@ -27,8 +27,8 @@ router.put(
   json(),
   canWrite(),
   asyncWrap(async (req: Request, res: Response) => {
-    // Currently we do not use the scope, left here for reference.
-    const { "npm-scope": scope } = req.headers;
+    // Note: npm-role is Nandu specific (owner, admin or developer)
+    const { "npm-scope": scope, "npm-role": role } = req.headers;
 
     const { name, password, email, type } = req.body;
     const { user } = res.locals;
@@ -71,6 +71,29 @@ router.put(
         }
 
         await User.create({ _id: targetUserId, ...data }, { transaction });
+
+        if (scope) {
+          const org = await Organization.findOne({
+            where: { name: scope },
+            transaction,
+          });
+
+          if (!org) {
+            res
+              .status(StatusCodes.NOT_FOUND)
+              .json({ ok: false, message: "missing organization" });
+            throw new Error("Missing organization");
+          }
+
+          await UserOrganization.create(
+            {
+              userId: targetUserId,
+              organizationId: scope,
+              role: "developer",
+            },
+            { transaction }
+          );
+        }
 
         await transaction.commit();
       } catch (err) {

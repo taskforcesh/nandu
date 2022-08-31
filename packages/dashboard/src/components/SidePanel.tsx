@@ -1,39 +1,27 @@
-import { Component, createMemo, createSignal } from "solid-js";
-import { useLocation, useNavigate } from "@solidjs/router";
+import { Component, createMemo, createSignal, mergeProps } from "solid-js";
+import { useLocation, useNavigate, NavLink } from "@solidjs/router";
 
 import { Icon } from "solid-heroicons";
 import {
-  home,
   user,
   users,
   folder,
-  calendar,
-  inbox,
-  chartBar,
   plus,
+  lightningBolt,
+  userGroup,
 } from "solid-heroicons/solid";
 
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  createDisclosure,
-  Text,
-  Input,
-  Button,
-} from "@hope-ui/solid";
+import { createDisclosure } from "@hope-ui/solid";
 
 import { Select } from "@thisbeyond/solid-select";
 import "@thisbeyond/solid-select/style.css";
 
-import { state, setState } from "../store/state";
+import { sessionState, setSessionState } from "../store/state";
 
 import logo from "../assets/nandu_logo.png";
-import { Organization, OrganizationsService } from "../services/organizations";
+import { Organization } from "../services/organizations";
+import AddOrganization from "./AddOrganization";
+import { classNames } from "../utils";
 
 function HeroIcon(icon: any) {
   return (props: any) => <Icon {...props} path={icon} />;
@@ -42,39 +30,30 @@ function HeroIcon(icon: any) {
 const navigation = [
   {
     name: "Profile",
-    href: "/",
+    href: "",
     icon: HeroIcon(user),
   },
   {
     name: "Packages",
-    href: "/packages",
+    href: "packages",
     icon: HeroIcon(folder),
   },
   {
-    name: "Teams",
-    href: "/teams",
+    name: "Users",
+    href: "users",
     icon: HeroIcon(users),
   },
   {
-    name: "Calendar",
-    href: "#",
-    icon: HeroIcon(calendar),
+    name: "Teams",
+    href: "teams",
+    icon: HeroIcon(userGroup),
   },
   {
-    name: "Documents",
-    href: "#",
-    icon: HeroIcon(inbox),
-  },
-  {
-    name: "Reports",
-    href: "#",
-    icon: HeroIcon(chartBar),
+    name: "Hooks",
+    href: "hooks",
+    icon: HeroIcon(lightningBolt),
   },
 ];
-
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 function parsePath(str: string) {
   const to = str.replace(/^.*?#/, "");
@@ -93,38 +72,29 @@ function parsePath(str: string) {
  *
  */
 const SidePanel: Component<any> = (props: any) => {
-  const organizations = props.organizations;
-  const location = useLocation();
-  const pathname = createMemo(() => parsePath(location.pathname));
+  const merged = mergeProps(
+    {
+      organizations: [],
+      selectedOrganization: null,
+      onAddOrganization: () => void 0,
+      onOrganizationSelect: () => void 0,
+    },
+    props
+  );
 
   const navigate = useNavigate();
 
   function logout() {
-    setState({ session: void 0 });
+    setSessionState({ session: void 0 });
     navigate("/login");
   }
-
-  const [newOrganization, setNewOrganization] = createSignal("");
-  const updateOrganizationName = (event: any) =>
-    setNewOrganization(event.target.value);
 
   const PlusIcon = HeroIcon(plus);
   const { isOpen, onOpen, onClose } = createDisclosure();
 
-  async function saveOrganization(event: any) {
-    // setState({ organization });
-    try {
-      await OrganizationsService.createOrganization(
-        state().session?.user._id!,
-        state().session?.token!,
-        newOrganization()
-      );
-    } catch (error) {
-      // TODO: Display error
-      console.log(error);
-    }
-
-    onClose();
+  async function saveOrganization(organization: any) {
+    console.log("Adding organization", organization);
+    merged.onAddOrganization(organization);
   }
 
   return (
@@ -138,12 +108,11 @@ const SidePanel: Component<any> = (props: any) => {
             <div class="flex flex-row">
               <Select
                 class="org-select bg-gray-600 text-white mb-2 w-full"
-                options={
-                  organizations &&
-                  organizations
-                    .map((org: Organization) => org.organizationId)
-                    .sort()
-                }
+                initialValue={merged.selectedOrganization}
+                options={merged.organizations
+                  .map((org: Organization) => org.organizationId)
+                  .sort()}
+                onChange={(value) => merged.onOrganizationSelect(value)}
                 placeholder="Choose organization"
               />
 
@@ -162,56 +131,26 @@ const SidePanel: Component<any> = (props: any) => {
                 <span class="sr-only">Icon description</span>
               </button>
 
-              {/* TODO: Refactor into custom component */}
-              <Modal
-                blockScrollOnMount={false}
-                opened={isOpen()}
+              <AddOrganization
+                isOpen={isOpen}
                 onClose={onClose}
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalCloseButton />
-                  <ModalHeader>Add Organization</ModalHeader>
-                  <ModalBody>
-                    <Text fontWeight="$bold"></Text>
-                    <Input
-                      placeholder="Organization name"
-                      onInput={updateOrganizationName}
-                    />
-                  </ModalBody>
-                  <ModalFooter>
-                    <button
-                      disabled={!newOrganization()}
-                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                      onClick={saveOrganization}
-                    >
-                      Save
-                    </button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
+                onAddOrganization={saveOrganization}
+              />
             </div>
             {navigation.map((item) => (
-              <a
-                href={item.href}
-                class={classNames(
-                  item.href === pathname()
-                    ? "bg-gray-900 text-white"
-                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                  "group flex items-center px-2 py-2 text-base font-medium rounded-md"
-                )}
+              <NavLink
+                href={`/${merged.selectedOrganization}/${item.href}`}
+                activeClass="bg-gray-900 text-white"
+                inactiveClass="text-gray-300 hover:bg-gray-700 hover:text-white"
+                class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                end={true}
               >
                 <item.icon
-                  class={classNames(
-                    item.href === pathname()
-                      ? "text-gray-300"
-                      : "text-gray-400 group-hover:text-gray-300",
-                    "mr-4 flex-shrink-0 h-6 w-6"
-                  )}
+                  class="mr-4 flex-shrink-0 h-6 w-6"
                   aria-hidden="true"
                 />
                 {item.name}
-              </a>
+              </NavLink>
             ))}
           </nav>
         </div>
@@ -227,10 +166,10 @@ const SidePanel: Component<any> = (props: any) => {
               </div>
               <div class="ml-3">
                 <p class="text-sm font-medium text-white text-left">
-                  {state().session?.user.name}
+                  {sessionState().session?.user.name}
                 </p>
                 <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">
-                  {state().session?.user.email}
+                  {sessionState().session?.user.email}
                 </p>
               </div>
               <div>

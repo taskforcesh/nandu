@@ -157,14 +157,7 @@ const SidePanel: Component<any> = (props: any) => {
         <div class="flex-shrink-0 flex bg-gray-700 p-4">
           <a href="#" class="flex-shrink-0 w-full group block">
             <div class="flex items-center">
-              <div>
-                <img
-                  class="inline-block h-9 w-9 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-              </div>
-              <div>
+              <div class="flex-auto ml-1">
                 <p class="text-sm font-medium text-white text-left">
                   {sessionState().session?.user.name}
                 </p>
@@ -172,10 +165,13 @@ const SidePanel: Component<any> = (props: any) => {
                   {sessionState().session?.user.email}
                 </p>
               </div>
-              <div>
-                <button 
-                class="text-sm ml-24 mt-0.5 bg-orange-500 hover:bg-orange-600 text-gray-100 font-bold py-1.5 px-5 rounded active:bg-orange-700 focus:outline-none focus:ring focus:ring-orange-300"
-                onClick={logout}>Logout</button>
+              <div class="ml-2">
+                <button
+                  class="text-sm mt-0.5 bg-orange-500 hover:bg-orange-600 text-gray-100 font-bold py-1.5 px-5 rounded active:bg-orange-700 focus:outline-none focus:ring focus:ring-orange-300"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
               </div>
             </div>
           </a>

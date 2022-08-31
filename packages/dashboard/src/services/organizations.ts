@@ -1,4 +1,4 @@
-const host = "http://localhost:4567";
+const host = import.meta.env.VITE_API_HOST;
 
 export interface Organization {
   organizationId: string;
@@ -38,5 +38,4 @@ export class OrganizationsService {
       throw new Error(response.statusText);
     }
   }
-
 }

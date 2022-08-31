@@ -1,4 +1,3 @@
-import { Accessor } from "solid-js";
 import { createStore } from "solid-js/store";
 
 type FormFields = {

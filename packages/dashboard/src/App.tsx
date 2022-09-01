@@ -6,6 +6,8 @@ const Dashboard = lazy(() => import("./components/dashboard"));
 const Profile = lazy(() => import("./components/profile"));
 const Packages = lazy(() => import("./components/packages"));
 const Teams = lazy(() => import("./components/teams"));
+const TeamMembers = lazy(() => import("./components/teamMembers"));
+const TeamPackages = lazy(() => import("./components/teamPackages"));
 
 import { PackagesService } from "./services/packages";
 
@@ -16,6 +18,7 @@ import { OrganizationsService } from "./services/organizations";
 import { UsersService } from "./services/users";
 import Users from "./components/Users";
 import Hooks from "./components/Hooks";
+import { TeamsService } from "./services/teams";
 
 function ScopePackages({ params, location, navigate, data }: any) {
   const [packages] = createResource(() =>
@@ -29,6 +32,35 @@ function ScopeUsers({ params, location, navigate, data }: any) {
     UsersService.listUsers(params.scope, sessionState().session?.token!)
   );
   return [users, mutate];
+}
+
+function ScopeTeams({ params, location, navigate, data }: any) {
+  const [teams, { mutate }] = createResource(() =>
+    TeamsService.listTeams(params.scope, sessionState().session?.token!)
+  );
+  return [teams, mutate];
+}
+
+function TeamMembersData({ params, location, navigate, data }: any) {
+  const [members, { mutate }] = createResource(() =>
+    TeamsService.listMembers(
+      params.scope,
+      params.team,
+      sessionState().session?.token!
+    )
+  );
+  return [members, mutate];
+}
+
+function TeamPackagesData({ params, location, navigate, data }: any) {
+  const [packages, { mutate }] = createResource(() =>
+    TeamsService.listPackages(
+      params.scope,
+      params.team,
+      sessionState().session?.token!
+    )
+  );
+  return [packages, mutate];
 }
 
 function UserOrganizations({ params, location, navigate, data }: any) {
@@ -63,13 +95,32 @@ const App: Component = () => {
           <Route path="/" component={Dashboard} data={UserOrganizations}>
             <Route path="/" component={Profile} />
             <Route path="/:scope" component={Profile} />
+
             <Route
               path="/:scope/packages"
               component={Packages}
               data={ScopePackages}
             />
+
             <Route path="/:scope/users" component={Users} data={ScopeUsers} />
-            <Route path="/:scope/teams" component={Teams} />
+            <Route
+              path="/:scope/teams"
+              component={Teams}
+              data={ScopeTeams}
+            ></Route>
+
+            <Route
+              path="/:scope/teams/:team/members"
+              component={TeamMembers}
+              data={TeamMembersData}
+            />
+
+            <Route
+              path="/:scope/teams/:team/packages"
+              component={TeamPackages}
+              data={TeamPackagesData}
+            />
+
             <Route path="/:scope/hooks" component={Hooks} />
           </Route>
         </Show>

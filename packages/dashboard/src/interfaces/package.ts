@@ -3,4 +3,5 @@ export interface Package {
   version: string;
   description: string;
   lastUpdated: string;
+  updatedAt: string;
 }

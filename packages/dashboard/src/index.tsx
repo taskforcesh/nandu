@@ -9,11 +9,7 @@ import "./index.css";
 import App from "./App";
 
 const config: HopeThemeConfig = {
-  lightTheme: {
-    colors: {
-      primary9: "salmon",
-    },
-  },
+  initialColorMode: "dark", // 2. Add your color mode
 };
 
 render(

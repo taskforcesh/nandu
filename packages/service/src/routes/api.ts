@@ -8,6 +8,8 @@ import { expressjwt as jwt, Request } from "express-jwt";
 import { Router, Response, NextFunction, json } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import { Op } from "sequelize";
+
 import config from "../../config";
 import {
   asyncWrap,
@@ -15,7 +17,14 @@ import {
   canAccessOrganization,
   canWrite,
 } from "../middleware";
-import { Organization, User, UserOrganization } from "../models";
+import {
+  DistTag,
+  Organization,
+  Team,
+  User,
+  UserOrganization,
+  Version,
+} from "../models";
 
 import { authToken } from "../middleware";
 import { OrganizationAction } from "../enums";
@@ -101,15 +110,6 @@ router.get(
   asyncWrap(async (req: Request, res: Response) => {
     const { scope } = req.params;
 
-    /*
-    const members = await UserOrganization.findAll({
-      where: {
-        organizationId: scope,
-      },
-      attributes: ["userId", "role"],
-    });
-    */
-
     const organization = await Organization.findOne({
       where: {
         name: scope,
@@ -131,5 +131,73 @@ router.get(
     });
 
     res.status(StatusCodes.OK).json(members);
+  })
+);
+
+/**
+ * Get all the users belonging to an organization.
+ *
+ */
+router.get(
+  "/organizations/:scope/teams",
+  canAccessOrganization(OrganizationAction.listMembers),
+  asyncWrap(async (req: Request, res: Response) => {
+    const { scope } = req.params;
+
+    const teams = await Team.findAll({
+      where: {
+        organizationId: scope,
+      },
+    });
+
+    res.status(StatusCodes.OK).json(teams);
+  })
+);
+
+/**
+ * Get users belonging to a given team
+ */
+router.get(
+  "/organizations/:scope/:teamName/users",
+  canAccessOrganization(OrganizationAction.listTeamMembers),
+  asyncWrap(async (req: Request, res: Response) => {
+    const { scope, teamName } = req.params;
+
+    const team = (await Team.getMembers(scope, teamName)) as Team & {
+      members: any[];
+    };
+
+    res.status(StatusCodes.OK).json(team.members);
+  })
+);
+
+/**
+ * List all packages that this organization has access to.
+ */
+router.get(
+  "/organizations/:scope/packages",
+  canAccessOrganization(OrganizationAction.manageTeamPackageAccess),
+  asyncWrap(async (req: Request, res: Response) => {
+    const { scope } = req.params;
+
+    const distTags = await DistTag.findAll({
+      where: {
+        packageId: { [Op.startsWith]: `@${scope}/` },
+        name: "latest",
+      },
+    });
+
+    const versions = await Version.findAll({
+      where: {
+        _id: {
+          [Op.in]: distTags.map(
+            (tag) =>
+              `${tag.getDataValue("packageId")}@${tag.getDataValue("version")}`
+          ),
+        },
+      },
+    });
+
+    res.status(StatusCodes.OK).json(versions);
   })
 );

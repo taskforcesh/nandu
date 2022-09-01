@@ -91,7 +91,7 @@ router.put(
 );
 
 /**
- * Get Hooks
+ * Delete Hooks
  */
 router.delete(
   "/-/npm/v1/hooks/hook/:hookId",

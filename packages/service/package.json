@@ -35,6 +35,7 @@
     "is-jwt": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.6.0",
+    "pg": "^8.8.0",
     "pino": "^7.1.0",
     "range_check": "^2.0.4",
     "sequelize": "latest",

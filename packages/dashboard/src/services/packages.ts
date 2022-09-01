@@ -5,7 +5,7 @@ interface Package {
 }
 export class PackagesService {
   static listPackages(organizationId: string, token: string) {
-    return fetch(`${host}/-/org/${organizationId}/package`, {
+    return fetch(`${host}/api/organizations/${organizationId}/packages`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

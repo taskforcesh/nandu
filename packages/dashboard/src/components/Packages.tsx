@@ -17,7 +17,11 @@ const Packages: Component = () => {
       <For each={packages()}>
         {(pkg: Package, i) => (
           <li>
-            {pkg.name} - {pkg.description}
+            <div>
+              Name: {pkg.name} - Description: {pkg.description} - Version:
+              {pkg.version}
+            </div>
+            <div>Updated: {new Date(pkg.updatedAt).toLocaleDateString()}</div>
           </li>
         )}
       </For>

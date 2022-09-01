@@ -117,7 +117,7 @@ Hook.init(
       type: DataTypes.STRING,
     },
     lastTriggeredAt: DataTypes.DATE,
-    triggerCount: DataTypes.NUMBER,
+    triggerCount: DataTypes.INTEGER,
   },
   {
     sequelize: db,

@@ -92,6 +92,7 @@ export class Team extends Model {
     return Team.findOne({
       where: { id: teamId },
       include: { model: User, as: "members" },
+      order: [[{ model: User, as: "members" }, "updatedAt", "DESC"]],
     });
   }
 

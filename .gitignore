@@ -6,3 +6,4 @@ yarn-error.log
 packages/service/storage
 packages/service/dist
 .yarn
+packages/service/.env

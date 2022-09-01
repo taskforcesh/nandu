@@ -41,9 +41,9 @@ const RemoveUser: Component<any> = (props: any) => {
         type="button"
         class={classNames(
           "inline-flex text-sm items-center px-4 py-2 border border-transparent shadow-sm text-sm",
-          "font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none",
-          "focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-          "disabled:bg-blue-400 disabled:cursor-not-allowed"
+          "font-medium rounded-md text-white bg-orange-400 hover:bg-amber-500 focus:outline-none",
+          "focus:ring-2 focus:ring-offset-2 focus:ring-amber-500",
+          "disabled:bg-amber-400 disabled:cursor-not-allowed"
         )}
       >
         <Icon class="w-5 h-5 mr-1" path={userRemove} />
@@ -74,9 +74,9 @@ const RemoveUser: Component<any> = (props: any) => {
             <button
               onClick={onClose}
               class={classNames(
-                "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium",
-                "rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700",
-                "focus:outline-none dark:focus:ring-blue-800"
+                "text-white bg-yellow-400 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium",
+                "rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-amber-400 dark:hover:bg-amber-500",
+                "focus:outline-none dark:focus:ring-yellow-800"
               )}
             >
               Cancel

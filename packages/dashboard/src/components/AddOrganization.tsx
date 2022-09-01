@@ -58,7 +58,7 @@ const AddOrganization: Component<any> = (props: any) => {
         <ModalFooter>
           <button
             disabled={!newOrganization()}
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+            class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={saveOrganization}
           >
             Save

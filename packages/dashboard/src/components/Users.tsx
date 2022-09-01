@@ -52,10 +52,10 @@ const Users: Component = () => {
         <AddUser onAddUser={saveUser} />
       </div>
 
-      <div class="border-2 border-gray-200 rounded-lg h-full">
+      <div class="border-2 border-orange-400 rounded-lg h-full">
         <Table>
           <Thead>
-            <Tr>
+            <Tr class="text-orange-400">
               <Th>User</Th>
               <Th>Role</Th>
               <Th>Type</Th>

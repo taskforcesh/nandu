@@ -86,12 +86,8 @@ const AddTeam: Component<any> = (props: any) => {
             </FormControl>
 
             <FormControl required invalid={!!errors("name")}>
-              <FormLabel>Name</FormLabel>
-              <Input
-                type="text"
-                name="description"
-                placeholder="Description"
-              />
+              <FormLabel>Description</FormLabel>
+              <Input type="text" name="description" placeholder="Description" />
               <FormErrorMessage>{errors("description")[0]}</FormErrorMessage>
             </FormControl>
 

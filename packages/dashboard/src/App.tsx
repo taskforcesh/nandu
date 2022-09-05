@@ -19,6 +19,7 @@ import { UsersService } from "./services/users";
 import Users from "./components/Users";
 import Hooks from "./components/Hooks";
 import { TeamsService } from "./services/teams";
+import { HooksService } from "./services/hooks";
 
 function ScopePackages({ params, location, navigate, data }: any) {
   const [packages] = createResource(() =>
@@ -75,6 +76,13 @@ function UserOrganizations({ params, location, navigate, data }: any) {
   return organizations;
 }
 
+function HooksData({ params, location, navigate, data }: any) {
+  const [hooks, { mutate }] = createResource(() =>
+    HooksService.listHooks(sessionState().session?.token!)
+  );
+  return [hooks, mutate];
+}
+
 const App: Component = () => {
   const navigate = useNavigate();
 
@@ -121,7 +129,7 @@ const App: Component = () => {
               data={TeamPackagesData}
             />
 
-            <Route path="/:scope/hooks" component={Hooks} />
+            <Route path="/:scope/hooks" component={Hooks} data={HooksData} />
           </Route>
         </Show>
       </Routes>

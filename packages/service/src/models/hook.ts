@@ -71,7 +71,19 @@ async function postHook(hook: Hook, payload: HookPayload) {
 
 export class Hook extends Model {
   static getUserHooks(ownerId: string) {
-    return Hook.findAll({ where: { ownerId } });
+    return Hook.findAll({
+      where: { ownerId },
+      attributes: [
+        "id",
+        "type",
+        "name",
+        "endpoint",
+        ["lastTriggeredAt", "last_delivery"],
+        "triggerCount",
+        "createdAt",
+        "updatedAt",
+      ],
+    });
   }
 
   // Very simple and slow notification system

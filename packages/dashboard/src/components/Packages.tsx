@@ -22,11 +22,11 @@ const Packages: Component = () => {
                 <a href="#" class="block hover:bg-black-50">
                   <div class="px-4 py-4 sm:px-6">
                     <div class="flex items-center justify-between">
-                      <p class="truncate uppercase text-sm font-medium text-orange-500">
+                      <p class="truncate uppercase text-sm font-medium text-orange-400">
                         {pkg.name}
                       </p>
                       <div class="ml-2 flex flex-shrink-0">
-                        <p class="inline-flex rounded-full bg-orange-500 px-2 text-xs font-semibold leading-5 text-orange-200">
+                        <p class="inline-flex rounded-full bg-amber-500 px-2 text-xs font-semibold leading-5 text-amber-200">
                           v. &nbsp;{pkg.version}
                         </p>
                       </div>

@@ -6435,6 +6435,8 @@ __metadata:
 "nandu@workspace:.":
   version: 0.0.0-use.local
   resolution: "nandu@workspace:."
+  dependencies:
+    pg: ^8.8.0
   languageName: unknown
   linkType: soft
 

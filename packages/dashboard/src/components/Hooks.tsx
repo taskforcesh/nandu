@@ -39,16 +39,16 @@ const Hooks: Component = () => {
 
   return (
     <div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-5">
         <h1 class="text-2xl font-semibold text-white">Hooks</h1>
       </div>
       <div class="flex flex-row justify-start mb-4">
         <AddHook onAddHook={saveHook} />
       </div>
-      <div class="border-2 border-gray-200 rounded-lg h-full">
+      <div class="border-2 border-orange-400 rounded-lg h-full">
         <Table>
           <Thead>
-            <Tr>
+            <Tr class="text-orange-400">
               <Th>Name</Th>
               <Th>Type</Th>
               <Th>Endpoint</Th>

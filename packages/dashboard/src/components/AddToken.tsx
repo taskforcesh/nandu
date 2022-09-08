@@ -1,7 +1,7 @@
 import { Component, mergeProps, For } from "solid-js";
 import { createForm } from "@felte/solid";
 import { validator } from "@felte/validator-yup";
-import type { InferType } from "yup";
+import { boolean, InferType } from "yup";
 import { object, string } from "yup";
 
 import {
@@ -16,6 +16,7 @@ import {
   FormErrorMessage,
   FormLabel,
   createDisclosure,
+  Checkbox,
 } from "@hope-ui/solid";
 
 import { Icon } from "solid-heroicons";
@@ -24,16 +25,16 @@ import { userAdd } from "solid-heroicons/solid";
 import { classNames } from "../utils";
 
 const schema = object({
-  name: string().required(),
-  description: string().required(),
+  readOnly: boolean().required().default(true),
+  password: string().required(),
 });
 
 /**
- * AddTeam Component.
+ * Change Password Component.
  *
  */
-const AddTeam: Component<any> = (props: any) => {
-  const merged = mergeProps({ onAddTeam: () => void 0 }, props);
+const AddToken: Component<any> = (props: any) => {
+  const merged = mergeProps({ onAddToken: () => void 0 }, props);
 
   const { isOpen, onOpen, onClose } = createDisclosure();
 
@@ -42,7 +43,7 @@ const AddTeam: Component<any> = (props: any) => {
   >({
     extend: validator({ schema }),
     onSubmit: async (values) => {
-      await merged.onAddTeam(values);
+      await merged.onAddToken(values);
       onClose();
     },
     initialValues: {},
@@ -60,35 +61,33 @@ const AddTeam: Component<any> = (props: any) => {
         )}
       >
         <Icon class="w-5 h-5 mr-1" path={userAdd} />
-        Team
+        Token
       </button>
 
       <Modal
         blockScrollOnMount={false}
         opened={isOpen()}
-        initialFocus="#teamName"
         onClose={onClose}
+        initialFocus="#password"
       >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalHeader>Add Team</ModalHeader>
+          <ModalHeader>New Token</ModalHeader>
           <ModalBody as="form" ref={form}>
-            <FormControl required invalid={!!errors("name")}>
-              <FormLabel>Name</FormLabel>
-              <Input
-                id="teamName"
-                type="text"
-                name="name"
-                placeholder="Team Name"
-              />
-              <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
-            </FormControl>
+            <Checkbox name="readOnly" defaultChecked>
+              Read Only
+            </Checkbox>
 
-            <FormControl required invalid={!!errors("description")}>
-              <FormLabel>Description</FormLabel>
-              <Input type="text" name="description" placeholder="Description" />
-              <FormErrorMessage>{errors("description")[0]}</FormErrorMessage>
+            <FormControl required invalid={!!errors("password")}>
+              <FormLabel>Password</FormLabel>
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Your Password"
+              />
+              <FormErrorMessage>{errors("password")[0]}</FormErrorMessage>
             </FormControl>
 
             <div class="w-full flex flex-row justify-end my-4">
@@ -100,7 +99,7 @@ const AddTeam: Component<any> = (props: any) => {
                   "py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 )}
               >
-                Save
+                New Token
               </button>
             </div>
           </ModalBody>
@@ -110,4 +109,4 @@ const AddTeam: Component<any> = (props: any) => {
   );
 };
 
-export default AddTeam;
+export default AddToken;

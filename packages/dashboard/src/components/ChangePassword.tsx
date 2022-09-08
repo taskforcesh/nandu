@@ -1,7 +1,7 @@
 import { Component, mergeProps, For } from "solid-js";
 import { createForm } from "@felte/solid";
 import { validator } from "@felte/validator-yup";
-import type { InferType } from "yup";
+import { InferType, ref } from "yup";
 import { object, string } from "yup";
 
 import {
@@ -18,22 +18,24 @@ import {
   createDisclosure,
 } from "@hope-ui/solid";
 
-import { Icon } from "solid-heroicons";
-import { userAdd } from "solid-heroicons/solid";
-
 import { classNames } from "../utils";
 
 const schema = object({
-  name: string().required(),
-  description: string().required(),
+  oldPassword: string().required("old password is required"),
+  newPassword: string()
+    .required()
+    .min(8, "Password must have at least 8 characters"),
+  confirmPassword: string()
+    .required("This is a required field")
+    .oneOf([ref("newPassword"), null], "Passwords must match"),
 });
 
 /**
- * AddTeam Component.
+ * Change Password Component.
  *
  */
-const AddTeam: Component<any> = (props: any) => {
-  const merged = mergeProps({ onAddTeam: () => void 0 }, props);
+const ChangePassword: Component<any> = (props: any) => {
+  const merged = mergeProps({ onChangePassword: () => void 0 }, props);
 
   const { isOpen, onOpen, onClose } = createDisclosure();
 
@@ -42,7 +44,7 @@ const AddTeam: Component<any> = (props: any) => {
   >({
     extend: validator({ schema }),
     onSubmit: async (values) => {
-      await merged.onAddTeam(values);
+      await merged.onChangePassword(values);
       onClose();
     },
     initialValues: {},
@@ -59,36 +61,51 @@ const AddTeam: Component<any> = (props: any) => {
           "focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
         )}
       >
-        <Icon class="w-5 h-5 mr-1" path={userAdd} />
-        Team
+        Change Password
       </button>
 
       <Modal
         blockScrollOnMount={false}
         opened={isOpen()}
-        initialFocus="#teamName"
+        initialFocus="#oldPassword"
         onClose={onClose}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalHeader>Add Team</ModalHeader>
+          <ModalHeader>Change Password</ModalHeader>
           <ModalBody as="form" ref={form}>
-            <FormControl required invalid={!!errors("name")}>
-              <FormLabel>Name</FormLabel>
+            <FormControl required invalid={!!errors("oldPassword")}>
+              <FormLabel>Old Password</FormLabel>
               <Input
-                id="teamName"
-                type="text"
-                name="name"
-                placeholder="Team Name"
+                id="oldPassword"
+                type="password"
+                name="oldPassword"
+                placeholder="Old Password"
               />
-              <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
+              <FormErrorMessage>{errors("oldPassword")[0]}</FormErrorMessage>
             </FormControl>
 
-            <FormControl required invalid={!!errors("description")}>
-              <FormLabel>Description</FormLabel>
-              <Input type="text" name="description" placeholder="Description" />
-              <FormErrorMessage>{errors("description")[0]}</FormErrorMessage>
+            <FormControl required invalid={!!errors("newPassword")}>
+              <FormLabel>New Password</FormLabel>
+              <Input
+                type="password"
+                name="newPassword"
+                placeholder="New Password"
+              />
+              <FormErrorMessage>{errors("newPassword")[0]}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl required invalid={!!errors("confirmPassword")}>
+              <FormLabel>Repeat Password</FormLabel>
+              <Input
+                type="password"
+                name="confirmPassword"
+                placeholder="Repeat Password"
+              />
+              <FormErrorMessage>
+                {errors("confirmPassword")[0]}
+              </FormErrorMessage>
             </FormControl>
 
             <div class="w-full flex flex-row justify-end my-4">
@@ -110,4 +127,4 @@ const AddTeam: Component<any> = (props: any) => {
   );
 };
 
-export default AddTeam;
+export default ChangePassword;

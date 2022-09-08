@@ -57,9 +57,9 @@ router.put(
     const { scope, team } = req.params;
     const { user: userName } = req.body;
 
-    await Team.addUser(scope, team, userName);
+    const user = await Team.addMember(scope, team, userName);
 
-    res.status(StatusCodes.OK).json({});
+    res.status(StatusCodes.OK).json(user);
   })
 );
 

@@ -1,5 +1,4 @@
-const host = import.meta.env.VITE_API_HOST;
-
+import { Api } from "./api";
 export interface User {
   userId?: string;
   name: string;
@@ -9,56 +8,33 @@ export interface User {
 }
 
 export class UsersService {
-  static listUsers(scope: string, token: string) {
-    return fetch(`${host}/api/organizations/${scope}/users`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (response) => {
-      if (response.status === 200) {
-        return response.json() as Promise<User[]>;
-      } else {
-        throw new Error("Invalid credentials");
-      }
-    });
+  static listUsers(scope: string) {
+    return Api.get<User[]>(`/api/organizations/${scope}/users`);
   }
 
-  static createUser(
-    token: string,
-    user: User,
-    scope: string,
-    role: string = "developer"
-  ) {
-    return fetch(`${host}/-/user/org.couchdb.user:${user.name}`, {
-      method: "PUT",
+  static createUser(user: User, scope: string, role: string = "developer") {
+    return Api.put(`/-/user/org.couchdb.user:${user.name}`, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
         "npm-scope": scope,
         "npm-role": role,
       },
-      body: JSON.stringify(user),
-    }).then(async (response) => {
-      if (response.status !== 201) {
-        throw new Error(await response.text());
-      }
+      body: user,
     });
   }
 
-  static removeUser(token: string, userName: string, scope: string) {
-    return fetch(`${host}/-/org/${scope}/user`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+  static removeUser(userName: string, scope: string) {
+    return Api.delete(`/-/org/${scope}/user`, { body: { user: userName } });
+  }
+
+  static changePassword(
+    token: string,
+    oldPassword: string,
+    newPassword: string
+  ) {
+    return Api.post(`/-/npm/v1/user`, {
+      body: {
+        password: { old: oldPassword, new: newPassword },
       },
-      body: JSON.stringify({ user: userName }),
-    }).then(async (response) => {
-      if (response.status !== 200) {
-        throw new Error(await response.text());
-      }
     });
   }
 }

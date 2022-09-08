@@ -96,12 +96,13 @@ export class Team extends Model {
     });
   }
 
-  static async addUser(scope: string, teamName: string, userName: string) {
+  static async addMember(scope: string, teamName: string, userName: string) {
     const transaction = await db.transaction();
 
     try {
       const user = await User.findOne({
         where: { name: userName },
+        attributes: ["name", "email", "type", "_id"],
         transaction,
       });
 
@@ -125,6 +126,14 @@ export class Team extends Model {
       );
 
       await transaction.commit();
+
+      return {
+        name: user.getDataValue("name"),
+        email: user.getDataValue("email"),
+        type: user.getDataValue("type"),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
     } catch (err) {
       await transaction.rollback();
       throw err;

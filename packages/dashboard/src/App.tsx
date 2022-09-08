@@ -20,46 +20,44 @@ import Users from "./components/Users";
 import Hooks from "./components/Hooks";
 import { TeamsService } from "./services/teams";
 import { HooksService } from "./services/hooks";
+import { TokensService } from "./services/tokens";
+
+function TokensData({ params, location, navigate, data }: any) {
+  const [tokens, { mutate }] = createResource(() => TokensService.listTokens());
+  return [tokens, mutate];
+}
 
 function ScopePackages({ params, location, navigate, data }: any) {
   const [packages] = createResource(() =>
-    PackagesService.listPackages(params.scope, sessionState().session?.token!)
+    PackagesService.listPackages(params.scope)
   );
   return packages;
 }
 
 function ScopeUsers({ params, location, navigate, data }: any) {
   const [users, { mutate }] = createResource(() =>
-    UsersService.listUsers(params.scope, sessionState().session?.token!)
+    UsersService.listUsers(params.scope)
   );
   return [users, mutate];
 }
 
 function ScopeTeams({ params, location, navigate, data }: any) {
   const [teams, { mutate }] = createResource(() =>
-    TeamsService.listTeams(params.scope, sessionState().session?.token!)
+    TeamsService.listTeams(params.scope)
   );
   return [teams, mutate];
 }
 
 function TeamMembersData({ params, location, navigate, data }: any) {
   const [members, { mutate }] = createResource(() =>
-    TeamsService.listMembers(
-      params.scope,
-      params.team,
-      sessionState().session?.token!
-    )
+    TeamsService.listMembers(params.scope, params.team)
   );
   return [members, mutate];
 }
 
 function TeamPackagesData({ params, location, navigate, data }: any) {
   const [packages, { mutate }] = createResource(() =>
-    TeamsService.listPackages(
-      params.scope,
-      params.team,
-      sessionState().session?.token!
-    )
+    TeamsService.listPackages(params.scope, params.team)
   );
   return [packages, mutate];
 }
@@ -67,8 +65,7 @@ function TeamPackagesData({ params, location, navigate, data }: any) {
 function UserOrganizations({ params, location, navigate, data }: any) {
   const [organizations, { mutate, refetch }] = createResource(async () => {
     const organizations = await OrganizationsService.listOrganizations(
-      sessionState().session?.user._id!,
-      sessionState().session?.token!
+      sessionState().session?.user._id!
     );
     setState({ currentOrganizationId: organizations[0]?.organizationId });
     return organizations;
@@ -77,9 +74,7 @@ function UserOrganizations({ params, location, navigate, data }: any) {
 }
 
 function HooksData({ params, location, navigate, data }: any) {
-  const [hooks, { mutate }] = createResource(() =>
-    HooksService.listHooks(sessionState().session?.token!)
-  );
+  const [hooks, { mutate }] = createResource(() => HooksService.listHooks());
   return [hooks, mutate];
 }
 
@@ -101,8 +96,8 @@ const App: Component = () => {
             element={<div>This site was made with Solid</div>}
           />
           <Route path="/" component={Dashboard} data={UserOrganizations}>
-            <Route path="/" component={Profile} />
-            <Route path="/:scope" component={Profile} />
+            <Route path="/" component={Profile} data={TokensData} />
+            <Route path="/:scope" component={Profile} data={TokensData} />
 
             <Route
               path="/:scope/packages"

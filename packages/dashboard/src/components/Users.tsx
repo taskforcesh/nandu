@@ -19,7 +19,6 @@ const Users: Component = () => {
   async function saveUser(values: User & { role: string }) {
     try {
       await UsersService.createUser(
-        sessionState().session?.token!,
         values,
         state.currentOrganizationId!,
         values.role
@@ -32,11 +31,7 @@ const Users: Component = () => {
   }
 
   async function removeUser(user: User) {
-    await UsersService.removeUser(
-      sessionState().session?.token!,
-      user.name,
-      state.currentOrganizationId!
-    );
+    await UsersService.removeUser(user.name, state.currentOrganizationId!);
     setUsers(users().filter((u: User) => u.userId !== user.userId));
   }
 
@@ -44,7 +39,7 @@ const Users: Component = () => {
     <div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <h1 class="text-2xl font-semibold text-white">
-            {state.currentOrganizationId} Users
+          {state.currentOrganizationId} Users
         </h1>
       </div>
 

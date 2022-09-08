@@ -1,22 +1,12 @@
-const host = import.meta.env.VITE_API_HOST;
+import { Api } from "./api";
 
 interface Package {
   name: string;
+
+  // TODO: add all missing fields
 }
 export class PackagesService {
-  static listPackages(organizationId: string, token: string) {
-    return fetch(`${host}/api/organizations/${organizationId}/packages`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (response) => {
-      if (response.status === 200) {
-        return response.json() as Promise<Package[]>;
-      } else {
-        throw new Error("Invalid credentials");
-      }
-    });
+  static listPackages(organizationId: string) {
+    return Api.get<Package[]>(`/api/organizations/${organizationId}/packages`);
   }
 }

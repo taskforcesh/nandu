@@ -121,7 +121,7 @@ const AddHook: Component<any> = (props: any) => {
             <FormControl required invalid={!!errors("name")}>
               <FormLabel>Name</FormLabel>
               <Input id="name" type="text" name="name" placeholder="Name" />
-              <FormErrorMessage>{errors("pkg")[0]}</FormErrorMessage>
+              <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
             </FormControl>
 
             <FormControl required invalid={!!errors("endpoint")}>

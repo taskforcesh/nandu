@@ -1,7 +1,7 @@
 import { Component, mergeProps, For } from "solid-js";
 import { createForm } from "@felte/solid";
 import { validator } from "@felte/validator-yup";
-import type { InferType } from "yup";
+import { InferType, mixed } from "yup";
 import { object, string } from "yup";
 
 import {
@@ -16,6 +16,16 @@ import {
   FormErrorMessage,
   FormLabel,
   createDisclosure,
+  Select,
+  SelectTrigger,
+  SelectPlaceholder,
+  SelectValue,
+  SelectContent,
+  SelectIcon,
+  SelectListbox,
+  SelectOption,
+  SelectOptionText,
+  SelectOptionIndicator,
 } from "@hope-ui/solid";
 
 import { Icon } from "solid-heroicons";
@@ -25,15 +35,19 @@ import { classNames } from "../utils";
 
 const schema = object({
   name: string().required(),
-  description: string().required(),
+  permissions: mixed()
+    .oneOf(["read-only", "read-write"])
+    .required()
+    .default("read-only")
+    .required(),
 });
 
 /**
- * AddTeam Component.
+ * Dashboard Component.
  *
  */
-const AddTeam: Component<any> = (props: any) => {
-  const merged = mergeProps({ onAddTeam: () => void 0 }, props);
+const AddTeamPackage: Component<any> = (props: any) => {
+  const merged = mergeProps({ onAddTeamPackage: () => void 0 }, props);
 
   const { isOpen, onOpen, onClose } = createDisclosure();
 
@@ -42,10 +56,12 @@ const AddTeam: Component<any> = (props: any) => {
   >({
     extend: validator({ schema }),
     onSubmit: async (values) => {
-      await merged.onAddTeam(values);
+      await merged.onAddTeamPackage(values);
       onClose();
     },
-    initialValues: {},
+    initialValues: {
+      permissions: "read-only",
+    },
   });
 
   return (
@@ -60,7 +76,7 @@ const AddTeam: Component<any> = (props: any) => {
         )}
       >
         <Icon class="w-5 h-5 mr-1" path={userAdd} />
-        Team
+        Package
       </button>
 
       <Modal
@@ -72,7 +88,7 @@ const AddTeam: Component<any> = (props: any) => {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalHeader>Add Team</ModalHeader>
+          <ModalHeader>Add Package to Team</ModalHeader>
           <ModalBody as="form" ref={form}>
             <FormControl required invalid={!!errors("name")}>
               <FormLabel>Name</FormLabel>
@@ -85,10 +101,31 @@ const AddTeam: Component<any> = (props: any) => {
               <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
             </FormControl>
 
-            <FormControl required invalid={!!errors("description")}>
-              <FormLabel>Description</FormLabel>
-              <Input type="text" name="description" placeholder="Description" />
-              <FormErrorMessage>{errors("description")[0]}</FormErrorMessage>
+            <FormControl required invalid={!!errors("permissions")}>
+              <FormLabel>Permissions</FormLabel>
+              <Select
+                defaultValue="read-only"
+                onChange={(value) => setFields("permissions", value)}
+              >
+                <SelectTrigger>
+                  <SelectPlaceholder>Permissions</SelectPlaceholder>
+                  <SelectValue />
+                  <SelectIcon />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectListbox>
+                    <For each={["read-only", "read-write"]}>
+                      {(item) => (
+                        <SelectOption value={item}>
+                          <SelectOptionText>{item}</SelectOptionText>
+                          <SelectOptionIndicator />
+                        </SelectOption>
+                      )}
+                    </For>
+                  </SelectListbox>
+                </SelectContent>
+              </Select>
+              <FormErrorMessage>{errors("permissions")[0]}</FormErrorMessage>
             </FormControl>
 
             <div class="w-full flex flex-row justify-end my-4">
@@ -110,4 +147,4 @@ const AddTeam: Component<any> = (props: any) => {
   );
 };
 
-export default AddTeam;
+export default AddTeamPackage;

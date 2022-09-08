@@ -4,7 +4,7 @@ import { useRouteData, useNavigate, useLocation } from "@solidjs/router";
 import { Table, Thead, Tr, Th, Tbody, Td, Button } from "@hope-ui/solid";
 
 import AddTeam from "./AddTeam";
-import RemoveUser from "./RemoveUser";
+import RemoveResource from "./RemoveResource";
 
 import { Team } from "../services/teams";
 import { sessionState, state } from "../store/state";
@@ -22,24 +22,16 @@ const Teams: Component = () => {
 
   async function saveTeam(values: Team) {
     try {
-      await TeamsService.addTeam(
-        sessionState().session?.token!,
-        values,
-        state.currentOrganizationId!
-      );
+      await TeamsService.addTeam(values, state.currentOrganizationId!);
       setTeams([values, ...teams()]);
     } catch (e) {
       console.error(e);
     }
   }
 
-  async function removeTeam(team: Team) {
-    await TeamsService.removeTeam(
-      sessionState().session?.token!,
-      team.name,
-      state.currentOrganizationId!
-    );
-    setTeams(teams().filter((u: Team) => u.name !== team.name));
+  async function removeTeam(teamName: string) {
+    await TeamsService.removeTeam(teamName, state.currentOrganizationId!);
+    setTeams(teams().filter((u: Team) => u.name !== teamName));
   }
 
   return (
@@ -87,7 +79,14 @@ const Teams: Component = () => {
                       >
                         Packages
                       </Button>
-                      <RemoveUser user={team} onRemoveUser={removeTeam} />
+                      <div class="flex flex-row justify-start gap-x-1">
+                        <RemoveResource
+                          resourceId={team.name}
+                          resourceType="Team"
+                          resourceName={team.name}
+                          onRemoveResource={removeTeam}
+                        />
+                      </div>
                     </div>
                   </Td>
                 </Tr>

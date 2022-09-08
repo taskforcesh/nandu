@@ -3,12 +3,11 @@ import { useRouteData, useParams } from "@solidjs/router";
 
 import { Table, Thead, Tr, Th, Tbody, Td } from "@hope-ui/solid";
 
-import AddTeam from "./AddTeam";
-import RemoveUser from "./RemoveUser";
+import RemoveResource from "./RemoveResource";
 
-import { Team } from "../services/teams";
-import { sessionState, state } from "../store/state";
+import { state } from "../store/state";
 import { TeamsService } from "../services/teams";
+import AddTeamMember from "./AddTeamMember";
 
 /**
  * Dashboard Component.
@@ -19,27 +18,28 @@ const TeamMembers: Component = () => {
 
   const params = useParams();
 
-  async function addMember(team: string, userName: string) {
+  async function addMember({ name }: { name: string }) {
     try {
-      await TeamsService.addMember(
-        sessionState().session?.token!,
+      const user = await TeamsService.addMember(
         state.currentOrganizationId!,
-        userName,
-        team
+        params.team,
+        name
       );
-      setMembers([{ name: userName }, ...members()]);
+      setMembers([user, ...members()]);
     } catch (e) {
       console.error(e);
     }
   }
 
-  async function removeTeam(team: Team) {
-    await TeamsService.removeTeam(
-      sessionState().session?.token!,
-      team.name,
-      state.currentOrganizationId!
+  async function removeMember(memberName: string) {
+    await TeamsService.removeMember(
+      state.currentOrganizationId!,
+      params.team,
+      memberName
     );
-    setMembers(members().filter((u: Team) => u.name !== team.name));
+    setMembers(
+      members().filter((u: { name: string }) => u.name !== memberName)
+    );
   }
 
   return (
@@ -51,7 +51,7 @@ const TeamMembers: Component = () => {
       </div>
 
       <div class="flex flex-row justify-start mb-4">
-        <AddTeam onAddTeam={addMember} />
+        <AddTeamMember onAddTeamMember={addMember} />
       </div>
 
       <div class="border-2 border-gray-200 rounded-lg h-full">
@@ -77,7 +77,12 @@ const TeamMembers: Component = () => {
                   <Td>{new Date(member.updatedAt).toLocaleDateString()}</Td>
                   <Td>
                     <div class="flex flex-row justify-start gap-x-1">
-                      <RemoveUser user={member} onRemoveUser={removeTeam} />
+                      <RemoveResource
+                        resourceId={member.name}
+                        resourceType="Team Member"
+                        resourceName={member.name}
+                        onRemoveResource={() => removeMember(member.name)}
+                      />
                     </div>
                   </Td>
                 </Tr>

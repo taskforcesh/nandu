@@ -1,4 +1,4 @@
-const host = import.meta.env.VITE_API_HOST;
+import { Api } from "./api";
 
 export interface Team {
   name: string;
@@ -13,109 +13,54 @@ export interface Package {
 }
 
 export class TeamsService {
-  static listTeams(scope: string, token: string) {
-    return fetch(`${host}/api/organizations/${scope}/teams`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (response) => {
-      if (response.status === 200) {
-        return response.json() as Promise<Team[]>;
-      } else {
-        throw new Error("Invalid credentials");
-      }
+  static listTeams(scope: string) {
+    return Api.get<Team[]>(`/api/organizations/${scope}/teams`);
+  }
+
+  static listMembers(scope: string, team: string) {
+    return Api.get<{ name: string }[]>(
+      `/api/organizations/${scope}/${team}/users`
+    );
+  }
+
+  static async listPackages(scope: string, team: string) {
+    const result = await Api.get<{
+      packages: Package[];
+    }>(`/-/team/${scope}/${team}/package`);
+    return result?.packages;
+  }
+
+  static addTeam(team: { name: string; description: string }, scope: string) {
+    return Api.put(`/-/org/${scope}/team`, { body: team });
+  }
+
+  static addMember(scope: string, team: string, userId: string) {
+    return Api.put(`/-/team/${scope}/${team}/user`, { body: { user: userId } });
+  }
+
+  static removeMember(scope: string, team: string, userId: string) {
+    return Api.delete(`/-/team/${scope}/${team}/user`, {
+      body: { user: userId },
     });
   }
 
-  static listMembers(scope: string, team: string, token: string) {
-    return fetch(`${host}/api/organizations/${scope}/${team}/users`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (response) => {
-      if (response.status === 200) {
-        return response.json() as Promise<{ name: string }[]>;
-      } else {
-        throw new Error("Invalid credentials");
-      }
-    });
-  }
-
-  static listPackages(scope: string, team: string, token: string) {
-    return fetch(`${host}/-/team/${scope}/${team}/package`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (response) => {
-      if (response.status === 200) {
-        const result = await (response.json() as Promise<{
-          packages: Package[];
-        }>);
-        return result.packages;
-      } else {
-        throw new Error("Invalid credentials");
-      }
-    });
-  }
-
-  static addTeam(
-    token: string,
-    team: { name: string; description: string },
-    scope: string
-  ) {
-    return fetch(`${host}/-/org/${scope}/team`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(team),
-    }).then(async (response) => {
-      if (response.status !== 201) {
-        throw new Error(await response.text());
-      }
-    });
-  }
-
-  static addMember(
-    token: string,
+  static addPackage(
     scope: string,
     team: string,
-    userId: string,
-    role: string = "developer"
+    pkg: { name: string; permissions: string }
   ) {
-    return fetch(`${host}/-/team/${scope}/${team}/user`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        "npm-role": role,
-      },
-      body: JSON.stringify({ user: userId }),
-    }).then(async (response) => {
-      if (response.status !== 201) {
-        throw new Error(await response.text());
-      }
+    return Api.put(`/-/team/${scope}/${team}/package`, {
+      body: { package: pkg.name, permissions: pkg.permissions },
     });
   }
 
-  static removeTeam(token: string, team: string, scope: string) {
-    return fetch(`${host}/-/team/${scope}/${team}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (response) => {
-      if (response.status !== 200) {
-        throw new Error(await response.text());
-      }
+  static removePackage(scope: string, team: string, pkg: string) {
+    return Api.delete(`/-/team/${scope}/${team}/package`, {
+      body: { package: pkg },
     });
+  }
+
+  static removeTeam(team: string, scope: string) {
+    return Api.delete(`/-/team/${scope}/${team}`);
   }
 }

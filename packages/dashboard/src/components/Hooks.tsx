@@ -3,9 +3,8 @@ import { Table, Thead, Tr, Th, Tbody, Td } from "@hope-ui/solid";
 
 import { useRouteData } from "@solidjs/router";
 
-import RemoveUser from "./RemoveUser";
+import RemoveResource from "./RemoveResource";
 import { HooksService, Hook, HookType } from "../services/hooks";
-import { sessionState, state } from "../store/state";
 import AddHook from "./AddHook";
 
 /**
@@ -22,19 +21,15 @@ const Hooks: Component = () => {
     secret: string;
   }) {
     try {
-      await HooksService.addHook(sessionState().session?.token!, values);
-      setHooks([{ ...values, createdAt: new Date() }, ...hooks()]);
+      const hook = await HooksService.addHook(values);
+      setHooks([hook, ...hooks()]);
     } catch (e) {
       console.error(e);
     }
   }
-  async function removeHook(team: Hook) {
-    await HooksService.removeHook(
-      sessionState().session?.token!,
-      team.name,
-      state.currentOrganizationId!
-    );
-    setHooks(hooks().filter((u: Hook) => u.name !== team.name));
+  async function removeHook(hookId: string) {
+    await HooksService.removeHook(hookId);
+    setHooks(hooks().filter((u: Hook) => u.id !== hookId));
   }
 
   return (
@@ -70,7 +65,12 @@ const Hooks: Component = () => {
                   <Td>{hook.createdAt}</Td>
                   <Td>
                     <div class="flex flex-row justify-start gap-x-1">
-                      <RemoveUser user={hook} onRemoveUser={removeHook} />
+                      <RemoveResource
+                        resourceId={hook.id}
+                        resourceType="Hook"
+                        resourceName={hook.name}
+                        onRemoveResource={removeHook}
+                      />
                     </div>
                   </Td>
                 </Tr>

@@ -3,12 +3,11 @@ import { useRouteData, useParams } from "@solidjs/router";
 
 import { Table, Thead, Tr, Th, Tbody, Td } from "@hope-ui/solid";
 
-import AddTeam from "./AddTeam";
-import RemoveUser from "./RemoveUser";
+import RemoveResource from "./RemoveResource";
 
-import { Team } from "../services/teams";
-import { sessionState, state } from "../store/state";
+import { state } from "../store/state";
 import { TeamsService } from "../services/teams";
+import AddTeamPackage from "./AddTeamPackage";
 
 /**
  * Dashboard Component.
@@ -19,27 +18,31 @@ const TeamPackages: Component = () => {
 
   const params = useParams();
 
-  async function addPackage(team: string, userName: string) {
+  async function addPackage(pkg: { name: string; permissions: string }) {
     try {
-      await TeamsService.addMember(
-        sessionState().session?.token!,
+      await TeamsService.addPackage(
         state.currentOrganizationId!,
-        userName,
-        team
+        params.team,
+        pkg
       );
-      setPackages([{ name: userName }, ...packages()]);
+      setPackages([
+        { packageId: pkg.name, permissions: pkg.permissions },
+        ...packages(),
+      ]);
     } catch (e) {
       console.error(e);
     }
   }
 
-  async function removePackage(team: Team) {
-    await TeamsService.removeTeam(
-      sessionState().session?.token!,
-      team.name,
-      state.currentOrganizationId!
+  async function removePackage(packageId: string) {
+    await TeamsService.removePackage(
+      state.currentOrganizationId!,
+      params.team,
+      packageId
     );
-    setPackages(packages().filter((u: Team) => u.name !== team.name));
+    setPackages(
+      packages().filter((u: { packageId: string }) => u.packageId !== packageId)
+    );
   }
 
   return (
@@ -51,7 +54,7 @@ const TeamPackages: Component = () => {
       </div>
 
       <div class="flex flex-row justify-start mb-4">
-        <AddTeam onAddTeam={addPackage} />
+        <AddTeamPackage onAddTeamPackage={addPackage} />
       </div>
 
       <div class="border-2 border-gray-200 rounded-lg h-full">
@@ -71,7 +74,12 @@ const TeamPackages: Component = () => {
                   <Td>{pkg.permissions}</Td>
                   <Td>
                     <div class="flex flex-row justify-start gap-x-1">
-                      <RemoveUser user={pkg} onRemoveUser={removePackage} />
+                      <RemoveResource
+                        resourceId={pkg.packageId}
+                        resourceType="Team Package"
+                        resourceName={pkg.packageId}
+                        onRemoveResource={() => removePackage(pkg.packageId)}
+                      />
                     </div>
                   </Td>
                 </Tr>

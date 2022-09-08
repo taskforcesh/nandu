@@ -1,5 +1,4 @@
-const host = import.meta.env.VITE_API_HOST;
-
+import { Api } from "./api";
 export interface HookType {
   type: "owner" | "scope" | "package";
 }
@@ -18,62 +17,34 @@ export interface Hook {
 }
 
 export class HooksService {
-  static listHooks(token: string) {
-    return fetch(`${host}/-/npm/v1/hooks`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (response) => {
-      if (response.status === 200) {
-        const result = await (response.json() as Promise<{ objects: Hook[] }>);
-        return result.objects;
-      } else {
-        throw new Error("Invalid credentials");
-      }
-    });
+  static async listHooks() {
+    const result = await Api.get<{ objects: Hook[] }>(`/-/npm/v1/hooks`);
+    return result?.objects;
   }
 
-  static addHook(
-    token: string,
-    {
-      type,
-      name,
-      endpoint,
-      secret,
-    }: { type: HookType; name: string; endpoint: string; secret: string }
-  ) {
+  static addHook({
+    type,
+    name,
+    endpoint,
+    secret,
+  }: {
+    type: HookType;
+    name: string;
+    endpoint: string;
+    secret: string;
+  }) {
     if (type.type === "scope" && !name.startsWith("@")) {
       name = `@${name}`;
     }
 
-    return fetch(`${host}/-/npm/v1/hooks/hook`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ type, name, endpoint, secret }),
-    }).then(async (response) => {
-      if (response.status !== 201) {
-        throw new Error(await response.text());
-      }
+    return Api.post(`/-/npm/v1/hooks/hook`, {
+      body: { type, name, endpoint, secret },
     });
   }
 
-  static removeHook(token: string, hookId: string, scope: string) {
-    return fetch(`${host}/-/org/${scope}/user`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ user: hookId }),
-    }).then(async (response) => {
-      if (response.status !== 200) {
-        throw new Error(await response.text());
-      }
+  static removeHook(hookId: string) {
+    return Api.delete(`/-/npm/v1/hooks/hook/${hookId}`, {
+      body: { user: hookId },
     });
   }
 }

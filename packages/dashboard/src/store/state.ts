@@ -2,9 +2,16 @@ import { createStore } from "solid-js/store";
 import { Signal, createSignal } from "solid-js";
 import { Session } from "../services/session";
 
+export interface AlertOptions {
+  status: "info" | "success" | "danger" | "warning";
+  title: string;
+  description?: string;
+}
+
 export const [state, setState] = createStore<{
   currentOrganizationId?: string;
-}>({});
+  alerts: AlertOptions[];
+}>({ alerts: [] });
 
 function createLocalStorageSignal<T>(
   key: string,

@@ -25,15 +25,14 @@ import { classNames } from "../utils";
 
 const schema = object({
   name: string().required(),
-  description: string().required(),
 });
 
 /**
- * AddTeam Component.
+ * Dashboard Component.
  *
  */
-const AddTeam: Component<any> = (props: any) => {
-  const merged = mergeProps({ onAddTeam: () => void 0 }, props);
+const AddTeamMember: Component<any> = (props: any) => {
+  const merged = mergeProps({ onAddTeamMember: () => void 0 }, props);
 
   const { isOpen, onOpen, onClose } = createDisclosure();
 
@@ -42,7 +41,7 @@ const AddTeam: Component<any> = (props: any) => {
   >({
     extend: validator({ schema }),
     onSubmit: async (values) => {
-      await merged.onAddTeam(values);
+      await merged.onAddTeamMember(values);
       onClose();
     },
     initialValues: {},
@@ -60,7 +59,7 @@ const AddTeam: Component<any> = (props: any) => {
         )}
       >
         <Icon class="w-5 h-5 mr-1" path={userAdd} />
-        Team
+        Member
       </button>
 
       <Modal
@@ -72,7 +71,7 @@ const AddTeam: Component<any> = (props: any) => {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalHeader>Add Team</ModalHeader>
+          <ModalHeader>Add Team Member</ModalHeader>
           <ModalBody as="form" ref={form}>
             <FormControl required invalid={!!errors("name")}>
               <FormLabel>Name</FormLabel>
@@ -83,12 +82,6 @@ const AddTeam: Component<any> = (props: any) => {
                 placeholder="Team Name"
               />
               <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl required invalid={!!errors("description")}>
-              <FormLabel>Description</FormLabel>
-              <Input type="text" name="description" placeholder="Description" />
-              <FormErrorMessage>{errors("description")[0]}</FormErrorMessage>
             </FormControl>
 
             <div class="w-full flex flex-row justify-end my-4">
@@ -110,4 +103,4 @@ const AddTeam: Component<any> = (props: any) => {
   );
 };
 
-export default AddTeam;
+export default AddTeamMember;

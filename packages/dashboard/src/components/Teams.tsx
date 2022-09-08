@@ -36,7 +36,7 @@ const Teams: Component = () => {
 
   return (
     <div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-5">
         <h1 class="text-2xl font-semibold text-white">Teams</h1>
       </div>
 
@@ -44,10 +44,10 @@ const Teams: Component = () => {
         <AddTeam onAddTeam={saveTeam} />
       </div>
 
-      <div class="border-2 border-gray-200 rounded-lg h-full">
+      <div class="border-2 border-orange-400 rounded-lg h-full">
         <Table>
           <Thead>
-            <Tr>
+            <Tr class="text-orange-400">
               <Th>Name</Th>
               <Th>Description</Th>
               <Th>Action</Th>
@@ -60,17 +60,18 @@ const Teams: Component = () => {
                   <Td>{team.name}</Td>
                   <Td>{team.description}</Td>
                   <Td>
-                    <div class="flex flex-row justify-start gap-x-1">
-                      <Button
+                    <div class="items-center flex flex-row justify-start gap-x-1">
+                      <Button class="bg-orange-400 hover:bg-orange-500 focus:outline-none font-medium rounded-md "
                         onClick={() =>
                           navigate(`${location.pathname}/${team.name}/members`)
+                          
                         }
                         size="lg"
                         compact
                       >
                         Members
                       </Button>
-                      <Button
+                      <Button class="bg-orange-400 hover:bg-orange-500 focus:outline-none"
                         onClick={() =>
                           navigate(`${location.pathname}/${team.name}/packages`)
                         }

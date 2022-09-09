@@ -3,9 +3,12 @@
   "packageManager": "yarn@3.2.1",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/cli",
+    "packages/service",
+    "packages/dashboard"
   ],
-  "dependencies": {
-    "pg": "^8.8.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taskforcesh/nandu.git"
   }
 }

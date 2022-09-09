@@ -3,3 +3,7 @@ node_modules
 /storage
 .DS_Store
 yarn-error.log
+packages/service/storage
+packages/service/dist
+.yarn
+packages/service/.env

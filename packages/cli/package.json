@@ -1,0 +1,116 @@
+{
+  "name": "@nanduland/cli",
+  "description": "Nandu Open NPM Registry CLI",
+  "version": "1.2.2",
+  "author": "@taskforcesh",
+  "bin": {
+    "nandu": "./bin/run"
+  },
+  "bugs": "https://github.com/taskforcesh/nandu-cli/issues",
+  "dependencies": {
+    "@nanduland/service": "workspace:packages/service",
+    "@npmcli/config": "^2.3.1",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^3",
+    "axios": "^0.24.0",
+    "cli-ux": "^5.6.3",
+    "tslib": "^1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.1",
+    "@semantic-release/exec": "^6.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/npm": "^8.0.3",
+    "@semantic-release/release-notes-generator": "^10.0.2",
+    "@types/chai": "^4",
+    "@types/mocha": "^5",
+    "@types/node": "^16.11.7",
+    "chai": "^4",
+    "eslint": "^5.13",
+    "eslint-config-oclif": "^3.1",
+    "eslint-config-oclif-typescript": "^0.1",
+    "globby": "^10",
+    "mocha": "^5",
+    "nyc": "^14",
+    "semantic-release": "^19.0.5",
+    "ts-node": "^8",
+    "typescript": "^4.5.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/taskforcesh/nandu-cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "AGPL",
+  "main": "lib/index.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "nandu",
+    "plugins": [
+      "@oclif/plugin-help"
+    ],
+    "topics": {
+      "token:create": {
+        "description": "create a new token for given user"
+      },
+      "token:ls": {
+        "description": "list tokens for given user"
+      }
+    }
+  },
+  "repository": "taskforcesh/nandu-cli",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts",
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "docs/gitbook/changelog-cli.md"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "pnpm-lock.yaml",
+            "docs/gitbook/changelog.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  }
+}

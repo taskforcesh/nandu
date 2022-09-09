@@ -1,0 +1,75 @@
+{
+  "name": "@nanduland/dashboard",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "VITE_API_HOST= vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.6",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "autoprefixer": "latest",
+    "multi-semantic-release": "^3.0.0",
+    "postcss": "latest",
+    "semantic-release": "^19.0.5",
+    "tailwindcss": "latest",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.4",
+    "vite-plugin-solid": "^2.2.6"
+  },
+  "dependencies": {
+    "@felte/solid": "^1.2.3",
+    "@felte/validator-yup": "^1.0.9",
+    "@hope-ui/solid": "^0.6.7",
+    "@solidjs/router": "^0.4.2",
+    "@stitches/core": "^1.2.8",
+    "@thisbeyond/solid-select": "^0.12.0",
+    "solid-heroicons": "^2.0.3",
+    "solid-js": "latest",
+    "solid-transition-group": "^0.0.10",
+    "whatwg-fetch": "^3.6.2",
+    "yup": "^0.32.11"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "docs/gitbook/changelog-dashboard.md"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "pnpm-lock.yaml",
+            "docs/gitbook/changelog.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  }
+}

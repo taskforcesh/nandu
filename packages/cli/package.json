@@ -6,7 +6,7 @@
   "bin": {
     "nandu": "./bin/run"
   },
-  "bugs": "https://github.com/taskforcesh/nandu-cli/issues",
+  "bugs": "https://github.com/taskforcesh/nandu/issues",
   "dependencies": {
     "@nanduland/service": "workspace:packages/service",
     "@npmcli/config": "^2.3.1",
@@ -50,7 +50,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/taskforcesh/nandu-cli",
+  "homepage": "https://github.com/taskforcesh/nandu",
   "keywords": [
     "oclif"
   ],
@@ -71,7 +71,7 @@
       }
     }
   },
-  "repository": "taskforcesh/nandu-cli",
+  "repository": "taskforcesh/nandu",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",

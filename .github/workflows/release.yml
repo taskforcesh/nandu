@@ -15,9 +15,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --non-interactive
+        run: yarn install --frozen-lockfile
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1704,7 +1704,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nanduland/cli@workspace:packages/cli"
   dependencies:
-    "@nanduland/service": "workspace:packages/service"
+    "@nanduland/service": "workspace:*"
     "@npmcli/config": ^2.3.1
     "@oclif/command": ^1
     "@oclif/config": ^1
@@ -1739,7 +1739,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nanduland/dashboard@workspace:packages/dashboard":
+"@nanduland/dashboard@workspace:*, @nanduland/dashboard@workspace:packages/dashboard":
   version: 0.0.0-use.local
   resolution: "@nanduland/dashboard@workspace:packages/dashboard"
   dependencies:
@@ -1764,13 +1764,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nanduland/service@workspace:packages/service":
+"@nanduland/service@workspace:*, @nanduland/service@workspace:packages/service":
   version: 0.0.0-use.local
   resolution: "@nanduland/service@workspace:packages/service"
   dependencies:
     "@aws-sdk/client-s3": ^3.41.0
     "@aws-sdk/lib-storage": ^3.41.0
-    "@nanduland/dashboard": "workspace:packages/dashboard"
+    "@nanduland/dashboard": "workspace:*"
     "@types/bcrypt": ^5.0.0
     "@types/cors": ^2.8.12
     "@types/express": ^4.17.13

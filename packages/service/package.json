@@ -30,7 +30,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.41.0",
     "@aws-sdk/lib-storage": "^3.41.0",
-    "@nanduland/dashboard": "workspace:packages/dashboard",
+    "@nanduland/dashboard": "workspace:*",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",

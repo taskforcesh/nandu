@@ -22,6 +22,10 @@
     "prepare": "npm run build"
   },
   "author": "Taskforce.sh Inc.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taskforcesh/nandu.git"
+  },
   "license": "AGPL",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.41.0",

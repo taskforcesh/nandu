@@ -71,7 +71,10 @@
       }
     }
   },
-  "repository": "taskforcesh/nandu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taskforcesh/nandu.git"
+  },
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",

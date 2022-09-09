@@ -39,6 +39,10 @@
     "whatwg-fetch": "^3.6.2",
     "yup": "^0.32.11"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taskforcesh/nandu.git"
+  },
   "release": {
     "branches": [
       "main"

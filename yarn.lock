@@ -1746,18 +1746,10 @@ __metadata:
     "@felte/solid": ^1.2.3
     "@felte/validator-yup": ^1.0.9
     "@hope-ui/solid": ^0.6.7
-    "@semantic-release/changelog": ^6.0.1
-    "@semantic-release/commit-analyzer": ^9.0.2
-    "@semantic-release/exec": ^6.0.3
-    "@semantic-release/git": ^10.0.1
-    "@semantic-release/github": ^8.0.6
-    "@semantic-release/npm": ^9.0.1
-    "@semantic-release/release-notes-generator": ^10.0.3
     "@solidjs/router": ^0.4.2
     "@stitches/core": ^1.2.8
     "@thisbeyond/solid-select": ^0.12.0
     autoprefixer: latest
-    multi-semantic-release: ^3.0.0
     postcss: latest
     semantic-release: ^19.0.5
     solid-heroicons: ^2.0.3
@@ -1779,13 +1771,6 @@ __metadata:
     "@aws-sdk/client-s3": ^3.41.0
     "@aws-sdk/lib-storage": ^3.41.0
     "@nanduland/dashboard": "workspace:packages/dashboard"
-    "@semantic-release/changelog": ^6.0.1
-    "@semantic-release/commit-analyzer": ^9.0.1
-    "@semantic-release/exec": ^6.0.2
-    "@semantic-release/git": ^10.0.1
-    "@semantic-release/github": ^8.0.2
-    "@semantic-release/npm": ^9.0.1
-    "@semantic-release/release-notes-generator": ^10.0.2
     "@types/bcrypt": ^5.0.0
     "@types/cors": ^2.8.12
     "@types/express": ^4.17.13
@@ -1802,7 +1787,6 @@ __metadata:
     http-status-codes: ^2.1.4
     is-jwt: ^1.0.0
     jsonwebtoken: ^8.5.1
-    multi-semantic-release: ^3.0.0
     nodemon: ^2.0.14
     passport: ^0.6.0
     pg: ^8.8.0
@@ -8810,6 +8794,15 @@ __metadata:
 "nandu@workspace:.":
   version: 0.0.0-use.local
   resolution: "nandu@workspace:."
+  dependencies:
+    "@semantic-release/changelog": ^6.0.1
+    "@semantic-release/commit-analyzer": ^9.0.2
+    "@semantic-release/exec": ^6.0.3
+    "@semantic-release/git": ^10.0.1
+    "@semantic-release/github": ^8.0.6
+    "@semantic-release/npm": ^9.0.1
+    "@semantic-release/release-notes-generator": ^10.0.3
+    multi-semantic-release: ^3.0.0
   languageName: unknown
   linkType: soft
 

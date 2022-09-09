@@ -8986,6 +8986,7 @@ __metadata:
     "@semantic-release/npm": ^9.0.1
     "@semantic-release/release-notes-generator": ^10.0.3
     multi-semantic-release: 2.13.0
+    semantic-release: ^19.0.5
   languageName: unknown
   linkType: soft
 

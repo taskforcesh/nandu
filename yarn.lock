@@ -2613,9 +2613,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/npm@git@github.com:taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608":
+"@semantic-release/npm@https://github.com/taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608":
   version: 0.0.0-development
-  resolution: "@semantic-release/npm@git@github.com:taskforcesh/npm.git#commit=2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608"
+  resolution: "@semantic-release/npm@https://github.com/taskforcesh/npm.git#commit=2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608"
   dependencies:
     "@semantic-release/error": ^3.0.0
     aggregate-error: ^3.0.0
@@ -8075,7 +8075,7 @@ __metadata:
     "@semantic-release/exec": ^6.0.3
     "@semantic-release/git": ^10.0.1
     "@semantic-release/github": ^8.0.6
-    "@semantic-release/npm": "git@github.com:taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608"
+    "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608"
     "@semantic-release/release-notes-generator": ^10.0.3
     multi-semantic-release: 2.13.0
     semantic-release: ^19.0.5

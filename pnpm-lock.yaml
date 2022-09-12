@@ -8,7 +8,7 @@ specifiers:
   '@semantic-release/github': ^8.0.6
   '@semantic-release/npm': https://github.com/taskforcesh/npm.git#51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d
   '@semantic-release/release-notes-generator': ^10.0.3
-  multi-semantic-release: https://github.com/taskforcesh/multi-semantic-release.git#7b3d7aaf1bf436fb0a2fff03ab0478f30e8e0ba1
+  multi-semantic-release: ^3.0.0
   semantic-release: ^19.0.5
 
 devDependencies:
@@ -19,7 +19,7 @@ devDependencies:
   '@semantic-release/github': 8.0.6_semantic-release@19.0.5
   '@semantic-release/npm': github.com/taskforcesh/npm/51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d_semantic-release@19.0.5
   '@semantic-release/release-notes-generator': 10.0.3_semantic-release@19.0.5
-  multi-semantic-release: github.com/taskforcesh/multi-semantic-release/7b3d7aaf1bf436fb0a2fff03ab0478f30e8e0ba1
+  multi-semantic-release: 3.0.0
   semantic-release: 19.0.5
 
 packages:
@@ -1448,6 +1448,34 @@ packages:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
     dev: true
 
+  /multi-semantic-release/3.0.0:
+    resolution: {integrity: sha512-GKsAxdXJsfsCSNEZkAKjUm/2jL8KS3eUMT2OwlqGt2Uf1ueyzjBR64/Bdg6x5DVxl1rTu+w5aPanFbqXaH88kA==}
+    engines: {node: '>=16 || ^14.17', yarn: '>=1.0.0'}
+    hasBin: true
+    dependencies:
+      '@manypkg/get-packages': 1.1.3
+      blork: 9.3.0
+      cosmiconfig: 7.0.1
+      debug: 4.3.4
+      detect-indent: 6.1.0
+      detect-newline: 3.1.0
+      execa: 4.1.0
+      get-stream: 6.0.1
+      git-log-parser: 1.2.0
+      globby: 11.0.4
+      lodash: 4.17.21
+      meow: 8.1.2
+      promise-events: 0.2.4
+      semantic-release: 19.0.5
+      semver: 7.3.7
+      signale: 1.4.0
+      stream-buffers: 3.0.2
+      unixify: 1.0.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
@@ -2365,36 +2393,6 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.9
-    dev: true
-
-  github.com/taskforcesh/multi-semantic-release/7b3d7aaf1bf436fb0a2fff03ab0478f30e8e0ba1:
-    resolution: {tarball: https://codeload.github.com/taskforcesh/multi-semantic-release/tar.gz/7b3d7aaf1bf436fb0a2fff03ab0478f30e8e0ba1}
-    name: multi-semantic-release
-    version: 0.0.0-semantically-released
-    engines: {node: '>=10.18', yarn: '>=1.0.0'}
-    hasBin: true
-    dependencies:
-      '@manypkg/get-packages': 1.1.3
-      blork: 9.3.0
-      cosmiconfig: 7.0.1
-      debug: 4.3.4
-      detect-indent: 6.1.0
-      detect-newline: 3.1.0
-      execa: 4.1.0
-      get-stream: 6.0.1
-      git-log-parser: 1.2.0
-      globby: 11.0.4
-      lodash: 4.17.21
-      meow: 8.1.2
-      promise-events: 0.2.4
-      semantic-release: 19.0.5
-      semver: 7.3.7
-      signale: 1.4.0
-      stream-buffers: 3.0.2
-      unixify: 1.0.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
     dev: true
 
   github.com/taskforcesh/npm/51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d_semantic-release@19.0.5:

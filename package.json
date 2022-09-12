@@ -17,7 +17,7 @@
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.6",
-    "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608",
+    "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "multi-semantic-release": "2.13.0",
     "semantic-release": "^19.0.5"

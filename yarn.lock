@@ -2613,9 +2613,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/npm@https://github.com/taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608":
+"@semantic-release/npm@https://github.com/taskforcesh/npm.git#51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d":
   version: 0.0.0-development
-  resolution: "@semantic-release/npm@https://github.com/taskforcesh/npm.git#commit=2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608"
+  resolution: "@semantic-release/npm@https://github.com/taskforcesh/npm.git#commit=51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d"
   dependencies:
     "@semantic-release/error": ^3.0.0
     aggregate-error: ^3.0.0
@@ -2624,7 +2624,7 @@ __metadata:
     lodash: ^4.17.15
     nerf-dart: ^1.0.0
     normalize-url: ^6.0.0
-    npm: ^8.6.0
+    npm: ^8.19.1
     rc: ^1.2.8
     read-pkg: ^5.0.0
     registry-auth-token: ^4.0.0
@@ -2632,7 +2632,7 @@ __metadata:
     tempy: ^1.0.0
   peerDependencies:
     semantic-release: ">=19.0.0"
-  checksum: e473d91cd223a75c536909edd1f8284e6d7e11f6c7eebbbe473456a9238d8bc2954db36b1d9fda62fbdf2e849cbc58df2430b2d35e4900f8d40ac2c49cdb9ad7
+  checksum: cc0e1a231b594a7d41bf00f92df66339c5602a24cb056c8c5ceda6061ffd6c19ba911c5f9c24e9e6c182222947c79d66b1a5db3db5215f9f40ae1b2094d470f8
   languageName: node
   linkType: hard
 
@@ -8075,7 +8075,7 @@ __metadata:
     "@semantic-release/exec": ^6.0.3
     "@semantic-release/git": ^10.0.1
     "@semantic-release/github": ^8.0.6
-    "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608"
+    "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d"
     "@semantic-release/release-notes-generator": ^10.0.3
     multi-semantic-release: 2.13.0
     semantic-release: ^19.0.5
@@ -8585,7 +8585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm@npm:^8.3.0, npm@npm:^8.6.0":
+"npm@npm:^8.19.1, npm@npm:^8.3.0":
   version: 8.19.1
   resolution: "npm@npm:8.19.1"
   dependencies:

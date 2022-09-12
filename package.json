@@ -19,8 +19,7 @@
     "@semantic-release/github": "^8.0.6",
     "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#51315b4bcf26ad6f7d5b33e3f37d4ec6c1618f9d",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "multi-semantic-release": "2.13.0",
-    "semantic-release": "^19.0.5"
+    "multi-semantic-release": "https://github.com/taskforcesh/multi-semantic-release.git#7b3d7aaf1bf436fb0a2fff03ab0478f30e8e0ba1"
   },
   "resolutions": {
     "npm/chalk": "^4.1.2"

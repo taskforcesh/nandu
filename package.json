@@ -17,9 +17,12 @@
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.6",
-    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/npm": "git@github.com:taskforcesh/npm.git#2bc716e2f5975a9e7e13d4c72daf3e21ca5c0608",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "multi-semantic-release": "2.13.0",
     "semantic-release": "^19.0.5"
+  },
+  "resolutions": {
+    "npm/chalk": "^4.1.2"
   }
 }

@@ -1,14 +1,14 @@
 {
   "name": "@nanduland/cli",
   "description": "Nandu Open NPM Registry CLI",
-  "version": "1.2.2",
+  "version": "1.0.0",
   "author": "@taskforcesh",
   "bin": {
     "nandu": "./bin/run"
   },
   "bugs": "https://github.com/taskforcesh/nandu/issues",
   "dependencies": {
-    "@nanduland/service": "workspace:*",
+    "@nanduland/service": "1.0.0",
     "@npmcli/config": "^2.3.1",
     "@oclif/command": "^1",
     "@oclif/config": "^1",

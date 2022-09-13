@@ -22,13 +22,6 @@ jobs:
         with:
           version: 6.0.2
 
-      - name: Archive npm failure logs
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: npm-logs
-          path: ~/.npm/_logs
-
       - name: Install dependencies
         run: pnpm install
       - name: Release
@@ -36,3 +29,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx multi-semantic-release
+
+      - name: Archive npm failure logs
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: npm-logs
+          path: ~/.npm/_logs

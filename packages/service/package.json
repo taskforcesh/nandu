@@ -28,6 +28,7 @@
   },
   "license": "AGPL",
   "dependencies": {
+    "@aws-sdk/abort-controller": "^3.0.0",
     "@aws-sdk/client-s3": "^3.41.0",
     "@aws-sdk/lib-storage": "^3.41.0",
     "@nanduland/dashboard": "workspace:*",

@@ -14,7 +14,7 @@
     "postcss": "latest",
     "semantic-release": "^19.0.5",
     "tailwindcss": "latest",
-    "typescript": "^4.6.4",
+    "typescript": "4.4.4",
     "vite": "^3.0.4",
     "vite-plugin-solid": "^2.2.6"
   },

@@ -13,6 +13,7 @@ Nandu Open NPM Registry CLI
 <!-- toc -->
 * [Nandu CLI](#nandu-cli)
 * [Quick Start](#quick-start)
+* [Teams](#teams)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
@@ -88,11 +89,11 @@ $ npm access grant read-only  @myorg:myteam @myorg/mypackage
 
 <!-- usage -->
 ```sh-session
-$ npm install -g nandu-cli
+$ npm install -g @nanduland/cli
 $ nandu COMMAND
 running command...
 $ nandu (-v|--version|version)
-nandu-cli/1.2.2 darwin-x64 node-v14.19.0
+@nanduland/cli/1.0.0 linux-x64 node-v14.20.0
 $ nandu --help [COMMAND]
 USAGE
   $ nandu COMMAND
@@ -126,7 +127,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.5/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.3.1/src/commands/help.ts)_
 
 ## `nandu start`
 
@@ -145,7 +146,7 @@ EXAMPLE
   $ nandu start -p 4567
 ```
 
-_See code: [src/commands/start.ts](https://github.com/taskforcesh/nandu-cli/blob/v1.2.2/src/commands/start.ts)_
+_See code: [src/commands/start.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/start.ts)_
 
 ## `nandu token`
 
@@ -159,7 +160,7 @@ EXAMPLE
   $ nandu token:create myuser
 ```
 
-_See code: [src/commands/token/index.ts](https://github.com/taskforcesh/nandu-cli/blob/v1.2.2/src/commands/token/index.ts)_
+_See code: [src/commands/token/index.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/token/index.ts)_
 
 ## `nandu token:create USER`
 
@@ -180,7 +181,7 @@ EXAMPLE
   $ nandu start -p 4567
 ```
 
-_See code: [src/commands/token/create.ts](https://github.com/taskforcesh/nandu-cli/blob/v1.2.2/src/commands/token/create.ts)_
+_See code: [src/commands/token/create.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/token/create.ts)_
 
 ## `nandu token:ls USER`
 
@@ -199,7 +200,7 @@ EXAMPLE
   $ nandu start -p 4567
 ```
 
-_See code: [src/commands/token/ls.ts](https://github.com/taskforcesh/nandu-cli/blob/v1.2.2/src/commands/token/ls.ts)_
+_See code: [src/commands/token/ls.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/token/ls.ts)_
 
 ## `nandu user`
 
@@ -213,7 +214,7 @@ EXAMPLE
   $ nandu user:add myuser
 ```
 
-_See code: [src/commands/user/index.ts](https://github.com/taskforcesh/nandu-cli/blob/v1.2.2/src/commands/user/index.ts)_
+_See code: [src/commands/user/index.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/user/index.ts)_
 
 ## `nandu user:add USER`
 
@@ -232,5 +233,5 @@ EXAMPLE
   $ nandu user:add myuser
 ```
 
-_See code: [src/commands/user/add.ts](https://github.com/taskforcesh/nandu-cli/blob/v1.2.2/src/commands/user/add.ts)_
+_See code: [src/commands/user/add.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/user/add.ts)_
 <!-- commandsstop -->

@@ -2,6 +2,9 @@
   "name": "@nanduland/service",
   "version": "1.0.0",
   "description": "Open NPM Registry",
+  "engines": {
+    "node": ">=16"
+  },
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "source": "src/index.ts",

@@ -1,7 +1,10 @@
 {
   "name": "@nanduland/dashboard",
   "version": "1.0.0",
-  "description": "",
+  "description": "Dashboard for Nandu Open NPM Registry",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "start": "vite",
     "dev": "vite",

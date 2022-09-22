@@ -1697,6 +1697,7 @@ __metadata:
     "@oclif/command": ^1.8.16
     "@oclif/config": ^1.18.3
     "@oclif/dev-cli": ^1.26.10
+    "@oclif/parser": ^3.8.7
     "@oclif/plugin-help": ^3.3.1
     "@oclif/test": ^1.2.9
     "@types/chai": ^4.3.3
@@ -2191,7 +2192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oclif/parser@npm:^3.8.0, @oclif/parser@npm:^3.8.6":
+"@oclif/parser@npm:^3.8.0, @oclif/parser@npm:^3.8.6, @oclif/parser@npm:^3.8.7":
   version: 3.8.7
   resolution: "@oclif/parser@npm:3.8.7"
   dependencies:

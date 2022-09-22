@@ -1,3 +1,13 @@
+## @nanduland/service [1.0.1](https://github.com/taskforcesh/nandu/compare/@nanduland/service@1.0.0...@nanduland/service@1.0.1) (2022-09-22)
+
+
+
+
+
+### Dependencies
+
+* **@nanduland/dashboard:** upgraded to 1.0.1
+
 # @nanduland/service 1.0.0 (2022-09-13)
 
 

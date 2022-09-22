@@ -93,13 +93,14 @@ const Login: Component = () => {
             >
               Login
             </button>
-
+            {/*
             <a
               class="inline-block align-baseline font-bold text-sm text-orange-400 hover:text-orange-600"
               href="#"
             >
               Forgot password?
             </a>
+            */}
           </div>
         </form>
         <p class="text-center text-gray-500 text-xs">

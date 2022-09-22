@@ -1,5 +1,12 @@
-import { Component, lazy, createResource, Show } from "solid-js";
-import { Routes, Route, useNavigate } from "@solidjs/router";
+import {
+  Component,
+  lazy,
+  createResource,
+  Show,
+  ErrorBoundary,
+  createMemo,
+} from "solid-js";
+import { Routes, Route, useNavigate, useLocation } from "@solidjs/router";
 
 const Login = lazy(() => import("./components/login"));
 const Dashboard = lazy(() => import("./components/dashboard"));
@@ -21,6 +28,13 @@ import Hooks from "./components/Hooks";
 import { TeamsService } from "./services/teams";
 import { HooksService } from "./services/hooks";
 import { TokensService } from "./services/tokens";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  CloseButton,
+} from "@hope-ui/solid";
 
 function TokensData({ params, location, navigate, data }: any) {
   const [tokens, { mutate }] = createResource(() => TokensService.listTokens());
@@ -80,6 +94,9 @@ function HooksData({ params, location, navigate, data }: any) {
 
 const App: Component = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const pathname = createMemo(() => location.pathname);
 
   if (!sessionState().session?.user) {
     navigate("/login", { replace: true });
@@ -87,47 +104,74 @@ const App: Component = () => {
 
   return (
     <div class={styles.App}>
-      <Routes>
-        <Route path="/login" element={<Login />} />
+      <ErrorBoundary
+        fallback={(err, reset) => {
+          console.error({ err });
+          if (err.name == 401) {
+            navigate(
+              `/login${pathname().length > 1 ? "?redirect=" + pathname() : ""}`,
+              {
+                replace: true,
+              }
+            );
+            return <></>;
+          } else {
+            return (
+              <Alert status="danger">
+                <AlertIcon mr="$2_5" />
+                <AlertTitle mr="$2_5">
+                  There was some unexpected error{" "}
+                </AlertTitle>
+                <AlertDescription>
+                  Please close this refresh the page to retry.
+                </AlertDescription>
+              </Alert>
+            );
+          }
+        }}
+      >
+        <Routes>
+          <Route path="/login" element={<Login />} />
 
-        <Show when={sessionState().session?.user} fallback={<></>}>
-          <Route
-            path="/about"
-            element={<div>This site was made with Solid</div>}
-          />
-          <Route path="/" component={Dashboard} data={UserOrganizations}>
-            <Route path="/" component={Profile} data={TokensData} />
-            <Route path="/:scope" component={Profile} data={TokensData} />
-
+          <Show when={sessionState().session?.user} fallback={<></>}>
             <Route
-              path="/:scope/packages"
-              component={Packages}
-              data={ScopePackages}
+              path="/about"
+              element={<div>This site was made with Solid</div>}
             />
+            <Route path="/" component={Dashboard} data={UserOrganizations}>
+              <Route path="/" component={Profile} data={TokensData} />
+              <Route path="/:scope" component={Profile} data={TokensData} />
 
-            <Route path="/:scope/users" component={Users} data={ScopeUsers} />
-            <Route
-              path="/:scope/teams"
-              component={Teams}
-              data={ScopeTeams}
-            ></Route>
+              <Route
+                path="/:scope/packages"
+                component={Packages}
+                data={ScopePackages}
+              />
 
-            <Route
-              path="/:scope/teams/:team/members"
-              component={TeamMembers}
-              data={TeamMembersData}
-            />
+              <Route path="/:scope/users" component={Users} data={ScopeUsers} />
+              <Route
+                path="/:scope/teams"
+                component={Teams}
+                data={ScopeTeams}
+              ></Route>
 
-            <Route
-              path="/:scope/teams/:team/packages"
-              component={TeamPackages}
-              data={TeamPackagesData}
-            />
+              <Route
+                path="/:scope/teams/:team/members"
+                component={TeamMembers}
+                data={TeamMembersData}
+              />
 
-            <Route path="/:scope/hooks" component={Hooks} data={HooksData} />
-          </Route>
-        </Show>
-      </Routes>
+              <Route
+                path="/:scope/teams/:team/packages"
+                component={TeamPackages}
+                data={TeamPackagesData}
+              />
+
+              <Route path="/:scope/hooks" component={Hooks} data={HooksData} />
+            </Route>
+          </Show>
+        </Routes>
+      </ErrorBoundary>
     </div>
   );
 };

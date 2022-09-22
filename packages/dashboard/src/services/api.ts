@@ -34,7 +34,9 @@ export class Api {
         title: "Error",
         description: response.statusText,
       });
-      throw new Error(`${response.statusText}`);
+      const err = new Error(response.statusText);
+      err.name = response.status.toString();
+      throw err;
     }
   }
 

@@ -1,3 +1,19 @@
+## @nanduland/service [1.0.3](https://github.com/taskforcesh/nandu/compare/@nanduland/service@1.0.2...@nanduland/service@1.0.3) (2022-09-23)
+
+
+### Bug Fixes
+
+* downgrade to node 14 as ci fails otherwise ([8f44e51](https://github.com/taskforcesh/nandu/commit/8f44e516546daab1bb7dea63203486715b82cc9e))
+* **service:** construct dir to dashboard files ([8adeea6](https://github.com/taskforcesh/nandu/commit/8adeea60db655c1fbe36d1bca93d94cb846a730c))
+
+
+
+
+
+### Dependencies
+
+* **@nanduland/dashboard:** upgraded to 1.0.3
+
 ## @nanduland/service [1.0.2](https://github.com/taskforcesh/nandu/compare/@nanduland/service@1.0.1...@nanduland/service@1.0.2) (2022-09-23)
 
 

@@ -1,5 +1,5 @@
-import { Component, createMemo, createSignal, mergeProps } from "solid-js";
-import { useLocation, useNavigate, NavLink } from "@solidjs/router";
+import { Component, mergeProps } from "solid-js";
+import { useNavigate, NavLink } from "@solidjs/router";
 
 import { Icon } from "solid-heroicons";
 import {

@@ -1,8 +1,7 @@
 import { Component, mergeProps, For } from "solid-js";
 import { createForm } from "@felte/solid";
 import { validator } from "@felte/validator-yup";
-import { InferType, mixed } from "yup";
-import { object, string } from "yup";
+import { InferType, mixed, object, string } from "yup";
 
 import {
   Modal,

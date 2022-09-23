@@ -8,13 +8,13 @@ import {
 } from "solid-js";
 import { Routes, Route, useNavigate, useLocation } from "@solidjs/router";
 
-const Login = lazy(() => import("./components/login"));
-const Dashboard = lazy(() => import("./components/dashboard"));
-const Profile = lazy(() => import("./components/profile"));
-const Packages = lazy(() => import("./components/packages"));
-const Teams = lazy(() => import("./components/teams"));
-const TeamMembers = lazy(() => import("./components/teamMembers"));
-const TeamPackages = lazy(() => import("./components/teamPackages"));
+const Login = lazy(() => import("./components/Login"));
+const Dashboard = lazy(() => import("./components/Dashboard"));
+const Profile = lazy(() => import("./components/Profile"));
+const Packages = lazy(() => import("./components/Packages"));
+const Teams = lazy(() => import("./components/Teams"));
+const TeamMembers = lazy(() => import("./components/TeamMembers"));
+const TeamPackages = lazy(() => import("./components/TeamPackages"));
 
 import { PackagesService } from "./services/packages";
 

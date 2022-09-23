@@ -39,8 +39,11 @@ export async function startServer(port: number = 4567, serveDashboard = false) {
   const versionString = `Nandu NPM Registry v${pkg.version}`;
 
   if (serveDashboard) {
-    const { distDir } = require("@nanduland/dashboard");
-    app.use(express.static(distDir));
+    const path = require("path");
+    const dashboardDistDir = path.resolve(
+      `${getPkgJsonDir()}/../dashboard/dist`
+    );
+    app.use(express.static(dashboardDistDir));
   } else {
     app.get("/", (req: Request, res: Response) => {
       res.status(200).send(versionString);

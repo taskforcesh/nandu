@@ -106,7 +106,6 @@ const App: Component = () => {
     <div class={styles.App}>
       <ErrorBoundary
         fallback={(err, reset) => {
-          console.error({ err });
           if (err.name == 401) {
             navigate(
               `/login${pathname().length > 1 ? "?redirect=" + pathname() : ""}`,

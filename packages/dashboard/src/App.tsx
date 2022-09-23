@@ -122,7 +122,7 @@ const App: Component = () => {
                   There was some unexpected error{" "}
                 </AlertTitle>
                 <AlertDescription>
-                  Please close this refresh the page to retry.
+                  Please close this and refresh the page to retry.
                 </AlertDescription>
               </Alert>
             );

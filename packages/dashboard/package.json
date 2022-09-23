@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Dashboard for Nandu Open NPM Registry",
   "engines": {
-    "node": ">=16"
+    "node": ">=14"
   },
   "main": "index.js",
   "files": [

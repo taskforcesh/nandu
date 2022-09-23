@@ -5,11 +5,19 @@
   "engines": {
     "node": ">=16"
   },
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "start": "vite",
     "dev": "vite",
     "build": "VITE_API_HOST= vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "prepare": "npm run build"
   },
   "license": "MIT",
   "devDependencies": {

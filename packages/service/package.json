@@ -1,6 +1,6 @@
 {
   "name": "@nandu/service",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "Open NPM Registry",
   "engines": {
     "node": ">=14"
@@ -35,7 +35,7 @@
     "@aws-sdk/abort-controller": "^3.0.0",
     "@aws-sdk/client-s3": "^3.41.0",
     "@aws-sdk/lib-storage": "^3.41.0",
-    "@nandu/dashboard": "1.0.3",
+    "@nandu/dashboard": "1.0.0",
     "@types/nodemailer": "^6.4.6",
     "@types/nodemailer-mailgun-transport": "^1.4.3",
     "axios": "^0.24.0",

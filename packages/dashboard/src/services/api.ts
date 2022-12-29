@@ -21,22 +21,29 @@ export class Api {
       },
       body: options.body ? JSON.stringify(options.body) : undefined,
     });
+
+    let json;
+    try {
+      json = (await response.json()) as T;
+    } catch (e) {
+      // Ignore error
+    }
+
     if (response.status >= 200 && response.status <= 299) {
-      try {
-        const json = (await response.json()) as Promise<T>;
-        return json;
-      } catch (e) {
-        // Ignore error
-      }
+      return json;
     } else {
+      const errorJson = json as { message: string };
       AlertsService.addAlert({
         status: "danger",
         title: "Error",
-        description: response.statusText,
+        description: (errorJson && errorJson.message) || response.statusText,
       });
-      const err = new Error(response.statusText);
+      /*
+      let text = response.statusText;
+      const err = new Error(text);
       err.name = response.status.toString();
       throw err;
+      */
     }
   }
 

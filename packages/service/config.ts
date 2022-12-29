@@ -23,6 +23,13 @@ export default {
      *
      */
     password: process.env["NANDU_ROOT_PASSWD"] || "root",
+
+
+    /**
+     * Define an email to be used for the root user.
+     * 
+     */
+    email: process.env["NANDU_ROOT_EMAIL"],
   },
 
   /**
@@ -68,5 +75,36 @@ export default {
    */
   jwt: {
     secret: process.env["NANDU_JWT_SECRET"] || "nandu-secret",
+  },
+
+  /**
+   * Dashboard url
+   */
+  dashboardUrl: process.env["NANDU_DASHBOARD_URL"] || "http://localhost:5173",
+
+  /**
+   * Email settings
+   *
+   */
+  email: {
+    from: process.env["NANDU_EMAIL_FROM"] || "admin@nandu.land",
+    useTransport: process.env["NANDU_EMAIL_USE_TRANSPORT"],
+    transports: {
+      smtp: {
+        host: process.env["NANDU_EMAIL_SMTP_HOST"] || "smtp.mailtrap.io",
+        port:
+          (process.env["NANDU_EMAIL_SMTP_PORT"] &&
+            parseInt(process.env["NANDU_EMAIL_SMTP_PORT"])) ||
+          2525,
+        auth: {
+          user: process.env["NANDU_EMAIL_SMTP_USER"],
+          pass: process.env["NANDU_EMAIL_SMTP_PASS"],
+        },
+      },
+      mailgun: {
+        apiKey: process.env["NANDU_MAILGUN_API_KEY"],
+        domain: process.env["NANDU_MAILGUN_DOMAIN"],
+      },
+    },
   },
 };

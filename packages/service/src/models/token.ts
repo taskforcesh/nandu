@@ -1,10 +1,10 @@
 import { createHash } from "crypto";
-import { DataTypes, Model, Op } from "sequelize";
+import { DataTypes, Model, Op, Sequelize } from "sequelize";
 
 import * as uuid from "uuid";
 import * as range_check from "range_check";
 
-import { db } from "./db";
+import { initDb } from "./db";
 import { User } from "./user";
 
 export type TokenAccess = "readonly" | "publish" | "automation";
@@ -110,54 +110,56 @@ export class Token extends Model {
   }
 }
 
-Token.init(
-  {
-    key: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
-    token: {
-      type: DataTypes.STRING, // Hash of the token
-      set(token: string) {
-        if (token) {
-          this.setDataValue("token", Token.hashToken(token));
-        }
+export default function (db: Sequelize) {
+  Token.init(
+    {
+      key: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
       },
-    },
-    hidden: DataTypes.STRING,
-    cidrWhitelist: {
-      type: DataTypes.STRING,
-      set(cidrs?: string[]) {
-        cidrs && this.setDataValue("cidrWhitelist", cidrs.join(","));
+      token: {
+        type: DataTypes.STRING, // Hash of the token
+        set(token: string) {
+          if (token) {
+            this.setDataValue("token", Token.hashToken(token));
+          }
+        },
       },
-      get() {
-        const cidr = this.getDataValue("cidrWhitelist");
-        return (cidr && cidr.split(",")) || void 0;
+      hidden: DataTypes.STRING,
+      cidrWhitelist: {
+        type: DataTypes.STRING,
+        set(cidrs?: string[]) {
+          cidrs && this.setDataValue("cidrWhitelist", cidrs.join(","));
+        },
+        get() {
+          const cidr = this.getDataValue("cidrWhitelist");
+          return (cidr && cidr.split(",")) || void 0;
+        },
       },
-    },
 
-    name: DataTypes.STRING,
-    lastUsed: DataTypes.DATE,
-    useCount: DataTypes.INTEGER,
-    access: {
-      type: DataTypes.STRING, // String with comma separated scopes
-      get() {
-        const access = this.getDataValue("access");
-        return (access && access.split(",")) || void 0;
-      },
-      set(access: string[]) {
-        access && this.setDataValue("access", access.join(","));
+      name: DataTypes.STRING,
+      lastUsed: DataTypes.DATE,
+      useCount: DataTypes.INTEGER,
+      access: {
+        type: DataTypes.STRING, // String with comma separated scopes
+        get() {
+          const access = this.getDataValue("access");
+          return (access && access.split(",")) || void 0;
+        },
+        set(access: string[]) {
+          access && this.setDataValue("access", access.join(","));
+        },
       },
     },
-  },
-  {
-    sequelize: db,
-    modelName: "Token",
-  }
-);
+    {
+      sequelize: db,
+      modelName: "Token",
+    }
+  );
 
-Token.belongsTo(User, { foreignKey: "userId" });
+  Token.belongsTo(User, { foreignKey: "userId" });
+}
 
 /*
 export class Token {

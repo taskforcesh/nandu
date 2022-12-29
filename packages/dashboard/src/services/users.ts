@@ -37,4 +37,22 @@ export class UsersService {
       },
     });
   }
+
+  static resetPassword(email: string) {
+    return Api.post(`/api/passwords/reset`, {
+      body: {
+        email,
+      },
+    });
+  }
+
+  static setPassword(email: string, token: string, password: string) {
+    return Api.post(`/api/passwords`, {
+      body: {
+        email,
+        token,
+        password,
+      },
+    });
+  }
 }

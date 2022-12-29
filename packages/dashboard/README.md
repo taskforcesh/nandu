@@ -1,16 +1,23 @@
-## Usage
+# Nandu Dashboard
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+This is the dashboard for Nandu. It is a [Solid](https://solidjs.com) app. Although quite capable is still a work in progress.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+Features:
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
+- [x] Login
+- [x] Password reset
+- [x] Token management
+- [x] User management (withing the same organization)
+- [ ] User management (across organizations)
+- [x] Organizations support
+- [x] Teams management
+- [x] Hooks management.
+- [x] Basig package management
+- [ ] Upload packages
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## Getting Started
 
-## Available Scripts
+## Available Development Scripts
 
 In the project directory, you can run:
 

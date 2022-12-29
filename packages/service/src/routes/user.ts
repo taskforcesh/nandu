@@ -3,6 +3,7 @@
  */
 import { StatusCodes } from "http-status-codes";
 import { Request, Response, Router, json } from "express";
+import { Op } from "sequelize";
 
 import { User } from "../models/user";
 import { db, Organization, UserOrganization } from "../models";
@@ -41,6 +42,7 @@ router.put(
       email,
       password,
       type,
+      role,
     };
 
     if (userId === targetUserId) {
@@ -49,7 +51,7 @@ router.put(
           error: "Invalid password",
         });
       } else {
-        User.update(data, {
+        await User.update(data, {
           where: {
             _id: userId,
           },
@@ -60,13 +62,14 @@ router.put(
       const transaction = await db.transaction();
       try {
         const user = await User.findOne({
-          where: { _id: targetUserId },
+          where: { [Op.or]: { _id: targetUserId, email } },
           transaction,
         });
         if (user) {
-          res
-            .status(StatusCodes.CONFLICT)
-            .json({ ok: false, message: "cannot create existing user" });
+          const message = (user.email = email
+            ? "A user with the same email already exists"
+            : "A user with the same name already exists");
+          res.status(StatusCodes.CONFLICT).json({ ok: false, message });
           throw new Error("Cannot create existing user");
         }
 

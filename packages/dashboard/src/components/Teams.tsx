@@ -7,7 +7,7 @@ import AddTeam from "./AddTeam";
 import RemoveResource from "./RemoveResource";
 
 import { Team } from "../services/teams";
-import { sessionState, state } from "../store/state";
+import { state } from "../store/state";
 import { TeamsService } from "../services/teams";
 
 /**

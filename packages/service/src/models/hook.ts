@@ -1,9 +1,9 @@
 import { createHmac } from "crypto";
-import { DataTypes, Model, literal } from "sequelize";
+import { DataTypes, Model, literal, Sequelize } from "sequelize";
 import axios from "axios";
 import pino from "pino";
 
-import { db } from "./db";
+import { initDb } from "./db";
 import { User } from "./user";
 
 const logger = pino();
@@ -115,26 +115,28 @@ export class Hook extends Model {
   }
 }
 
-Hook.init(
-  {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+export default function (db: Sequelize) {
+  Hook.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      type: DataTypes.ENUM("package", "owner", "scope"),
+      name: DataTypes.STRING,
+      endpoint: DataTypes.STRING,
+      secret: {
+        type: DataTypes.STRING,
+      },
+      lastTriggeredAt: DataTypes.DATE,
+      triggerCount: DataTypes.INTEGER,
     },
-    type: DataTypes.ENUM("package", "owner", "scope"),
-    name: DataTypes.STRING,
-    endpoint: DataTypes.STRING,
-    secret: {
-      type: DataTypes.STRING,
-    },
-    lastTriggeredAt: DataTypes.DATE,
-    triggerCount: DataTypes.INTEGER,
-  },
-  {
-    sequelize: db,
-    modelName: "Hook",
-  }
-);
+    {
+      sequelize: db,
+      modelName: "Hook",
+    }
+  );
 
-User.hasMany(Hook, { foreignKey: "ownerId" });
+  User.hasMany(Hook, { foreignKey: "ownerId" });
+}

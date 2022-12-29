@@ -1,10 +1,9 @@
-import { DataTypes, Model, CreationOptional } from "sequelize";
+import { DataTypes, Model, CreationOptional, Sequelize } from "sequelize";
 import * as bcrypt from "bcrypt";
 import pino from "pino";
 import { sign } from "jsonwebtoken";
 
 import config from "../../config";
-import { db } from "./db";
 
 const logger = pino();
 
@@ -18,7 +17,7 @@ export class User extends Model {
   /**
    * Add the root user if there is no root user.
    */
-  static async addRootUser() {
+  static async addRootUser(db: Sequelize) {
     const transaction = await db.transaction();
     try {
       const userId = `org.couchdb.user:${config.root.user}`;
@@ -70,36 +69,46 @@ export class User extends Model {
   declare name: string;
   declare email: string;
   declare password: string;
+  declare passwordResetToken: string;
+  declare passwordResetExpires: Date;
 }
 
-User.init(
-  {
-    _id: {
+export default function (db: Sequelize) {
+  User.init(
+    {
+      _id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true,
+      },
       type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true,
-    },
-    type: DataTypes.STRING,
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
-    },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-    },
-
-    password: {
-      type: DataTypes.STRING, // Hash of the token
-      set(password: string) {
-        if (password) {
-          this.setDataValue("password", User.hashPassword(password));
-        }
+      name: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      password: {
+        type: DataTypes.STRING, // Hash of the token
+        set(password: string) {
+          if (password) {
+            this.setDataValue("password", User.hashPassword(password));
+          }
+        },
+      },
+      passwordResetToken: {
+        type: DataTypes.STRING,
+      },
+      passwordResetExpires: {
+        type: DataTypes.DATE,
       },
     },
-  },
-  {
-    sequelize: db,
-    modelName: "User",
-  }
-);
+    {
+      sequelize: db,
+      modelName: "User",
+    }
+  );
+  return db;
+}

@@ -1,5 +1,5 @@
 import { Command, flags } from "@oclif/command";
-import { startServer } from "@nanduland/service";
+import { startServer } from "@nandu/service";
 
 export default class Start extends Command {
   static description = "Starts Nandu Open NPM Server";

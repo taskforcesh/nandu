@@ -119,19 +119,19 @@ const AddHook: Component<any> = (props: any) => {
             </FormControl>
 
             <FormControl required invalid={!!errors("name")}>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Name (e.g. package, scope or user name)</FormLabel>
               <Input id="name" type="text" name="name" placeholder="Name" />
               <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
             </FormControl>
 
             <FormControl required invalid={!!errors("endpoint")}>
-              <FormLabel>Endpoint</FormLabel>
+              <FormLabel>Endpoint (will be called when the hook triggers)</FormLabel>
               <Input type="text" name="endpoint" placeholder="Url" />
               <FormErrorMessage>{errors("endpoint")[0]}</FormErrorMessage>
             </FormControl>
 
             <FormControl required invalid={!!errors("secret")}>
-              <FormLabel>Secret</FormLabel>
+              <FormLabel>Secret (sent in every hook)</FormLabel>
               <Input type="text" name="secret" placeholder="Secret" />
               <FormErrorMessage>{errors("secret")[0]}</FormErrorMessage>
             </FormControl>

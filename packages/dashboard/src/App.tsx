@@ -28,13 +28,10 @@ import Hooks from "./components/Hooks";
 import { TeamsService } from "./services/teams";
 import { HooksService } from "./services/hooks";
 import { TokensService } from "./services/tokens";
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  CloseButton,
-} from "@hope-ui/solid";
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@hope-ui/solid";
+import RequestPasswordReset from "./components/RequestPasswordReset";
+import PasswordReset from "./components/PasswordReset";
+import { LoginRedirect } from "./components/LoginRedirect";
 
 function TokensData({ params, location, navigate, data }: any) {
   const [tokens, { mutate }] = createResource(() => TokensService.listTokens());
@@ -98,10 +95,6 @@ const App: Component = () => {
 
   const pathname = createMemo(() => location.pathname);
 
-  if (!sessionState().session?.user) {
-    navigate("/login", { replace: true });
-  }
-
   return (
     <div class={styles.App}>
       <ErrorBoundary
@@ -131,44 +124,56 @@ const App: Component = () => {
       >
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/request-password-reset"
+            element={<RequestPasswordReset />}
+          />
+          <Route path="/passwords/reset/:token" element={<PasswordReset />} />
 
-          <Show when={sessionState().session?.user} fallback={<></>}>
-            <Route
-              path="/about"
-              element={<div>This site was made with Solid</div>}
-            />
-            <Route path="/" component={Dashboard} data={UserOrganizations}>
-              <Route path="/" component={Profile} data={TokensData} />
-              <Route path="/:scope" component={Profile} data={TokensData} />
+          {sessionState().session?.user && (
+            <Show when={sessionState().session?.user} fallback={<></>}>
+              <Route path="/" component={Dashboard} data={UserOrganizations}>
+                <Route path="/" component={Profile} data={TokensData} />
+                <Route path="/:scope" component={Profile} data={TokensData} />
 
-              <Route
-                path="/:scope/packages"
-                component={Packages}
-                data={ScopePackages}
-              />
+                <Route
+                  path="/:scope/packages"
+                  component={Packages}
+                  data={ScopePackages}
+                />
 
-              <Route path="/:scope/users" component={Users} data={ScopeUsers} />
-              <Route
-                path="/:scope/teams"
-                component={Teams}
-                data={ScopeTeams}
-              ></Route>
+                <Route
+                  path="/:scope/users"
+                  component={Users}
+                  data={ScopeUsers}
+                />
+                <Route
+                  path="/:scope/teams"
+                  component={Teams}
+                  data={ScopeTeams}
+                ></Route>
 
-              <Route
-                path="/:scope/teams/:team/members"
-                component={TeamMembers}
-                data={TeamMembersData}
-              />
+                <Route
+                  path="/:scope/teams/:team/members"
+                  component={TeamMembers}
+                  data={TeamMembersData}
+                />
 
-              <Route
-                path="/:scope/teams/:team/packages"
-                component={TeamPackages}
-                data={TeamPackagesData}
-              />
+                <Route
+                  path="/:scope/teams/:team/packages"
+                  component={TeamPackages}
+                  data={TeamPackagesData}
+                />
 
-              <Route path="/:scope/hooks" component={Hooks} data={HooksData} />
-            </Route>
-          </Show>
+                <Route
+                  path="/:scope/hooks"
+                  component={Hooks}
+                  data={HooksData}
+                />
+              </Route>
+            </Show>
+          )}
+          <Route path="*" element={<LoginRedirect />} />
         </Routes>
       </ErrorBoundary>
     </div>

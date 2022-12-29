@@ -1,20 +1,20 @@
-import { DataTypes, Model } from "sequelize";
-import { db } from "./db";
-import { Package } from "./package";
+import { DataTypes, Model, Sequelize } from "sequelize";
 
 export class DistTag extends Model {}
 
-DistTag.init(
-  {
-    key: {
-      type: DataTypes.STRING, // `${packageName}-{$tagName}`
-      primaryKey: true,
+export default function (db: Sequelize) {
+  DistTag.init(
+    {
+      key: {
+        type: DataTypes.STRING, // `${packageName}-{$tagName}`
+        primaryKey: true,
+      },
+      name: DataTypes.STRING,
+      version: DataTypes.STRING,
     },
-    name: DataTypes.STRING,
-    version: DataTypes.STRING,
-  },
-  {
-    sequelize: db,
-    modelName: "DistTag",
-  }
-);
+    {
+      sequelize: db,
+      modelName: "DistTag",
+    }
+  );
+}

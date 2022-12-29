@@ -1,21 +1,15 @@
-# List of ENV variables that can be customized in Nandu
+# ENV variables that can be customized in Nandu
 
-- `NANDU_LOG_LEVEL` defaults to debug if NODE_ENV is not set to production.
-- `NANDU_ROOT_USER` (defaults to root)
-- `NANDU_ROOT_PASSWD` (defaults to root)
-- `NANDU_PASSWORD_SALT_ROUNDS` (defaults 10)
-- `NANDU_SEQUELIZE_URI` (default: sqlite:./storage/db/nandu.db)
-- `NANDU_S3_BUCKET`
-- `NANDU_LOCAL_STORAGE_DIR`
-
-
-| variable | meaning | required? | default |
-| --- | --- | --- | --- |
-| NANDU_LOG_LEVEL | the API token you generated in Slack | y | - |
-| NANDU_ROOT_USER | the ID of the Slack channel to post to (not its name!) | y | - |
-| NANDU_ROOT_PASSWD | the shared secret set up for the hooks you'll be receiving | y | - |
-| NANDU_PASSWORD_SALT_ROUNDS | the port number to listen on | n | 6666 |
-| NANDU_SEQUELIZE_URI | the path to mount the hook on | n | `/incoming` |
-| NANDU_S3_BUCKET | used in logging | n | `hooks-bot` |
-| NANDU_LOCAL_STORAGE_DIR | post as the inferred bot user (bot needs to be in the channel!) | n | - |
-
+| variable                   | meaning                                                                       | required? | default                        |
+| -------------------------- | ----------------------------------------------------------------------------- | --------- | ------------------------------ |
+| NANDU_LOG_LEVEL            | A (pino)[https://getpino.io/#/] log level                                     | n         | `debug`                        |
+| NANDU_ROOT_USER            | The user name that will be considered root of the system                      | n         | `root`                         |
+| NANDU_ROOT_PASSWD          | The initial password used for the root user                                   | n         | `root`                         |
+| NANDU_ROOT_EMAIL           | An email to be used for the root user                                         | n         | -                              |
+| NANDU_PASSWORD_SALT_ROUNDS | The number of salt rounds to be used for hashing passwords                    | n         | 5                              |
+| NANDU_SEQUELIZE_URI        | A (sequelizejs)[https://sequelize.org/] compatible URI to a DB                | n         | `sqlite:./storage/db/nandu.db` |
+| NANDU_S3_BUCKET            | A bucket to use for storing all packages in S3                                | n         | -                              |
+| NANDU_LOCAL_STORAGE_DIR    | A local directory to use for storing packages                                 | n         | -                              |
+| NANDU_EMAIL_USE_TRANSPORT  | A transport to use for sending notifications (only mailgun supported for now) | n         | `mailgun`                      |
+| NANDU_MAILGUN_API_KEY      | The mailgun API KEY                                                           | y         | -                              |
+| NANDU_MAILGUN_DOMAIN       | The mailgun domain                                                            | y         | -                              |

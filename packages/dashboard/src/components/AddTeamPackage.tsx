@@ -95,7 +95,7 @@ const AddTeamPackage: Component<any> = (props: any) => {
                 id="teamName"
                 type="text"
                 name="name"
-                placeholder="Team Name"
+                placeholder="Team Package"
               />
               <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
             </FormControl>

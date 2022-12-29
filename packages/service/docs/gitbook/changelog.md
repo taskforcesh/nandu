@@ -1,4 +1,4 @@
-## @nanduland/service [1.0.3](https://github.com/taskforcesh/nandu/compare/@nanduland/service@1.0.2...@nanduland/service@1.0.3) (2022-09-23)
+## @nandu/service [1.0.3](https://github.com/taskforcesh/nandu/compare/@nandu/service@1.0.2...@nandu/service@1.0.3) (2022-09-23)
 
 
 ### Bug Fixes
@@ -12,19 +12,9 @@
 
 ### Dependencies
 
-* **@nanduland/dashboard:** upgraded to 1.0.3
+* **@nandu/dashboard:** upgraded to 1.0.3
 
-## @nanduland/service [1.0.2](https://github.com/taskforcesh/nandu/compare/@nanduland/service@1.0.1...@nanduland/service@1.0.2) (2022-09-23)
-
-
-
-
-
-### Dependencies
-
-* **@nanduland/dashboard:** upgraded to 1.0.2
-
-## @nanduland/service [1.0.1](https://github.com/taskforcesh/nandu/compare/@nanduland/service@1.0.0...@nanduland/service@1.0.1) (2022-09-22)
+## @nandu/service [1.0.2](https://github.com/taskforcesh/nandu/compare/@nandu/service@1.0.1...@nandu/service@1.0.2) (2022-09-23)
 
 
 
@@ -32,9 +22,19 @@
 
 ### Dependencies
 
-* **@nanduland/dashboard:** upgraded to 1.0.1
+* **@nandu/dashboard:** upgraded to 1.0.2
 
-# @nanduland/service 1.0.0 (2022-09-13)
+## @nandu/service [1.0.1](https://github.com/taskforcesh/nandu/compare/@nandu/service@1.0.0...@nandu/service@1.0.1) (2022-09-22)
+
+
+
+
+
+### Dependencies
+
+* **@nandu/dashboard:** upgraded to 1.0.1
+
+# @nandu/service 1.0.0 (2022-09-13)
 
 
 ### Features

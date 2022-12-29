@@ -89,11 +89,11 @@ $ npm access grant read-only  @myorg:myteam @myorg/mypackage
 
 <!-- usage -->
 ```sh-session
-$ npm install -g @nanduland/cli
+$ npm install -g @nandu/cli
 $ nandu COMMAND
 running command...
 $ nandu (-v|--version|version)
-@nanduland/cli/1.0.4 linux-x64 node-v14.20.0
+@nandu/cli/1.0.4 linux-x64 node-v14.20.0
 $ nandu --help [COMMAND]
 USAGE
   $ nandu COMMAND

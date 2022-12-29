@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize";
-import { db } from "./db";
+import { DataTypes, Model, Sequelize } from "sequelize";
+import { initDb } from "./db";
 
 import { Version as VersionModel } from "./version";
 import { DistTag } from "./dist-tag";
@@ -45,7 +45,7 @@ export class Package extends Model {
     name: string,
     access: "public" | "restricted"
   ) {
-    const transaction = await db.transaction();
+    const transaction = await (await initDb).transaction();
 
     try {
       let pkg = await Package.findOne({
@@ -85,22 +85,24 @@ export class Package extends Model {
   }
 }
 
-Package.init(
-  {
-    _id: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true,
+export default function (db: Sequelize) {
+  Package.init(
+    {
+      _id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true,
+      },
+      name: DataTypes.STRING,
+      access: DataTypes.ENUM("public", "restricted"),
     },
-    name: DataTypes.STRING,
-    access: DataTypes.ENUM("public", "restricted"),
-  },
-  {
-    sequelize: db,
-    modelName: "Package",
-  }
-);
+    {
+      sequelize: db,
+      modelName: "Package",
+    }
+  );
 
-Package.hasMany(DistTag, { foreignKey: "packageId", as: "dist-tags" });
-Package.hasMany(VersionModel, { foreignKey: "packageId", as: "versions" });
-Package.belongsTo(User, { foreignKey: "userId" });
+  Package.hasMany(DistTag, { foreignKey: "packageId", as: "dist-tags" });
+  Package.hasMany(VersionModel, { foreignKey: "packageId", as: "versions" });
+  Package.belongsTo(User, { foreignKey: "userId" });
+}

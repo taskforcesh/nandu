@@ -1,6 +1,6 @@
 {
   "name": "@nandu/dashboard",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "Dashboard for Nandu Open NPM Registry",
   "engines": {
     "node": ">=14"

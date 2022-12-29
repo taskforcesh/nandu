@@ -39,6 +39,7 @@ export const authToken =
       return res.status(StatusCodes.UNAUTHORIZED).send("Missing credentials");
     }
     const [authType, token] = authorization.split(" ");
+
     console.log("authToken", authType, token);
 
     if ((authType !== "Basic" && authType !== "Bearer") || !token) {

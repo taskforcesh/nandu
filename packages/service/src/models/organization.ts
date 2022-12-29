@@ -1,5 +1,5 @@
-import { DataTypes, Model, Transaction } from "sequelize";
-import { db } from "./db";
+import { DataTypes, Model, Sequelize, Transaction } from "sequelize";
+import { initDb, db } from "./db";
 import { User } from "./user";
 import { OrganizationRole, OrganizationAction } from "../enums";
 
@@ -61,7 +61,7 @@ export class Organization extends Model {
   }
 
   static async createOrganization(scope: string, ownerId: string) {
-    const transaction = await db.transaction();
+    const transaction = await (await initDb).transaction();
 
     try {
       let organization = await Organization.findOne({
@@ -102,26 +102,28 @@ export class Organization extends Model {
   }
 }
 
-Organization.init(
-  {
-    name: {
-      type: DataTypes.STRING,
-      primaryKey: true,
-      allowNull: false,
-      unique: true,
+export default function (db: Sequelize) {
+  Organization.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+      },
     },
-  },
-  {
-    sequelize: db,
-    modelName: "Organization",
-  }
-);
+    {
+      sequelize: db,
+      modelName: "Organization",
+    }
+  );
 
-User.belongsToMany(Organization, {
-  through: UserOrganization,
-  foreignKey: "userId",
-});
-Organization.belongsToMany(User, {
-  through: UserOrganization,
-  foreignKey: "organizationId",
-});
+  User.belongsToMany(Organization, {
+    through: UserOrganization,
+    foreignKey: "userId",
+  });
+  Organization.belongsToMany(User, {
+    through: UserOrganization,
+    foreignKey: "organizationId",
+  });
+}

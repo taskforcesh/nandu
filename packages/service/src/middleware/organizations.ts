@@ -14,6 +14,12 @@ export const canAccessOrganization =
       return next();
     }
 
+    if (!req.params.scope) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .send("Requires organization scope");
+    }
+
     const role = await Organization.getMemberRole(req.params.scope, memberId);
 
     if (role) {

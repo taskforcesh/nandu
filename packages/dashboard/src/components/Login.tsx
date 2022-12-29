@@ -15,8 +15,6 @@ import { setSessionState } from "../store/state";
  * Supports user/password.
  * Use Tailwind for styling.
  *
- * - Supports password reset.
- * - Supports registration.
  * - Supports forgot password.
  *
  */
@@ -93,14 +91,14 @@ const Login: Component = () => {
             >
               Login
             </button>
-            {/*
-            <a
-              class="inline-block align-baseline font-bold text-sm text-orange-400 hover:text-orange-600"
-              href="#"
-            >
-              Forgot password?
-            </a>
-            */}
+            {
+              <a
+                class="inline-block align-baseline font-bold text-sm text-orange-400 hover:text-orange-600"
+                href="/request-password-reset"
+              >
+                Forgot password?
+              </a>
+            }
           </div>
         </form>
         <p class="text-center text-gray-500 text-xs">

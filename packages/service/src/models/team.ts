@@ -1,5 +1,5 @@
-import { DataTypes, Model, Op } from "sequelize";
-import { db } from "./db";
+import { DataTypes, Model, Op, Sequelize } from "sequelize";
+import { initDb, db } from "./db";
 import { User } from "./user";
 import { Organization, UserOrganization } from "./organization";
 import { Package } from "./package";
@@ -265,45 +265,47 @@ export class Team extends Model {
   }
 }
 
-Team.init(
-  {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
+export default function (db: Sequelize) {
+  Team.init(
+    {
+      id: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+      },
+      name: DataTypes.STRING,
+      description: DataTypes.STRING,
     },
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-  },
-  {
-    sequelize: db,
-    modelName: "Team",
-  }
-);
+    {
+      sequelize: db,
+      modelName: "Team",
+    }
+  );
 
-Team.belongsTo(Organization, { foreignKey: "organizationId" });
+  Team.belongsTo(Organization, { foreignKey: "organizationId" });
 
-// Team membership
-User.belongsToMany(Team, {
-  through: UserTeam,
-  foreignKey: "userId",
-  as: "members",
-});
-Team.belongsToMany(User, {
-  through: UserTeam,
-  foreignKey: "teamId",
-  as: "members",
-});
+  // Team membership
+  User.belongsToMany(Team, {
+    through: UserTeam,
+    foreignKey: "userId",
+    as: "members",
+  });
+  Team.belongsToMany(User, {
+    through: UserTeam,
+    foreignKey: "teamId",
+    as: "members",
+  });
 
-// Package permissions
-TeamPackage.belongsTo(Organization, { foreignKey: "organizationId" });
+  // Package permissions
+  TeamPackage.belongsTo(Organization, { foreignKey: "organizationId" });
 
-Package.belongsToMany(Team, {
-  through: TeamPackage,
-  foreignKey: "packageId",
-  as: "packages",
-});
-Team.belongsToMany(Package, {
-  through: TeamPackage,
-  foreignKey: "teamId",
-  as: "packages",
-});
+  Package.belongsToMany(Team, {
+    through: TeamPackage,
+    foreignKey: "packageId",
+    as: "packages",
+  });
+  Team.belongsToMany(Package, {
+    through: TeamPackage,
+    foreignKey: "teamId",
+    as: "packages",
+  });
+}

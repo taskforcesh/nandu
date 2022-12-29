@@ -6,36 +6,40 @@
 
 ## Introduction
 
-Nandu is an open source NPM registry compatible with Npm, Yarn and Pnpm.
+Nandu is a new open source NPM registry compatible with Npm, Yarn and Pnpm.
 
-Note: Although quite functional, this software cannot be classified as production ready just yet,
-so be careful for production critical projects.
-
-You are still encouraged to test it (it is quite functional already!) and report any issues you may
-find. As the project is currently under heavy development expect quick resolution of the issues.
+It has been built from scratch with the following goals in mind:
+- Secured by default, so it can be used in a corporate environment with peace of mind.
+- Easy to deploy, so you can have your registry up and running in minutes.
+- Compatible with scalable technologies such as S3 and PostreSQL so you can scale your registry to meet your needs.
+- Implement most of the NPM registry API so you can use it with your existing tools.
+- Clean code base, serving as documentation for most NPM currently undocumented APIs.
 
 ## Motivation
 
 NPM is the core of all the NodeJS Ecosystem, and even though all NPM clients are open source,
-the server itself is propietary software.
+the server itself is proprietary software.
 
-There a couple of attempts to provide an open source alternative (such as Sintopia and Verdaccio),
+There have been a couple of attempts to provide an open source alternative (such as Sintopia and Verdaccio),
 but these projects are oriented to support private local repositories instead a full NPM server
 replacement within a professional environment.
 
 Nandu is secured by default, focusing on user, team and organization management, enabling
 corporate use cases where user access management is important as well as other popular
-use cases such as providing subscription based licenses for commercial packages.
+use cases such as providing subscription-based licenses for commercial packages.
 
-Furthermore, we are currently also aiming at documenting the NPM Apis, for which there are
+Furthermore, we are currently also aiming at documenting the NPM Apis, for which there is
 currently no documentation available.
 
 ## Architecture
 
-The registry is both a package metadata store, for which you can use any SQL based database (even SQLlite), as well as a package store which is based on a file storage. The package store can be anything capable of storing files but currently we are shipping support for local files as well as S3, it is easy to add other file storages by implementing a simple interface if needed.
+The registry is both a package metadata store, for which you can use any SQL-based database (including SQLlite),
+as well as a package store that is based on file storage. The package store can be anything capable of storing
+files but currently, we are shipping support for local files as well as S3, but it is quite easy to add other file
+storage by implementing a simple interface if needed.
 
 All settings are controlled by environment variables, so no configuration files are used which makes it easier
-to deploy following the [12 factor app principles](https://12factor.net/).
+to deploy following the [12-factor app principles](https://12factor.net/).
 
 ## Used by
 
@@ -43,7 +47,7 @@ Currently used by [Taskforce.sh](https://taskforce.sh) to provide the BullMQ Pro
 
 ## Features
 
-Currently Nandu is capable of the basic set of features needed for publishing packages, handle authentication and
+Nandu is capable of the basic set of features needed for publishing packages, handling authentication and
 authorization, organizations and teams.
 
 - Secured by default, only registered users can access the registry.
@@ -59,7 +63,65 @@ authorization, organizations and teams.
 
 ## How to use
 
-In order to use Nandu you should use the [Nandu-cli](https://github.com/taskforcesh/nandu-cli) tool and following the instructions there.
+Nandu provides a simple CLI tool that is used to manage the registry. The CLI tool should
+be installed globally:
+    
+```bash
+    yarn global add @nandu/cli
+```
+
+Run the cli tool to see the available commands:
+    
+```bash
+    $ nandu
+
+    Nandu Open NPM Registry CLI
+
+VERSION
+  @nandu/cli/1.0.2 darwin-x64 node-v16.15.1
+
+USAGE
+  $ nandu [COMMAND]
+
+TOPICS
+  token  Manage NPM Registry tokens
+  user   Manage NPM Registry users
+
+COMMANDS
+  help   display help for nandu
+  start  Starts Nandu Open NPM Server
+  token  Manage NPM Registry tokens
+  user   Manage NPM Registry users
+```
+
+### Starting the server
+
+If you just want to start the server to try it out, go to a suitable directory (as the following command will create a SQLite database file) and run:
+
+```bash
+    nandu start
+```
+
+This command will start a Nandu service using an SQLite database and local file storage. You will find the database and the storage
+under the directory ```storage``` under the current directory.
+
+The service will be by default available at http://localhost:4567
+
+If you point your browser to http://localhost:4567 you will see the Nandu login page, however, you will
+not be able to login as there are no users in the system yet. 
+You should start by creating a root user:
+
+```bash
+    nandu user:create --root --username root --password root
+```
+
+To start the server, you need to provide the following environment variables:
+
+```bash
+    export NPM_REGISTRY_PORT=8080
+    export NPM_REGISTRY_HOST=
+```
+
 
 ## License
 

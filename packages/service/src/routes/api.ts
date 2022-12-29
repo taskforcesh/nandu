@@ -4,9 +4,9 @@
  *
  *
  */
-import { expressjwt as jwt, Request } from "express-jwt";
-import { Router, Response, NextFunction, json } from "express";
+import { Router, Request, Response, json } from "express";
 import { StatusCodes } from "http-status-codes";
+import { randomBytes } from "crypto";
 
 import { Op } from "sequelize";
 
@@ -28,6 +28,7 @@ import {
 
 import { authToken } from "../middleware";
 import { OrganizationAction } from "../enums";
+import { sendEmail } from "../services/notifications";
 
 export const router = Router();
 
@@ -45,25 +46,80 @@ router.post("/login", json(), authUserPassword(), async (req, res) => {
   });
 });
 
-router.use(authToken());
-/*
-  jwt({
-    secret: config.jwt.secret,
-    algorithms: ["HS256"],
-  }).unless({ path: ["/login"] }),
-  function (req: Request, res: Response, next: NextFunction) {
-    // Do stuff here if we have a logged in user, such as:
-    // if (!req.user.admin) return res.sendStatus(401);
-    // res.sendStatus(200);
-    next();
-  },
-  function (err: Error, req: Request, res: Response, next: NextFunction) {
-    if (err.name === "UnauthorizedError") {
-      return res.status(401).send("Invalid authorization token");
+router.post(
+  "/passwords/reset",
+  json(),
+  asyncWrap(async (req: Request, res: Response) => {
+    const { email } = req.body;
+    if (!email) {
+      res.status(StatusCodes.BAD_REQUEST).send("Email is required");
+      return;
     }
-  }
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      res.status(StatusCodes.NO_CONTENT).end();
+    } else {
+      user.passwordResetToken = randomBytes(32).toString("hex");
+      user.passwordResetExpires = new Date(Date.now() + 3600000); // 1 hour
+
+      await user.save();
+
+      // Generate link to reset password
+      const link = `${config.dashboardUrl}/passwords/reset/${user.passwordResetToken}?email=${user.email}`;
+      const html = `
+    <html>
+      <head>
+        <style></style>
+      </head>
+      <body>
+        <p>Hi ${user.name},</p>
+        <p>You requested to reset your password.</p>
+        <p>Please, click the link below to reset your password</p>
+        <a href="${link}">Reset Password</a>
+      </body>
+    </html>`;
+
+      // Send an email with the password reset token
+      await sendEmail(email, "Nandu Reset Password", html);
+
+      res.status(StatusCodes.NO_CONTENT).end();
+    }
+  })
 );
-*/
+
+router.post(
+  "/passwords/",
+  json(),
+  asyncWrap(async (req, res) => {
+    const { email, token: passwordResetToken, password } = req.body;
+    const user = await User.findOne({ where: { passwordResetToken, email } });
+    if (user) {
+      if (user.passwordResetExpires < new Date()) {
+        res.status(StatusCodes.BAD_REQUEST).send("Token expired");
+        return;
+      }
+
+      await User.update(
+        {
+          password,
+          passwordResetToken: null,
+          passwordResetExpires: null,
+        },
+        {
+          where: {
+            _id: user._id,
+          },
+        }
+      );
+
+      res.status(StatusCodes.NO_CONTENT).end();
+    } else {
+      res.status(StatusCodes.BAD_REQUEST).send("Invalid token");
+    }
+  })
+);
+
+router.use(authToken());
 
 /**
  * List all the organizations that the user is a member of.

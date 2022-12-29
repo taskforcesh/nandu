@@ -1,5 +1,5 @@
 {
-  "name": "@nanduland/service",
+  "name": "@nandu/service",
   "version": "1.0.3",
   "description": "Open NPM Registry",
   "engines": {
@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "test": "test",
+    "dev2": "export $(grep -v '^#' .env | xargs)",
     "dev": "export $(grep -v '^#' .env | xargs) && nodemon --watch './src/**/*.ts' --exec 'ts-node' ./server.ts | pino-pretty",
     "build": "tsc",
     "build:watch": "tsc --watch",
@@ -34,7 +35,7 @@
     "@aws-sdk/abort-controller": "^3.0.0",
     "@aws-sdk/client-s3": "^3.41.0",
     "@aws-sdk/lib-storage": "^3.41.0",
-    "@nanduland/dashboard": "1.0.3",
+    "@nandu/dashboard": "1.0.3",
     "@types/nodemailer": "^6.4.6",
     "@types/nodemailer-mailgun-transport": "^1.4.3",
     "axios": "^0.24.0",
@@ -52,7 +53,7 @@
     "pg": "^8.8.0",
     "pino": "^7.1.0",
     "range_check": "^2.0.4",
-    "sequelize": "latest",
+    "sequelize": "^6.28.0",
     "sqlite3": "^5.0.2",
     "umzug": "^3.2.1",
     "uuid": "^8.3.2",

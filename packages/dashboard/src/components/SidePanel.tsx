@@ -156,7 +156,7 @@ const SidePanel: Component<any> = (props: any) => {
         </div>
         <div class="flex-shrink-0 flex bg-gray-700 p-4">
           <a href="#" class="flex-shrink-0 w-full group block">
-            <div class="flex items-center">
+            <div class="flex flex-col items-center ">
               <div class="flex-auto ml-1">
                 <p class="text-sm font-medium text-white text-left">
                   {sessionState().session?.user.name}
@@ -165,7 +165,7 @@ const SidePanel: Component<any> = (props: any) => {
                   {sessionState().session?.user.email}
                 </p>
               </div>
-              <div class="ml-2">
+              <div class="mt-1">
                 <button
                   class="text-sm mt-0.5 bg-orange-500 hover:bg-orange-600 text-gray-100 font-bold py-1.5 px-5 rounded active:bg-orange-700 focus:outline-none focus:ring focus:ring-orange-300"
                   onClick={logout}

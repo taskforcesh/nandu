@@ -18,7 +18,10 @@ import {
 import express = require("express");
 import cors = require("cors");
 
-export async function startServer(port: number = 4567, serveDashboard = false) {
+export async function startServer(
+  port: number = 4567,
+  dashboardOpts?: { port: number; apiHost: string }
+) {
   const pkg = require(`${getPkgJsonDir()}/package.json`);
 
   const logger = pino();
@@ -38,12 +41,29 @@ export async function startServer(port: number = 4567, serveDashboard = false) {
 
   const versionString = `Nandu NPM Registry v${pkg.version}`;
 
-  if (serveDashboard) {
+  if (dashboardOpts) {
+    const dashboardApp = express() as Application;
     const path = require("path");
-    const dashboardDistDir = path.resolve(
-      `${getPkgJsonDir()}/../dashboard/dist`
+    const dashboardPath = path.resolve(
+      path.join(getPkgJsonDir(), "..", "dashboard", "dist")
     );
-    app.use(express.static(dashboardDistDir));
+
+    dashboardApp.use(express.static(dashboardPath));
+    dashboardApp.get("/config", (req, res) => {
+      res.json({
+        version: pkg.version,
+        apiHost: dashboardOpts.apiHost || `http://localhost:${port}`,
+      });
+    });
+
+    dashboardApp.use("/api", apiRouter);
+
+    dashboardApp.get("*", function (req, res) {
+      res.sendFile(path.join(dashboardPath, "index.html"));
+    });
+    dashboardApp.listen(dashboardOpts.port, () => {
+      logger.info(`Dashboard listening on port 3000`);
+    });
   } else {
     app.get("/", (req: Request, res: Response) => {
       res.status(200).send(versionString);
@@ -85,7 +105,7 @@ export async function startServer(port: number = 4567, serveDashboard = false) {
   // Application error logging.
   app.on("error", logger.error);
 
-  await initDb();
+  await initDb;
 
   app.listen(port, () => {
     logger.info(`Nandu is running on port ${port}.`);

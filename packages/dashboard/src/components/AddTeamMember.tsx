@@ -79,7 +79,7 @@ const AddTeamMember: Component<any> = (props: any) => {
                 id="teamName"
                 type="text"
                 name="name"
-                placeholder="Team Name"
+                placeholder="Team Member"
               />
               <FormErrorMessage>{errors("name")[0]}</FormErrorMessage>
             </FormControl>

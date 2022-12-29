@@ -1,5 +1,5 @@
+export * from './user';
 export * from './author';
-export * from './db';
 export * from './dist-tag';
 export * from './hook';
 export * from './organization';
@@ -8,5 +8,5 @@ export * from './registry';
 export * from './tarball';
 export * from './team';
 export * from './token';
-export * from './user';
 export * from './version';
+export * from './db';

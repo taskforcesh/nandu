@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize";
-import { db } from "./db";
+import { DataTypes, Model, Sequelize } from "sequelize";
+import { initDb } from "./db";
 import { Author } from "./author";
 import { DistTag } from "../models/dist-tag";
 import { Version as IVersion, Attachment } from "../interfaces";
@@ -69,49 +69,50 @@ export class Version extends Model {
   }
 }
 
-Version.init(
-  {
-    _id: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true,
+export default function (db: Sequelize) {
+  Version.init(
+    {
+      _id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      readme: {
+        type: DataTypes.TEXT,
+      },
+      version: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: DataTypes.STRING,
+      repository: DataTypes.JSON,
+      keywords: DataTypes.STRING, // Not the best solution if we want to do searches.
+
+      author: DataTypes.JSON,
+
+      maintainers: DataTypes.JSON,
+
+      devDependencies: DataTypes.JSON,
+      dependencies: DataTypes.JSON,
+
+      dist: DataTypes.JSON,
+
+      license: DataTypes.STRING,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    readme: {
-      type: DataTypes.TEXT,
-    },
-    version: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    description: DataTypes.STRING,
-    repository: DataTypes.JSON,
-    keywords: DataTypes.STRING, // Not the best solution if we want to do searches.
+    {
+      sequelize: db,
+      modelName: "Version",
+      // Other model options go here
+    }
+  );
 
-    author: DataTypes.JSON,
-
-    maintainers: DataTypes.JSON,
-
-    devDependencies: DataTypes.JSON,
-    dependencies: DataTypes.JSON,
-
-    dist: DataTypes.JSON,
-
-    license: DataTypes.STRING,
-  },
-  {
-    sequelize: db,
-    modelName: "Version",
-    // Other model options go here
-  }
-);
-
-Version.belongsTo(Author, { foreignKey: "authorId" });
-// Version.belongsTo(Package, { foreignKey: "packageId" });
-
+  Version.belongsTo(Author, { foreignKey: "authorId" });
+  // Version.belongsTo(Package, { foreignKey: "packageId" });
+};
 /*
 export class Version {
     _id: string;

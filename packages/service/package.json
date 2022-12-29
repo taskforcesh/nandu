@@ -62,17 +62,18 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
-    "@types/express": "^4.17.13",
+    "@types/express": "^4.17.15",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "*",
     "@types/sqlite3": "^3.1.7",
     "@types/uuid": "^8.3.1",
     "@types/validator": "^13.6.6",
+    "eslint-visitor-keys": "^3.3.0",
     "nodemon": "^2.0.14",
     "pino-pretty": "^8.1.0",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",
-    "typescript": "4.4.4"
+    "typescript": "4.9.4"
   },
   "publishConfig": {
     "access": "public"

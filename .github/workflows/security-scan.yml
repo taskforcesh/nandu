@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: '0 0 * * 0' # Run once a week at midnight on Sunday
 
+# Set explicit permissions for the GITHUB_TOKEN to enhance security
+permissions:
+  contents: read
+
 jobs:
   scan:
     name: OSV Security Scan
@@ -20,14 +24,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
-      - name: Install Pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 6.0.2
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install
 
       # Run OSV Scanner on all packages in the monorepo
       - name: Run OSV Scanner

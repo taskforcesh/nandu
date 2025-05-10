@@ -1,0 +1,15 @@
+[scanner]
+# Set to true to not exit with an error code if vulnerabilities are found
+no-error-on-vulnerabilities = false
+
+# Paths to exclude from scanning
+exclude-paths = ["node_modules", ".git", "**/*test*", "**/*demo*"]
+
+# Configure vulnerability filtering
+[vulnerability]
+# Exclude specific vulnerabilities by ID
+#ignore = ["GO-2022-0968"]
+
+# Where to store the OSV vulnerability database cache
+[cache]
+directory = ".osv-scanner-cache"

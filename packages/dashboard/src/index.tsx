@@ -3,7 +3,8 @@ import { render } from "solid-js/web";
 import { Router } from "@solidjs/router";
 import { HopeProvider, HopeThemeConfig } from "@hope-ui/solid";
 
-import "tailwindcss/tailwind.css";
+// Updated Tailwind import path for newer versions
+import "tailwindcss";
 
 import "./index.css";
 import App from "./App";

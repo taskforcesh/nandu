@@ -69,7 +69,7 @@
     "@types/uuid": "^8.3.1",
     "@types/validator": "^13.6.6",
     "eslint-visitor-keys": "^3.3.0",
-    "nodemon": "^2.0.14",
+    "nodemon": "^3.0.2",
     "pino-pretty": "^8.1.0",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",

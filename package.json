@@ -11,14 +11,14 @@
     "url": "https://github.com/taskforcesh/nandu.git"
   },
   "devDependencies": {
-    "@qiwi/multi-semantic-release": "^6.5.1",
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@qiwi/multi-semantic-release": "^7.1.2",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^10.0.1",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.6",
+    "@semantic-release/github": "^9.2.1",
     "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#985e34fca5b2cc2f5f70841ea927e8ee817813dd",
-    "@semantic-release/release-notes-generator": "^10.0.3",
-    "semantic-release": "^19.0.5"
+    "@semantic-release/release-notes-generator": "^11.0.7",
+    "semantic-release": "^22.0.0"
   }
 }

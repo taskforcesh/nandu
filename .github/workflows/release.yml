@@ -17,22 +17,17 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install Pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 6.0.2
-
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx multi-semantic-release
 
-      - name: Archive npm failure logs
+      - name: Archive yarn failure logs
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: npm-logs
-          path: ~/.npm/_logs
+          name: yarn-logs
+          path: ~/.yarn/log

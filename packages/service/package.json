@@ -88,7 +88,7 @@
       [
         "@semantic-release/changelog",
         {
-          "changelogFile": "docs/gitbook/changelog.md"
+          "changelogFile": "../../docs/gitbook/changelog-service.md"
         }
       ],
       [
@@ -103,8 +103,8 @@
         {
           "assets": [
             "package.json",
-            "pnpm-lock.yaml",
-            "docs/gitbook/changelog.md"
+            "yarn.lock",
+            "../../docs/gitbook/changelog-service.md"
           ],
           "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }

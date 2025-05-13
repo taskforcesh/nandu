@@ -6,7 +6,15 @@
     "outDir": "lib",
     "rootDir": "src",
     "strict": true,
-    "target": "es2017"
+    "target": "es2017",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@nandu/service": ["../service/dist/src"]
+    }
   },
   "include": [
     "src/**/*"

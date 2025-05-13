@@ -19,13 +19,27 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 20
 
       - name: Install dependencies
         run: yarn install
 
-      - name: Update TypeScript to compatible version
-        run: yarn add -W typescript@4.9.5 --dev
+      - name: Pin type-fest to compatible version
+        run: yarn add type-fest@3.0.0 --dev
+
+      # First build service package
+      - name: Build service package
+        run: |
+          cd packages/service
+          yarn build
+          cd ../..
+
+      # Then build CLI package that depends on service
+      - name: Build CLI package 
+        run: |
+          cd packages/cli
+          yarn build
+          cd ../..
         
       - name: Release
         env:

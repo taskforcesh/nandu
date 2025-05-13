@@ -25,7 +25,7 @@ jobs:
         run: yarn install
 
       - name: Pin type-fest to compatible version
-        run: yarn add type-fest@3.0.0 --dev
+        run: yarn add type-fest@3.0.0 --dev -W
 
       # First build service package
       - name: Build service package

@@ -23,6 +23,10 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
+
+      - name: Update TypeScript to compatible version
+        run: yarn add -W typescript@4.9.5 --dev
+        
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -12,7 +12,7 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "strictNullChecks": false,
     "baseUrl": ".",
     "paths": {

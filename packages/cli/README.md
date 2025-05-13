@@ -92,8 +92,8 @@ $ npm access grant read-only  @myorg:myteam @myorg/mypackage
 $ npm install -g @nandu/cli
 $ nandu COMMAND
 running command...
-$ nandu (-v|--version|version)
-@nandu/cli/1.0.4 linux-x64 node-v14.20.0
+$ nandu (--version)
+@nandu/cli/1.0.0 linux-x64 node-v20.19.1
 $ nandu --help [COMMAND]
 USAGE
   $ nandu COMMAND
@@ -104,7 +104,6 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`nandu help [COMMAND]`](#nandu-help-command)
 * [`nandu start`](#nandu-start)
 * [`nandu token`](#nandu-token)
 * [`nandu token:create USER`](#nandu-tokencreate-user)
@@ -112,41 +111,27 @@ USAGE
 * [`nandu user`](#nandu-user)
 * [`nandu user:add USER`](#nandu-useradd-user)
 
-## `nandu help [COMMAND]`
-
-display help for nandu
-
-```
-USAGE
-  $ nandu help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
-
-OPTIONS
-  --all  see all commands in CLI
-```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.3.1/src/commands/help.ts)_
-
 ## `nandu start`
 
 Starts Nandu Open NPM Server
 
 ```
 USAGE
-  $ nandu start
+  $ nandu start [-h] [-p <value>] [-f]
 
-OPTIONS
+FLAGS
   -f, --force
-  -h, --help       show CLI help
-  -p, --port=port  [default: 4567] listen to port
+  -h, --help          Show CLI help.
+  -p, --port=<value>  [default: 4567] listen to port
 
-EXAMPLE
+DESCRIPTION
+  Starts Nandu Open NPM Server
+
+EXAMPLES
   $ nandu start -p 4567
 ```
 
-_See code: [src/commands/start.ts](https://github.com/taskforcesh/nandu/blob/v1.0.4/src/commands/start.ts)_
+_See code: [src/commands/start.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/start.ts)_
 
 ## `nandu token`
 
@@ -156,11 +141,14 @@ Manage NPM Registry tokens
 USAGE
   $ nandu token
 
-EXAMPLE
+DESCRIPTION
+  Manage NPM Registry tokens
+
+EXAMPLES
   $ nandu token:create myuser
 ```
 
-_See code: [src/commands/token/index.ts](https://github.com/taskforcesh/nandu/blob/v1.0.4/src/commands/token/index.ts)_
+_See code: [src/commands/token/index.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/token/index.ts)_
 
 ## `nandu token:create USER`
 
@@ -168,20 +156,23 @@ create a new token for given user
 
 ```
 USAGE
-  $ nandu token:create USER
+  $ nandu token:create USER --registry <value> [-h] [--token <value> | ] [--readonly] [--cidr-whitelist <value>]
 
-OPTIONS
-  -h, --help                       show CLI help
-  --cidr-whitelist=cidr-whitelist  comma separated list of whitelisted cidrs
-  --readonly                       generate a readonly token
-  --registry=registry              (required) URI pointing to your Nandu NPM Registry
-  --token=token                    Token to be used for authentication, uses NPM_TOKEN env variable if unspecified
+FLAGS
+  -h, --help                    Show CLI help.
+      --cidr-whitelist=<value>  comma separated list of whitelisted cidrs
+      --readonly                generate a readonly token
+      --registry=<value>        (required) URI pointing to your Nandu NPM Registry
+      --token=<value>           Token to be used for authentication, uses NPM_TOKEN env variable if unspecified
 
-EXAMPLE
+DESCRIPTION
+  create a new token for given user
+
+EXAMPLES
   $ nandu start -p 4567
 ```
 
-_See code: [src/commands/token/create.ts](https://github.com/taskforcesh/nandu/blob/v1.0.4/src/commands/token/create.ts)_
+_See code: [src/commands/token/create.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/token/create.ts)_
 
 ## `nandu token:ls USER`
 
@@ -189,18 +180,21 @@ list tokens for given user
 
 ```
 USAGE
-  $ nandu token:ls USER
+  $ nandu token:ls USER --registry <value> [-h] [--token <value> | ]
 
-OPTIONS
-  -h, --help           show CLI help
-  --registry=registry  (required) URI pointing to your Nandu NPM Registry
-  --token=token        Token to be used for authentication, uses NPM_TOKEN env variable if unspecified
+FLAGS
+  -h, --help              Show CLI help.
+      --registry=<value>  (required) URI pointing to your Nandu NPM Registry
+      --token=<value>     Token to be used for authentication, uses NPM_TOKEN env variable if unspecified
 
-EXAMPLE
+DESCRIPTION
+  list tokens for given user
+
+EXAMPLES
   $ nandu start -p 4567
 ```
 
-_See code: [src/commands/token/ls.ts](https://github.com/taskforcesh/nandu/blob/v1.0.4/src/commands/token/ls.ts)_
+_See code: [src/commands/token/ls.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/token/ls.ts)_
 
 ## `nandu user`
 
@@ -210,11 +204,14 @@ Manage NPM Registry users
 USAGE
   $ nandu user
 
-EXAMPLE
+DESCRIPTION
+  Manage NPM Registry users
+
+EXAMPLES
   $ nandu user:add myuser
 ```
 
-_See code: [src/commands/user/index.ts](https://github.com/taskforcesh/nandu/blob/v1.0.4/src/commands/user/index.ts)_
+_See code: [src/commands/user/index.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/user/index.ts)_
 
 ## `nandu user:add USER`
 
@@ -222,16 +219,19 @@ add or update a new token for given user
 
 ```
 USAGE
-  $ nandu user:add USER
+  $ nandu user:add USER --registry <value> [-h] [--token <value> | ]
 
-OPTIONS
-  -h, --help           show CLI help
-  --registry=registry  (required) URI pointing to your Nandu NPM Registry
-  --token=token        Token to be used for authentication, uses NPM_TOKEN env variable if unspecified
+FLAGS
+  -h, --help              Show CLI help.
+      --registry=<value>  (required) URI pointing to your Nandu NPM Registry
+      --token=<value>     Token to be used for authentication, uses NPM_TOKEN env variable if unspecified
 
-EXAMPLE
+DESCRIPTION
+  add or update a new token for given user
+
+EXAMPLES
   $ nandu user:add myuser
 ```
 
-_See code: [src/commands/user/add.ts](https://github.com/taskforcesh/nandu/blob/v1.0.4/src/commands/user/add.ts)_
+_See code: [src/commands/user/add.ts](https://github.com/taskforcesh/nandu/blob/v1.0.0/src/commands/user/add.ts)_
 <!-- commandsstop -->

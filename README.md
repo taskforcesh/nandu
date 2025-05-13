@@ -43,7 +43,7 @@ to deploy following the [12-factor app principles](https://12factor.net/).
 
 ## Used by
 
-Currently used by [Taskforce.sh](https://taskforce.sh) to provide the BullMQ Pro package to licensed users.
+Currently used in production by [Taskforce.sh](https://taskforce.sh) to provide the BullMQ Pro package to licensed users.
 
 ## Features
 
@@ -127,4 +127,4 @@ To start the server, you need to provide the following environment variables:
 
 This project is provided as open source and licensed under GNU's AGPL license terms.
 
-(c) 2022 Taskforce.sh Inc.
+(c) 2022-2025 Taskforce.sh Inc.

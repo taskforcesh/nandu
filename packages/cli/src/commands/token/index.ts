@@ -1,8 +1,7 @@
 export * from "./create";
 export * from "./ls";
 
-import { Command, flags } from "@oclif/command";
-import cli from "cli-ux";
+import { Command } from "@oclif/core";
 import axios, { AxiosRequestConfig } from "axios";
 
 export default class Token extends Command {

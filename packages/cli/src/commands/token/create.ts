@@ -1,10 +1,8 @@
-import { flags } from "@oclif/command";
+import { Flags, Args, ux } from "@oclif/core";
 import { wrapAction } from "../../utils";
 
 import AuthCommand from "../../auth-command";
 import { addToken } from "../../services/nandu.service";
-
-import cli from "cli-ux";
 
 export default class TokenCreate extends AuthCommand {
   static description = "create a new token for given user";
@@ -13,24 +11,32 @@ export default class TokenCreate extends AuthCommand {
 
   static flags = {
     ...AuthCommand.flags,
-    readonly: flags.boolean({
+    readonly: Flags.boolean({
       description: "generate a readonly token",
     }),
-    "cidr-whitelist": flags.string({
+    "cidr-whitelist": Flags.string({
       description: "comma separated list of whitelisted cidrs",
     }),
   };
 
-  static args = [{ name: "user", required: true }];
+  static args = {
+    user: Args.string({required: true})
+  };
 
   async run() {
-    const { args, flags } = this.parse(this.ctor);
+    const { args, flags } = await this.parse(TokenCreate);
     const { opts, password } = await this.getCredentials();
+
+    // Ensure password is defined
+    if (!password) {
+      this.error('Password is required');
+      return;
+    }
 
     const { "cidr-whitelist": cidrWhitelist } = flags;
 
-    wrapAction(cli.action, async () => {
-      cli.action.start("creating token");
+    wrapAction(ux.action, async () => {
+      ux.action.start("creating token");
 
       const token = await addToken(
         flags.registry,
@@ -41,7 +47,7 @@ export default class TokenCreate extends AuthCommand {
         cidrWhitelist
       );
 
-      cli.action.stop();
+      ux.action.stop();
       console.log(`New token created for user ${args.user}`, token);
     });
   }

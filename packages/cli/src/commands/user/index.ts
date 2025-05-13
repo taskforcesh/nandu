@@ -1,6 +1,6 @@
 export * from "./add";
 
-import { Command } from "@oclif/command";
+import { Command } from "@oclif/core";
 
 export default class User extends Command {
   static description = "Manage NPM Registry users";

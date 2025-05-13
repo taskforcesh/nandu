@@ -19,6 +19,7 @@
     "@semantic-release/github": "^9.2.1",
     "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#985e34fca5b2cc2f5f70841ea927e8ee817813dd",
     "@semantic-release/release-notes-generator": "^11.0.7",
-    "semantic-release": "^22.0.0"
+    "semantic-release": "^22.0.0",
+    "type-fest": "3.0.0"
   }
 }

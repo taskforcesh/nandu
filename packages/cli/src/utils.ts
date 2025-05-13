@@ -1,7 +1,7 @@
-import { ActionBase } from "cli-ux";
+import { ux } from "@oclif/core";
 import { AxiosResponse } from "axios";
 
-export const wrapAction = async (action: ActionBase, actionFn: () => {}) => {
+export const wrapAction = async (action: typeof ux.action, actionFn: () => {}) => {
   try {
     await actionFn();
   } catch (err) {

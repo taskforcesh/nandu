@@ -1,8 +1,7 @@
 import AuthCommand from "../../auth-command";
 import { addUser } from "../../services/nandu.service";
 import { wrapAction } from "../../utils";
-
-import cli from "cli-ux";
+import { Args, ux } from "@oclif/core";
 
 export default class UserAdd extends AuthCommand {
   static description = "add or update a new token for given user";
@@ -13,22 +12,24 @@ export default class UserAdd extends AuthCommand {
     ...AuthCommand.flags,
   };
 
-  static args = [{ name: "user", required: true }];
+  static args = {
+    user: Args.string({required: true})
+  };
 
   async run() {
-    const { args, flags } = this.parse(this.ctor);
+    const { args, flags } = await this.parse(UserAdd);
     const { opts } = await this.getCredentials();
 
-    cli.log("Enter new user credentials");
-    const password = await cli.prompt("password", { type: "hide" });
-    const email = await cli.prompt("email");
+    this.log("Enter new user credentials");
+    const password = await ux.prompt("password", { type: "hide" });
+    const email = await ux.prompt("email");
 
-    wrapAction(cli.action, async () => {
-      cli.action.start("adding user");
+    wrapAction(ux.action, async () => {
+      ux.action.start("adding user");
 
       await addUser(flags.registry, args.user, password, email, opts);
 
-      cli.action.stop();
+      ux.action.stop();
     });
   }
 }

@@ -24,22 +24,11 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Pin type-fest to compatible version
-        run: yarn add type-fest@3.0.0 --dev -W
-
-      # First build service package
-      - name: Build service package
+      # Use build.sh to build all packages
+      - name: Build packages
         run: |
-          cd packages/service
-          yarn build
-          cd ../..
-
-      # Then build CLI package that depends on service
-      - name: Build CLI package 
-        run: |
-          cd packages/cli
-          yarn build
-          cd ../..
+          chmod +x ./build.sh
+          ./build.sh
         
       - name: Release
         env:

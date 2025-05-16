@@ -20,14 +20,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-          cache: 'yarn'
+      - name: Setup BunJS
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: yarn install
+        run: bun install
 
       # Run OSV Scanner on all packages in the monorepo
       - name: Run OSV Scanner

@@ -1,13 +1,25 @@
-import { Component, For } from "solid-js";
-import { useRouteData } from "@solidjs/router";
+import { Component, For, createResource } from "solid-js";
+import { query } from "@solidjs/router";
 import { Package } from "../interfaces/package";
+import { PackagesService } from "../services/packages";
+import { state } from "../store/state";
+
+const getPackages = query(
+  async (scope: string) => {
+    return await PackagesService.listPackages(scope);
+  },
+  "packages" // Cache key
+);
 
 /**
  * Dashboard Component.
  *
  */
 const Packages: Component = () => {
-  const packages = useRouteData<any>();
+  const [packages] = createResource(
+    () => state.currentOrganizationId!,
+    getPackages
+  );
 
   return (
     <div>

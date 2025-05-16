@@ -8,7 +8,8 @@ export interface User {
   type: UserType;
 }
 
-const host = import.meta.env.VITE_API_HOST;
+// Add a fallback host value if the environment variable isn't loaded properly
+const host = import.meta.env.VITE_API_HOST || 'http://localhost:4567';
 
 interface SessionPayload {
   user: User;
@@ -34,6 +35,11 @@ export class Session {
       if (response.status === 200) {
         return new Session(await response.json());
       }
+      console.error('Login failed with status:', response.status); // Debug log
+      return undefined;
+    }).catch(error => {
+      console.error('Login request failed:', error); // Debug log for fetch errors
+      throw error; // Re-throw to be handled by the login component
     });
   }
 

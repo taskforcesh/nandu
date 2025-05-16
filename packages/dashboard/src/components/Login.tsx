@@ -81,7 +81,7 @@ const Login: Component = () => {
             />
           </div>
           <div class="mb-10 peer-invalid:visible text-pink-600 text-sm">
-            {errorMessage}
+            {errorMessage()}
           </div>
           <div class="flex items-center justify-between">
             <button

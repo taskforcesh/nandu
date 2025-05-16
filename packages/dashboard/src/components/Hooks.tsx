@@ -1,18 +1,25 @@
-import { Component, For } from "solid-js";
+import { Component, For, createResource } from "solid-js";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@hope-ui/solid";
 
-import { useRouteData } from "@solidjs/router";
+import { query } from "@solidjs/router";
 
 import RemoveResource from "./RemoveResource";
 import { HooksService, Hook, HookType } from "../services/hooks";
 import AddHook from "./AddHook";
+
+const getHooks = query(
+  async () => {
+    return await HooksService.listHooks();
+  },
+  "hooks" // Cache key
+);
 
 /**
  * Hooks Component.
  *
  */
 const Hooks: Component = () => {
-  const [hooks, setHooks] = useRouteData<any>();
+  const [hooks, { mutate: setHooks }] = createResource(() => getHooks());
 
   async function saveHook(values: {
     type: HookType;

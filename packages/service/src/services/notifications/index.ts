@@ -42,7 +42,7 @@ try {
 
 /**
  * Send an email to the specified address
- * If email transport is not configured, it will save emails to log files
+ * If email transport is not configured, it will be logged but not sent
  */
 export const sendEmail = async (
   email: string,
@@ -58,27 +58,15 @@ export const sendEmail = async (
 
   logger.debug({ email, subject }, "Attempting to send email");
 
-  // Always log the email content for debugging
-  try {
-    const timestamp = new Date().toISOString().replace(/[:\.]/g, "-");
-    const logFile = path.join(
-      emailLogDir,
-      `email-${timestamp}-${email.replace("@", "_at_")}.html`
-    );
-    const logContent = `
-To: ${email}
-From: ${options.from}
-Subject: ${subject}
-Date: ${new Date().toString()}
-Content-Type: text/html
-
-${html}
-    `;
-    fs.writeFileSync(logFile, logContent);
-    logger.debug({ logFile }, "Email logged to file");
-  } catch (err) {
-    logger.error({ err }, "Failed to log email content");
-  }
+  // Log email details without creating HTML files
+  logger.debug(
+    {
+      to: email,
+      from: options.from,
+      subject: subject,
+    },
+    "Email content logged"
+  );
 
   // Return early with console notification if no transport
   if (!transporter) {

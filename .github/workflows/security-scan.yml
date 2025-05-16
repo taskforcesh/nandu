@@ -20,11 +20,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup BunJS
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Yarn
+        run: corepack prepare yarn@stable --activate
 
       - name: Install dependencies
-        run: bun install
+        run: yarn install
 
       # Run OSV Scanner on all packages in the monorepo
       - name: Run OSV Scanner

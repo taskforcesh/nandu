@@ -1,5 +1,5 @@
-import { Component, For } from "solid-js";
-import { useRouteData, useParams } from "@solidjs/router";
+import { Component, For, createResource } from "solid-js";
+import { useParams, query } from "@solidjs/router";
 
 import { Table, Thead, Tr, Th, Tbody, Td } from "@hope-ui/solid";
 
@@ -9,14 +9,23 @@ import { state } from "../store/state";
 import { TeamsService } from "../services/teams";
 import AddTeamMember from "./AddTeamMember";
 
+const getTeamMembers = query(
+  async (scope: string, team: string) => {
+    return await TeamsService.listMembers(scope, team);
+  },
+  "teamMembers" // Cache key
+);
+
 /**
  * Dashboard Component.
  *
  */
 const TeamMembers: Component = () => {
-  const [members, setMembers] = useRouteData<any>();
-
   const params = useParams();
+  const [members, { mutate: setMembers }] = createResource(
+    () => [params.scope, params.team],
+    ([scope, team]) => getTeamMembers(scope, team)
+  );
 
   async function addMember({ name }: { name: string }) {
     try {

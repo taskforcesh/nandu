@@ -1,5 +1,5 @@
-import { Component, For } from "solid-js";
-import { useRouteData } from "@solidjs/router";
+import { Component, For, createResource } from "solid-js";
+import { query } from "@solidjs/router";
 
 import { Table, Thead, Tr, Th, Tbody, Td } from "@hope-ui/solid";
 
@@ -9,12 +9,22 @@ import RemoveUser from "./RemoveUser";
 import { User, UsersService } from "../services/users";
 import { sessionState, state } from "../store/state";
 
+const getUsers = query(
+  async (scope: string) => {
+    return await UsersService.listUsers(scope);
+  },
+  "users" // Cache key
+);
+
 /**
  * Dashboard Component.
  *
  */
 const Users: Component = () => {
-  const [users, setUsers] = useRouteData<any>();
+  const [users, { mutate: setUsers }] = createResource(
+    () => state.currentOrganizationId!,
+    getUsers
+  );
 
   async function saveUser(values: User & { role: string }) {
     try {

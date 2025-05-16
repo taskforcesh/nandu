@@ -1,5 +1,5 @@
-import { Component, createSignal, For, Show } from "solid-js";
-import { Outlet, useNavigate, useRouteData } from "@solidjs/router";
+import { Component, createSignal, For, Show, createResource } from "solid-js";
+import { useNavigate, query, RouteSectionProps } from "@solidjs/router";
 
 import {
   Alert,
@@ -14,12 +14,23 @@ import { OrganizationsService } from "../services/organizations";
 import { sessionState, state, setState } from "../store/state";
 import { AlertsService } from "../services/alerts";
 
+const getOrganizations = query(
+  async (userId: string) => {
+    return await OrganizationsService.listOrganizations(userId);
+  },
+  "organizations" // Cache key
+);
+
 /**
  * Dashboard Component.
  *
  */
-const Dashboard: Component = () => {
-  const [organizations, setOrganizations] = createSignal(useRouteData<any>()());
+const Dashboard: Component<RouteSectionProps<unknown>> = (props) => {
+  const [organizations] = createResource(
+    () => sessionState().session?.user._id,
+    getOrganizations
+  );
+  const [localOrgs, setLocalOrgs] = createSignal(organizations());
   const navigate = useNavigate();
 
   return (
@@ -51,9 +62,7 @@ const Dashboard: Component = () => {
         <main class="flex-1">
           <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div class="py-4">
-                <Outlet />
-              </div>
+              <div class="py-4">{props.children}</div>
             </div>
           </div>
         </main>
@@ -93,7 +102,7 @@ const Dashboard: Component = () => {
               sessionState().session?.user._id!,
               organization.organizationId
             );
-            setOrganizations([organization, ...organizations()]);
+            setLocalOrgs([organization, ...localOrgs()]);
             setState({ currentOrganizationId: organization.organizationId });
           } catch (error) {
             // TODO: Display error

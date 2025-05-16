@@ -1,5 +1,5 @@
 import { Component, mergeProps } from "solid-js";
-import { useNavigate, NavLink } from "@solidjs/router";
+import { useNavigate, A } from "@solidjs/router";
 
 import { Icon } from "solid-heroicons";
 import {
@@ -138,7 +138,7 @@ const SidePanel: Component<any> = (props: any) => {
               />
             </div>
             {navigation.map((item) => (
-              <NavLink
+              <A
                 href={`/${merged.selectedOrganization}/${item.href}`}
                 activeClass="bg-gray-900 text-white"
                 inactiveClass="text-gray-300 hover:bg-gray-700 hover:text-white"
@@ -150,7 +150,7 @@ const SidePanel: Component<any> = (props: any) => {
                   aria-hidden="true"
                 />
                 {item.name}
-              </NavLink>
+              </A>
             ))}
           </nav>
         </div>

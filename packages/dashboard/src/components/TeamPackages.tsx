@@ -1,5 +1,5 @@
-import { Component, For } from "solid-js";
-import { useRouteData, useParams } from "@solidjs/router";
+import { Component, For, createResource } from "solid-js";
+import { useParams, query } from "@solidjs/router";
 
 import { Table, Thead, Tr, Th, Tbody, Td } from "@hope-ui/solid";
 
@@ -9,14 +9,23 @@ import { state } from "../store/state";
 import { TeamsService } from "../services/teams";
 import AddTeamPackage from "./AddTeamPackage";
 
+const getTeamPackages = query(
+  async (scope: string, team: string) => {
+    return await TeamsService.listPackages(scope, team);
+  },
+  "teamPackages" // Cache key
+);
+
 /**
  * Dashboard Component.
  *
  */
 const TeamPackages: Component = () => {
-  const [packages, setPackages] = useRouteData<any>();
-
   const params = useParams();
+  const [packages, { mutate: setPackages }] = createResource(
+    () => [params.scope, params.team],
+    ([scope, team]) => getTeamPackages(scope, team)
+  );
 
   async function addPackage(pkg: { name: string; permissions: string }) {
     try {

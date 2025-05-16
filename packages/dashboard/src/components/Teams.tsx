@@ -1,5 +1,12 @@
-import { Component, For } from "solid-js";
-import { useRouteData, useNavigate, useLocation } from "@solidjs/router";
+import { Component, createResource, For } from "solid-js";
+import {
+  useNavigate,
+  useLocation,
+  RoutePreloadFunc,
+  RoutePreloadFuncArgs,
+  query,
+  useParams,
+} from "@solidjs/router";
 
 import { Table, Thead, Tr, Th, Tbody, Td, Button } from "@hope-ui/solid";
 
@@ -10,12 +17,30 @@ import { Team } from "../services/teams";
 import { state } from "../store/state";
 import { TeamsService } from "../services/teams";
 
+const getTeams = query(
+  async (scope: string) => {
+    return await TeamsService.listTeams(scope);
+  },
+  "teams" // Cache key
+);
+
+export const fetchTeams: RoutePreloadFunc = ({
+  params,
+  location,
+}: RoutePreloadFuncArgs) => {
+  return TeamsService.listTeams(params.scope);
+};
+
 /**
  * Dashboard Component.
  *
  */
-const Teams: Component = () => {
-  const [teams, setTeams] = useRouteData<any>();
+const Teams: Component = (props) => {
+  const params = useParams();
+  const [teams, { mutate: setTeams }] = createResource(
+    () => params.scope,
+    getTeams
+  );
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,17 +86,18 @@ const Teams: Component = () => {
                   <Td>{team.description}</Td>
                   <Td>
                     <div class="items-center flex flex-row justify-start gap-x-1">
-                      <Button class="bg-orange-400 hover:bg-orange-500 focus:outline-none font-medium rounded-md "
+                      <Button
+                        class="bg-orange-400 hover:bg-orange-500 focus:outline-none font-medium rounded-md "
                         onClick={() =>
                           navigate(`${location.pathname}/${team.name}/members`)
-                          
                         }
                         size="lg"
                         compact
                       >
                         Members
                       </Button>
-                      <Button class="bg-orange-400 hover:bg-orange-500 focus:outline-none"
+                      <Button
+                        class="bg-orange-400 hover:bg-orange-500 focus:outline-none"
                         onClick={() =>
                           navigate(`${location.pathname}/${team.name}/packages`)
                         }

@@ -1,6 +1,5 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
-import { Router } from "@solidjs/router";
 import { HopeProvider, HopeThemeConfig } from "@hope-ui/solid";
 
 // Updated Tailwind import path for newer versions
@@ -16,9 +15,7 @@ const config: HopeThemeConfig = {
 render(
   () => (
     <HopeProvider config={config}>
-      <Router>
-        <App />
-      </Router>
+      <App />
     </HopeProvider>
   ),
   document.getElementById("root") as HTMLElement

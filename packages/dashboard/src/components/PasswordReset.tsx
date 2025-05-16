@@ -150,6 +150,9 @@ const ChangePassword: Component<any> = (props: any) => {
     onSubmit: async (values) => {
       const { newPassword } = values;
       try {
+        if (!email) {
+          throw new Error("Email is required");
+        }
         await UsersService.setPassword(email, token, newPassword);
         setSuccess("Password changed successfully");
         setTimeout(() => {
@@ -162,6 +165,14 @@ const ChangePassword: Component<any> = (props: any) => {
     },
     initialValues: {},
   });
+
+  const getError = (type: "newPassword" | "confirmPassword") => {
+    const error = errors(type);
+    if (error) {
+      return error[0];
+    }
+    return "";
+  };
 
   return (
     <div class="flex flex-col items-center justify-center h-screen">
@@ -185,9 +196,7 @@ const ChangePassword: Component<any> = (props: any) => {
                     name="newPassword"
                     placeholder="New Password"
                   />
-                  <FormErrorMessage>
-                    {errors("newPassword")[0]}
-                  </FormErrorMessage>
+                  <FormErrorMessage>{getError("newPassword")}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl required invalid={!!errors("confirmPassword")}>
@@ -198,7 +207,7 @@ const ChangePassword: Component<any> = (props: any) => {
                     placeholder="Repeat Password"
                   />
                   <FormErrorMessage>
-                    {errors("confirmPassword")[0]}
+                    {getError("confirmPassword")}
                   </FormErrorMessage>
                 </FormControl>
 

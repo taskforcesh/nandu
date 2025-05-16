@@ -1,10 +1,7 @@
 import { Component, createSignal, Show } from "solid-js";
-import { useNavigate } from "@solidjs/router";
-
-import { Session } from "../services/session";
 import { useForm } from "../services/form";
 import { UsersService } from "../services/users";
-import { AlertsService } from "../services/alerts";
+
 
 // We need to use the store for the session so that it can be accessed from many places
 // inclusive the router.
@@ -85,7 +82,7 @@ const RequestPasswordReset: Component = () => {
             </div>
 
             <div class="mb-10 peer-invalid:visible text-pink-600 text-sm">
-              {errorMessage}
+              {errorMessage()}
             </div>
             <div class="flex items-center justify-between">
               <button

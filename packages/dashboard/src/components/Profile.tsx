@@ -1,5 +1,5 @@
-import { Component } from "solid-js";
-import { useRouteData } from "@solidjs/router";
+import { Component, createResource } from "solid-js";
+import { query } from "@solidjs/router";
 
 import Tokens from "./Tokens";
 import ChangePassword from "./ChangePassword";
@@ -9,12 +9,19 @@ import { sessionState, state } from "../store/state";
 import { UsersService } from "../services/users";
 import { AlertsService } from "../services/alerts";
 
+const getTokens = query(
+  async () => {
+    return await TokensService.listTokens();
+  },
+  "tokens" // Cache key
+);
+
 /**
  * Profile Component.
  *
  */
 const Profile: Component = () => {
-  const [tokens, setTokens] = useRouteData<any>();
+  const [tokens, { mutate: setTokens }] = createResource(() => getTokens());
 
   async function addToken(values: any) {
     try {

@@ -1,0 +1,71 @@
+name: Service Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/service/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/service/**'
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Service Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Yarn
+        run: corepack prepare yarn@stable --activate
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Setup Bun (for testing only)
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+          
+      - name: Create required directories
+        run: |
+          mkdir -p packages/service/logs
+          mkdir -p packages/service/storage/db
+
+      - name: Run tests with Bun
+        working-directory: ./packages/service
+        run: bun test
+        env:
+          NODE_ENV: test
+
+      - name: Archive logs and test artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            packages/service/logs
+            packages/service/storage/db
+          if-no-files-found: ignore
+          
+      - name: Archive yarn failure logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: yarn-logs
+          path: ~/.yarn/log

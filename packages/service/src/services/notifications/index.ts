@@ -2,7 +2,6 @@ import config from "../../../config";
 import { getTransport } from "./transport-factory";
 import fs from "fs";
 import path from "path";
-import { Transporter } from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 import pino from "pino";
 

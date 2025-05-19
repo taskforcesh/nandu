@@ -1,5 +1,4 @@
 import { DataTypes, Model, Op, Sequelize } from "sequelize";
-import { initDb } from "./db";
 import { User } from "./user";
 import { Organization, UserOrganization } from "./organization";
 import { Package } from "./package";

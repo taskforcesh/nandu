@@ -1,5 +1,4 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { initDb } from "./db";
 import { Author } from "./author";
 import { DistTag } from "../models/dist-tag";
 import { Version as IVersion, Attachment } from "../interfaces";

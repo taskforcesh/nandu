@@ -4,7 +4,6 @@ import { DataTypes, Model, Op, Sequelize } from "sequelize";
 import * as uuid from "uuid";
 import * as range_check from "range_check";
 
-import { initDb } from "./db";
 import { User } from "./user";
 
 export type TokenAccess = "readonly" | "publish" | "automation";

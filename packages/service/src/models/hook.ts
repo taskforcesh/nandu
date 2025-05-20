@@ -3,7 +3,6 @@ import { DataTypes, Model, literal, Sequelize } from "sequelize";
 import axios from "axios";
 import pino from "pino";
 
-import { initDb } from "./db";
 import { User } from "./user";
 
 const logger = pino();

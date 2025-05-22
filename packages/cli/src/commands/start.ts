@@ -24,7 +24,7 @@ export default class Start extends Command {
 
     const { port } = flags;
 
-    // Pass port and dashboard options to startServer
-    startServer(port, { port: 3000, apiHost: `http://localhost:${port}` });
+    // Pass only the port to startServer - it only accepts one argument
+    startServer(port);
   }
 }

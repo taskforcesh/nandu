@@ -24,7 +24,7 @@ export default class Start extends Command {
 
     const { port } = flags;
 
-    // Pass only the port to startServer - it only accepts one argument
+    // Call startServer with the port
     startServer(port);
   }
 }

@@ -12,7 +12,8 @@
     "@npmcli/config": "^2.4.0",
     "@oclif/core": "^3.19.2",
     "axios": "^1.9.0",
-    "cli-ux": "^6.0.9"
+    "cli-ux": "^6.0.9",
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@oclif/test": "^3.0.0",
@@ -27,7 +28,6 @@
     "nyc": "^15.1.0",
     "oclif": "^4.1.1",
     "ts-node": "^10.9.1",
-    "tslib": "^2.4.0",
     "typescript": "^5.3.3"
   },
   "engines": {

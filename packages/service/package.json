@@ -1,6 +1,6 @@
 {
   "name": "@nandu/service",
-  "version": "1.0.3",
+  "version": "1.3.0",
   "description": "Open NPM Registry",
   "engines": {
     "node": ">=14"
@@ -42,6 +42,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-jwt": "^7.7.5",
+    "express-rate-limit": "^7.5.0",
     "handlebars": "^4.7.7",
     "http-status-codes": "^2.1.4",
     "is-jwt": "^1.0.0",
@@ -54,6 +55,7 @@
     "range_check": "^2.0.4",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.0.2",
+    "tslib": "^2.3.1",
     "umzug": "^3.8.2",
     "uuid": "^8.3.2",
     "whatwg-fetch": "^3.6.2"
@@ -71,7 +73,6 @@
     "nodemon": "^3.0.2",
     "pino-pretty": "^8.1.0",
     "ts-node": "^10.4.0",
-    "tslib": "^2.3.1",
     "typescript": "4.9.4"
   },
   "publishConfig": {

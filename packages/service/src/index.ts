@@ -3,7 +3,11 @@ import { Request, Response, NextFunction, json, Application } from "express";
 import pino from "pino";
 
 import { authToken } from "./middleware";
-import { initDb } from "./models";
+import { initDb } from "./models/db";
+import { handleHealthCheck } from "./services/healthcheck";
+
+import RateLimit from "express-rate-limit";
+
 import {
   loginRouter,
   packagesRouter,
@@ -18,10 +22,7 @@ import {
 import express = require("express");
 import cors = require("cors");
 
-export async function startServer(
-  port: number = 4567,
-  dashboardOpts?: { port: number; apiHost: string }
-) {
+export async function startServer(port: number = 4567) {
   const pkg = require(`${getPkgJsonDir()}/package.json`);
 
   const logger = pino();
@@ -30,7 +31,23 @@ export async function startServer(
 
   app.set("trust proxy", true);
 
-  app.use(cors());
+  // Rate limiting middleware
+  const limiter = RateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: "Too many requests, please try again later.",
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+  app.use(limiter);
+
+  // Configure CORS to allow requests from the S3/CloudFront hosted dashboard
+  app.use(
+    cors({
+      origin: process.env.DASHBOARD_ORIGIN || "*",
+      credentials: true,
+    })
+  );
 
   if (process.env.NODE_ENV !== "production") {
     app.use("*", (req, res, next) => {
@@ -41,37 +58,19 @@ export async function startServer(
 
   const versionString = `Nandu NPM Registry v${pkg.version}`;
 
-  if (dashboardOpts) {
-    const dashboardApp = express() as Application;
-    const path = require("path");
-    const dashboardPath = path.resolve(
-      path.join(getPkgJsonDir(), "..", "dashboard", "dist")
-    );
-
-    dashboardApp.use(express.static(dashboardPath));
-    dashboardApp.get("/config", (req, res) => {
-      res.json({
-        version: pkg.version,
-        apiHost: dashboardOpts.apiHost || `http://localhost:${port}`,
-      });
-    });
-
-    dashboardApp.use("/api", apiRouter);
-
-    dashboardApp.get("*", function (req, res) {
-      res.sendFile(path.join(dashboardPath, "index.html"));
-    });
-    dashboardApp.listen(dashboardOpts.port, () => {
-      logger.info(`Dashboard listening on port 3000`);
-    });
-  } else {
-    app.get("/", (req: Request, res: Response) => {
-      res.status(200).send(versionString);
-    });
-  }
-
-  app.get("/-/ping", (req: Request, res: Response) => {
+  app.get("/", (req: Request, res: Response) => {
     res.status(200).send(versionString);
+  });
+
+  app.get("/config", (req, res) => {
+    res.json({
+      version: pkg.version,
+      apiHost: process.env.API_PUBLIC_URL || `http://localhost:${port}`,
+    });
+  });
+
+  app.get("/-/ping", async (req: Request, res: Response) => {
+    await handleHealthCheck(req, res, logger, pkg.version);
   });
 
   app.use(loginRouter);

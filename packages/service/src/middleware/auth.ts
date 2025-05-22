@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import pino from "pino";
+import { Sequelize } from "sequelize";
 
 import { Token, User, TokenAccess } from "../models";
 import config from "../../config";
@@ -87,6 +88,15 @@ export const authToken =
         if (!tokenInstance.checkCIDR(req.ip)) {
           return res.status(StatusCodes.UNAUTHORIZED).send("Invalid IP");
         }
+
+        // Update token usage statistics with a single atomic operation
+        await Token.update(
+          { 
+            lastUsed: new Date(),
+            useCount: Sequelize.literal('useCount + 1') 
+          },
+          { where: { token: tokenHash } }
+        );
 
         const user = await User.findOne({
           where: { _id: tokenInstance.getDataValue("userId") },

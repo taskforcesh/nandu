@@ -1,5 +1,4 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { initDb } from "./db";
 import { Version } from "./version";
 
 export class Tarball extends Model {}

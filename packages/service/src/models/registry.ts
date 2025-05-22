@@ -1,5 +1,4 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { initDb } from "./db";
 import { Package } from "./";
 
 export class Registry extends Model {}

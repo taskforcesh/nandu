@@ -1,21 +1,13 @@
 import { DataTypes, Model, Op, Sequelize } from "sequelize";
-import { initDb, db } from "./db";
 import { User } from "./user";
 import { Organization, UserOrganization } from "./organization";
 import { Package } from "./package";
 import { Permissions } from "../types";
+import { db } from "./db";
 
-const UserTeam = db.define("UserTeam", {}, { timestamps: false });
-
-const TeamPackage = db.define(
-  "TeamPackage",
-  {
-    permissions: {
-      type: DataTypes.ENUM("read-only", "read-write"),
-    },
-  },
-  { timestamps: false }
-);
+// These will be initialized after Team is defined
+let UserTeam: any;
+let TeamPackage: any;
 
 export class Team extends Model {
   static async createTeam(
@@ -265,7 +257,20 @@ export class Team extends Model {
   }
 }
 
-export default function (db: Sequelize) {
+export default function (sequelize: Sequelize) {
+  // Initialize the models here instead of at the module level
+  UserTeam = sequelize.define("UserTeam", {}, { timestamps: false });
+
+  TeamPackage = sequelize.define(
+    "TeamPackage",
+    {
+      permissions: {
+        type: DataTypes.ENUM("read-only", "read-write"),
+      },
+    },
+    { timestamps: false }
+  );
+
   Team.init(
     {
       id: {

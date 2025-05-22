@@ -6,6 +6,8 @@ import { authToken } from "./middleware";
 import { initDb } from "./models/db";
 import { handleHealthCheck } from "./services/healthcheck";
 
+import RateLimit from "express-rate-limit";
+
 import {
   loginRouter,
   packagesRouter,
@@ -20,9 +22,7 @@ import {
 import express = require("express");
 import cors = require("cors");
 
-export async function startServer(
-  port: number = 4567
-) {
+export async function startServer(port: number = 4567) {
   const pkg = require(`${getPkgJsonDir()}/package.json`);
 
   const logger = pino();
@@ -31,11 +31,23 @@ export async function startServer(
 
   app.set("trust proxy", true);
 
+  // Rate limiting middleware
+  const limiter = RateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: "Too many requests, please try again later.",
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+  app.use(limiter);
+
   // Configure CORS to allow requests from the S3/CloudFront hosted dashboard
-  app.use(cors({
-    origin: process.env.DASHBOARD_ORIGIN || '*',
-    credentials: true
-  }));
+  app.use(
+    cors({
+      origin: process.env.DASHBOARD_ORIGIN || "*",
+      credentials: true,
+    })
+  );
 
   if (process.env.NODE_ENV !== "production") {
     app.use("*", (req, res, next) => {
@@ -49,7 +61,7 @@ export async function startServer(
   app.get("/", (req: Request, res: Response) => {
     res.status(200).send(versionString);
   });
-  
+
   app.get("/config", (req, res) => {
     res.json({
       version: pkg.version,

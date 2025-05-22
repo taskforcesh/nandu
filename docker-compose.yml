@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  nandu:
+    # For local development, build from local source:
+    build: .
+    # For production, use the prebuilt image (uncomment the line below and comment out the 'build' line):
+    # image: ghcr.io/taskforcesh/nandu:latest
+    ports:
+      - "${NANDU_PORT:-4567}:4567"
+    depends_on:
+      - postgres
+    environment:
+      # Database configuration
+      NANDU_SEQUELIZE_URI: ${NANDU_SEQUELIZE_URI:-postgres://nandu:nandu@postgres:5432/nandu}
+      # JWT configuration
+      NANDU_JWT_SECRET: ${NANDU_JWT_SECRET:-change-this-in-production}
+      # Root user configuration
+      NANDU_ROOT_USER: ${NANDU_ROOT_USER:-root}
+      NANDU_ROOT_PASSWD: ${NANDU_ROOT_PASSWD:-change-this-in-production}
+      NANDU_ROOT_EMAIL: ${NANDU_ROOT_EMAIL:-admin@example.com}
+      # Storage configuration
+      NANDU_LOCAL_STORAGE_DIR: ${NANDU_LOCAL_STORAGE_DIR:-/app/storage/packages}
+      # Log configuration
+      NANDU_LOG_LEVEL: ${NANDU_LOG_LEVEL:-info}
+      # External dashboard URL (S3/CloudFront location)
+      NANDU_DASHBOARD_URL: ${NANDU_DASHBOARD_URL:-https://your-cloudfront-distribution.cloudfront.net}
+      # CORS origin for dashboard access
+      DASHBOARD_ORIGIN: ${DASHBOARD_ORIGIN:-https://your-cloudfront-distribution.cloudfront.net}
+      # Public URL for API (used by dashboard)
+      API_PUBLIC_URL: ${API_PUBLIC_URL:-http://localhost:4567}
+      # Email configuration (SMTP example)
+      NANDU_EMAIL_FROM: ${NANDU_EMAIL_FROM:-noreply@example.com}
+      NANDU_EMAIL_USE_TRANSPORT: ${NANDU_EMAIL_USE_TRANSPORT:-smtp}
+      NANDU_EMAIL_SMTP_HOST: ${NANDU_EMAIL_SMTP_HOST:-smtp.example.com}
+      NANDU_EMAIL_SMTP_PORT: ${NANDU_EMAIL_SMTP_PORT:-587}
+      NANDU_EMAIL_SMTP_USER: ${NANDU_EMAIL_SMTP_USER:-user}
+      NANDU_EMAIL_SMTP_PASS: ${NANDU_EMAIL_SMTP_PASS:-password}
+      # Health check configuration
+      NANDU_HEALTH_CHECK_STORAGE: ${NANDU_HEALTH_CHECK_STORAGE:-false}
+    volumes:
+      - nandu-storage:/app/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4567/-/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nandu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nandu}
+      POSTGRES_DB: ${POSTGRES_DB:-nandu}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nandu"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  nandu-storage:
+  postgres-data:

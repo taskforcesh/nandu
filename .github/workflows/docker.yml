@@ -45,12 +45,23 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
+          flavor: |
+            latest=auto # Sets 'latest' to highest semver on release, or to default branch tag
           tags: |
+            # For pushes to branches (e.g., 'main' when pushed to main)
             type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            # For all builds, tag with the long Git SHA (e.g., 'abcdef12345...')
             type=sha,format=long
+
+            # Semantic versioning tags from Git tags (e.g., v1.2.3, 1.2.3).
+            # These are primarily used for 'release' events or direct Git tag pushes.
+            # docker/metadata-action automatically uses github.ref (the Git tag) for these.
+            type=semver,pattern={{version}}      # e.g., 1.2.3 from Git tag v1.2.3
+            type=semver,pattern={{vversion}}     # e.g., v1.2.3 from Git tag v1.2.3
+            type=semver,pattern={{major}}.{{minor}} # e.g., 1.2 from Git tag v1.2.3
+            type=semver,pattern=v{{major}}.{{minor}}# e.g., v1.2 from Git tag v1.2.3
+            type=semver,pattern={{major}}         # e.g., 1 from Git tag v1.2.3
+            type=semver,pattern=v{{major}}        # e.g., v1 from Git tag v1.2.3
       
       # Determine if we should publish
       - name: Set publishing flag

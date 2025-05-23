@@ -97,13 +97,6 @@ RUN yarn config set nodeLinker node-modules
 RUN yarn install
 RUN yarn workspaces focus @nandu/service @nandu/dashboard --production
 
-# Explicitly install tslib, which seems to be causing issues
-RUN yarn add --dev tslib@^2.8.1
-
-# Make sure dependencies are properly accessible
-RUN mkdir -p /app/packages/service/node_modules/tslib
-RUN cp -r /app/node_modules/tslib/* /app/packages/service/node_modules/tslib/ || echo "Failed to copy tslib"
-
 # Set proper permissions for all files
 RUN chown -R node:node /app
 

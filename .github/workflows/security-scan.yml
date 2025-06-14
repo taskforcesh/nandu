@@ -36,26 +36,8 @@ jobs:
 
       # Run OSV Scanner on all packages in the monorepo
       - name: Run OSV Scanner
-        uses: google/osv-scanner/actions/scanner@main
+        uses: google/osv-scanner/actions/scanner@v1
         with:
           path: .
           recursive: true
           config: osv-scanner.toml
-          
-      # Scan CLI package separately
-      - name: Run OSV Scanner on CLI package
-        uses: google/osv-scanner/actions/scanner@main
-        with:
-          path: packages/cli
-          
-      # Scan Service package separately
-      - name: Run OSV Scanner on Service package
-        uses: google/osv-scanner/actions/scanner@main
-        with:
-          path: packages/service
-          
-      # Scan Dashboard package separately
-      - name: Run OSV Scanner on Dashboard package
-        uses: google/osv-scanner/actions/scanner@main
-        with:
-          path: packages/dashboard

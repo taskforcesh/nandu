@@ -91,9 +91,9 @@ export const authToken =
 
         // Update token usage statistics with a single atomic operation
         await Token.update(
-          { 
+          {
             lastUsed: new Date(),
-            useCount: Sequelize.literal('useCount + 1') 
+            useCount: Sequelize.literal(`"useCount" + 1`),
           },
           { where: { token: tokenHash } }
         );

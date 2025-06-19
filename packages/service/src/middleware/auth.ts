@@ -41,8 +41,6 @@ export const authToken =
     }
     const [authType, token] = authorization.split(" ");
 
-    console.log("authToken", authType, token);
-
     if ((authType !== "Basic" && authType !== "Bearer") || !token) {
       return res
         .status(StatusCodes.UNAUTHORIZED)

@@ -93,7 +93,7 @@ export const authToken =
         await Token.update(
           {
             lastUsed: new Date(),
-            useCount: Sequelize.literal(`"useCount" + 1`),
+            useCount: Sequelize.literal(`COALESCE("useCount", 0) + 1`),
           },
           { where: { token: tokenHash } }
         );

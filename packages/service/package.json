@@ -1,6 +1,6 @@
 {
   "name": "@nandu/service",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Open NPM Registry",
   "engines": {
     "node": ">=14"

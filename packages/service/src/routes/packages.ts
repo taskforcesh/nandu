@@ -130,7 +130,17 @@ router.put(
     };
     const { _id: userId } = res.locals.user;
 
-    if (!isValidPackageName(name)) {
+    // URL decode the name before validation to handle cases where it gets encoded
+    let decodedName: string;
+    try {
+      decodedName = decodeURIComponent(name);
+    } catch (error) {
+      // Handle malformed URI sequences
+      res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name encoding");
+      return;
+    }
+    
+    if (!isValidPackageName(decodedName)) {
       res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name");
     } else {
       try {

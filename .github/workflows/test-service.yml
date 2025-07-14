@@ -38,7 +38,7 @@ jobs:
         run: corepack prepare yarn@stable --activate
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Setup Bun (for testing only)
         uses: oven-sh/setup-bun@v2

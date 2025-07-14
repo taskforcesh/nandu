@@ -2,6 +2,7 @@ import { Command, Flags, Args, ux } from "@oclif/core";
 import { AxiosRequestConfig } from "axios";
 import { listTokens } from "../../services/nandu.service";
 import { wrapAction } from "../../utils";
+import cli from "cli-ux";
 
 export default class TokenList extends Command {
   static description = "list tokens for given user";
@@ -32,15 +33,15 @@ export default class TokenList extends Command {
     let password;
 
     if (!flags.token) {
-      const username = await ux.prompt("username");
-      password = await ux.prompt("password", { type: "hide" });
+      const username = await cli.prompt("username");
+      password = await cli.prompt("password", { type: "hide" });
 
       opts.auth = {
         username,
         password,
       };
     } else {
-      password = await ux.prompt("password", { type: "hide" });
+      password = await cli.prompt("password", { type: "hide" });
 
       opts.headers = {
         Authorization: `Bearer ${flags.token}`,

@@ -10,7 +10,8 @@
   "dependencies": {
     "@nandu/service": "workspace:*",
     "@npmcli/config": "^2.4.0",
-    "@oclif/core": "^3.19.2",
+    "@oclif/core": "^4.5.0",
+    "@oclif/plugin-help": "^6.2.31",
     "axios": "^1.9.0",
     "cli-ux": "^6.0.9",
     "tslib": "^2.4.0"
@@ -26,7 +27,7 @@
     "globby": "^10.0.2",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "oclif": "^4.1.1",
+    "oclif": "^4.20.6",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.3"
   },

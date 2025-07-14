@@ -28,7 +28,7 @@ jobs:
         run: corepack prepare yarn@stable --activate
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       # Use build.sh to build all packages
       - name: Build packages

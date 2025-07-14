@@ -93,7 +93,7 @@ $ npm install -g @nandu/cli
 $ nandu COMMAND
 running command...
 $ nandu (--version)
-@nandu/cli/1.0.0 linux-x64 node-v20.19.1
+@nandu/cli/1.0.0 darwin-arm64 node-v22.10.0
 $ nandu --help [COMMAND]
 USAGE
   $ nandu COMMAND
@@ -104,12 +104,33 @@ USAGE
 # Commands
 
 <!-- commands -->
+* [`nandu help [COMMAND]`](#nandu-help-command)
 * [`nandu start`](#nandu-start)
 * [`nandu token`](#nandu-token)
 * [`nandu token:create USER`](#nandu-tokencreate-user)
 * [`nandu token:ls USER`](#nandu-tokenls-user)
 * [`nandu user`](#nandu-user)
 * [`nandu user:add USER`](#nandu-useradd-user)
+
+## `nandu help [COMMAND]`
+
+Display help for nandu.
+
+```
+USAGE
+  $ nandu help [COMMAND...] [-n]
+
+ARGUMENTS
+  COMMAND...  Command to show help for.
+
+FLAGS
+  -n, --nested-commands  Include all nested commands in the output.
+
+DESCRIPTION
+  Display help for nandu.
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.31/src/commands/help.ts)_
 
 ## `nandu start`
 

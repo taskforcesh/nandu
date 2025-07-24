@@ -1,5 +1,6 @@
 import { Command, Flags, ux } from "@oclif/core";
 import { AxiosRequestConfig } from "axios";
+import cli from "cli-ux";
 
 export default abstract class AuthCommand extends Command {
   static flags = {
@@ -28,15 +29,15 @@ export default abstract class AuthCommand extends Command {
     if (flags) {
       if (!flags.token) {
         this.log("Enter your credentials");
-        const username = await ux.prompt("username");
-        password = (await ux.prompt("password", { type: "hide" })) as string;
+        const username = await cli.prompt("username");
+        password = (await cli.prompt("password", { type: "hide" })) as string;
 
         opts.auth = {
           username,
           password,
         };
       } else {
-        password = await ux.prompt("password", { type: "hide" });
+        password = await cli.prompt("password", { type: "hide" });
 
         opts.headers = {
           Authorization: `Bearer ${flags.token}`,

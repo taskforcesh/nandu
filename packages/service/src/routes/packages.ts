@@ -114,7 +114,6 @@ router.put(
   json({ limit: config.storage.maxPackageSize }),
   canWrite(),
   asyncWrap(async (req: Request, res: Response) => {
-    logger.debug({ path: req.path }, "Publish");
     const {
       _id,
       name,
@@ -130,17 +129,17 @@ router.put(
     };
     const { _id: userId } = res.locals.user;
 
-    // URL decode the name before validation to handle cases where it gets encoded
-    let decodedName: string;
-    try {
-      decodedName = decodeURIComponent(name);
-    } catch (error) {
-      // Handle malformed URI sequences
-      res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name encoding");
+    // Validate that the URL parameter matches the package name in the body
+    if (req.params.package !== _id) {
+      logger.warn({ 
+        urlParam: req.params.package, 
+        bodyId: _id
+      }, "Package name mismatch between URL and body");
+      res.status(StatusCodes.NOT_ACCEPTABLE).end("Package name mismatch");
       return;
     }
     
-    if (!isValidPackageName(decodedName)) {
+    if (!isValidPackageName(name)) {
       res.status(StatusCodes.NOT_ACCEPTABLE).end("Invalid package name");
     } else {
       try {

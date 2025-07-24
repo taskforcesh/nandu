@@ -108,7 +108,10 @@ export class Hook extends Model {
 
     // 3) Update hooks stats
     await Hook.update(
-      { triggerCount: literal("triggerCount + 1"), lastTriggerAt: new Date() },
+      { 
+        triggerCount: literal('"triggerCount" + 1'), 
+        lastTriggeredAt: new Date() 
+      },
       query
     );
   }

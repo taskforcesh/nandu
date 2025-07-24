@@ -32,7 +32,7 @@ jobs:
         run: corepack prepare yarn@stable --activate
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       # Run OSV Scanner on all packages in the monorepo
       - name: Run OSV Scanner

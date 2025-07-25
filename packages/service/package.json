@@ -92,9 +92,16 @@
         }
       ],
       [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "yarn version --new-version ${nextRelease.version} --no-git-tag-version"
+        }
+      ],
+      [
         "@semantic-release/npm",
         {
-          "npmPublish": true
+          "npmPublish": true,
+          "pkgRoot": "."
         }
       ],
       "@semantic-release/github",

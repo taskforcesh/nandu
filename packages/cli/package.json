@@ -12,7 +12,7 @@
     "@npmcli/config": "^2.4.0",
     "@oclif/core": "^4.5.0",
     "@oclif/plugin-help": "^6.2.31",
-    "axios": "^1.9.0",
+    "axios": "^1.12.2",
     "cli-ux": "^6.0.9",
     "tslib": "^2.4.0"
   },

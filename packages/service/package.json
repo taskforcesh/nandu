@@ -47,7 +47,7 @@
     "http-status-codes": "^2.1.4",
     "is-jwt": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^6.8.0",
+    "nodemailer": "^7.0.9",
     "nodemailer-mailgun-transport": "^2.1.5",
     "passport": "^0.6.0",
     "pg": "^8.8.0",

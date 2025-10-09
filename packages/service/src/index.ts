@@ -101,9 +101,6 @@ export async function startServer(port: number = 4567) {
     res.status(StatusCodes.NOT_FOUND).end("Not implemented");
   });
 
-  // Application error logging.
-  app.on("error", logger.error);
-
   await initDb;
 
   app.listen(port, () => {
@@ -113,14 +110,22 @@ export async function startServer(port: number = 4567) {
 
 // Source: https://stackoverflow.com/questions/10265798/determine-project-root-from-a-running-node-js-application
 function getPkgJsonDir() {
-  const { dirname } = require("path");
-  const { constants, accessSync } = require("fs");
+  const path = require("path");
+  const fs = require("fs");
 
-  for (let path of module.paths) {
+  // Start from current directory and work up
+  let currentDir = __dirname;
+  
+  while (currentDir !== path.dirname(currentDir)) {
     try {
-      let prospectivePkgJsonDir = dirname(path);
-      accessSync(path, constants.F_OK);
-      return prospectivePkgJsonDir;
-    } catch (e) {}
+      const pkgJsonPath = path.join(currentDir, 'package.json');
+      fs.accessSync(pkgJsonPath, fs.constants.F_OK);
+      return currentDir;
+    } catch (e) {
+      currentDir = path.dirname(currentDir);
+    }
   }
+  
+  // Fallback: try the service directory specifically
+  return path.resolve(__dirname, '..');
 }

@@ -9,5 +9,7 @@
 #   "CVE-2023-12345"
 # ]
 
-# By default, no vulnerabilities are ignored.
-IgnoredVulns = []
+# Vulnerabilities that are ignored because they are patched via git commits
+IgnoredVulns = [
+  "GHSA-9965-vmph-33xx"  # CVE-2025-56200 - validator package fixed via git commit cbef5088
+]

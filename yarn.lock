@@ -1889,7 +1889,7 @@ __metadata:
     solid-transition-group: "npm:^0.0.10"
     tailwindcss: "npm:^4.1.6"
     typescript: "npm:4.4.4"
-    vite: "npm:^7.1.7"
+    vite: "npm:^7.1.11"
     vite-plugin-solid: "npm:^2.2.6"
     whatwg-fetch: "npm:^3.6.2"
     yup: "npm:^0.32.11"
@@ -17967,10 +17967,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.9.0":
-  version: 13.15.15
-  resolution: "validator@npm:13.15.15"
-  checksum: 10c0/f5349d1fbb9cc36f9f6c5dab1880764ddad1d0d2b084e2a71e5964f7de1635d20e406611559df9a3db24828ce775cbee5e3b6dd52f0d555a61939ed7ea5990bd
+"validator@validatorjs/validator.js#4af61243ba0ae93f29e7689040e188b5849ff1b0":
+  version: 13.15.20
+  resolution: "validator@https://github.com/validatorjs/validator.js.git#commit=4af61243ba0ae93f29e7689040e188b5849ff1b0"
+  checksum: 10c0/ad02919440a138d0a5829d166348c169c00e69e72cd890f90fcc5e78d3fa202c32a85637cdd844b529de5e1e9e3f86873cb72be550bf25bc28abf32f0bb11f0c
   languageName: node
   linkType: hard
 
@@ -18002,9 +18002,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^7.1.7":
-  version: 7.1.9
-  resolution: "vite@npm:7.1.9"
+"vite@npm:^7.1.11":
+  version: 7.1.12
+  resolution: "vite@npm:7.1.12"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.5.0"
@@ -18053,7 +18053,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/f628f903a137c1410232558bde99c223ea00a090bda6af77752c61f912955f0050aac12d3cfe024d08a0f150ff6fab61b3d0be75d634a59b94d49f525392e1f7
+  checksum: 10c0/cef4d4b4a84e663e09b858964af36e916892ac8540068df42a05ced637ceeae5e9ef71c72d54f3cfc1f3c254af16634230e221b6e2327c2a66d794bb49203262
   languageName: node
   linkType: hard
 

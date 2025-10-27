@@ -14,7 +14,7 @@
     "tar-fs": "npm:tar-fs@2.1.4",
     "brace-expansion": "npm:brace-expansion@1.1.12",
     "form-data": "npm:form-data@4.0.4",
-    "validator": "validatorjs/validator.js#cbef5088f02d36caf978f378bb845fe49bdc0809"
+    "validator": "validatorjs/validator.js#4af61243ba0ae93f29e7689040e188b5849ff1b0"
   },
   "devDependencies": {
     "@qiwi/multi-semantic-release": "^7.1.2",

@@ -24,7 +24,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "semantic-release": "^22.0.0",
-    "tailwindcss": "^4.1.6",
+    "tailwindcss": "^4.1.17",
     "typescript": "4.4.4",
     "vite": "^7.1.11",
     "vite-plugin-solid": "^2.2.6"
@@ -35,7 +35,7 @@
     "@hope-ui/solid": "^0.6.7",
     "@solidjs/router": "^0.15.3",
     "@stitches/core": "^1.2.8",
-    "@tailwindcss/vite": "^4.1.6",
+    "@tailwindcss/vite": "^4.1.17",
     "@thisbeyond/solid-select": "^0.12.0",
     "solid-heroicons": "^2.0.3",
     "solid-js": "^1.9.6",

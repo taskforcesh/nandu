@@ -2,14 +2,8 @@
 # This file is used to specify vulnerability IDs that should be ignored by the scanner.
 
 # List of vulnerability IDs to ignore.
-# Add any vulnerability IDs you wish to ignore into this list.
-# Example:
-# IgnoredVulns = [
-#   "GHSA-abcd-1234-5678",
-#   "CVE-2023-12345"
-# ]
+# Each vulnerability needs to be specified as a table with an 'id' field.
 
 # Vulnerabilities that are ignored because they are patched via git commits
-IgnoredVulns = [
-  "GHSA-9965-vmph-33xx"  # CVE-2025-56200 - validator package fixed via git commit cbef5088
-]
+[[IgnoredVulns]]
+id = "GHSA-9965-vmph-33xx"  # CVE-2025-56200 - validator package fixed via git commit 4af61243ba0ae93f29e7689040e188b5849ff1b0

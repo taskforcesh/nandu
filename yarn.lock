@@ -12737,7 +12737,7 @@ __metadata:
     "@semantic-release/github": "npm:^11.0.2"
     "@semantic-release/npm": "npm:^13.1.1"
     "@semantic-release/release-notes-generator": "npm:^14.0.3"
-    semantic-release: "npm:^24.2.3"
+    semantic-release: "npm:^24.2.9"
     type-fest: "npm:3.0.0"
   languageName: unknown
   linkType: soft
@@ -15760,7 +15760,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semantic-release@npm:^24.2.3, semantic-release@npm:^24.2.9":
+"semantic-release@npm:^24.2.9":
   version: 24.2.9
   resolution: "semantic-release@npm:24.2.9"
   dependencies:

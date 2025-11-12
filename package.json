@@ -11,8 +11,6 @@
     "url": "https://github.com/taskforcesh/nandu.git"
   },
   "resolutions": {
-    "tar-fs": "npm:tar-fs@2.1.4",
-    "brace-expansion": "npm:brace-expansion@1.1.12",
     "form-data": "npm:form-data@4.0.4",
     "validator": "validatorjs/validator.js#4af61243ba0ae93f29e7689040e188b5849ff1b0"
   },
@@ -23,7 +21,7 @@
     "@semantic-release/exec": "^7.1.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.2",
-    "@semantic-release/npm": "https://github.com/taskforcesh/npm.git#985e34fca5b2cc2f5f70841ea927e8ee817813dd",
+    "@semantic-release/npm": "^13.1.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
     "semantic-release": "^24.2.3",
     "type-fest": "3.0.0"

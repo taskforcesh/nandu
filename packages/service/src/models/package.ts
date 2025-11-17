@@ -32,10 +32,40 @@ export class Package extends Model {
         return prev;
       }, {});
 
+    // Build the time field for pnpm minimumReleaseAge support
+    const time: { [key: string]: string } = {};
+    
+    // Find the earliest and latest version timestamps
+    let earliest: Date | null = null;
+    let latest: Date | null = null;
+    
+    pkg.versions.forEach((version: any) => {
+      const createdAt = version.createdAt;
+      if (createdAt) {
+        const timestamp = new Date(createdAt);
+        time[version.version] = timestamp.toISOString();
+        
+        if (!earliest || timestamp < earliest) {
+          earliest = timestamp;
+        }
+        if (!latest || timestamp > latest) {
+          latest = timestamp;
+        }
+      }
+    });
+    
+    // Add package-level timestamps
+    const pkgCreatedAt = pkg.getDataValue("createdAt");
+    const pkgUpdatedAt = pkg.getDataValue("updatedAt");
+    
+    time.created = (earliest || (pkgCreatedAt && new Date(pkgCreatedAt)) || new Date()).toISOString();
+    time.modified = (latest || (pkgUpdatedAt && new Date(pkgUpdatedAt)) || new Date()).toISOString();
+
     return {
       ...pkg.toJSON(),
       versions,
       "dist-tags": distTags,
+      time,
     };
   }
 
@@ -99,6 +129,7 @@ export default function (db: Sequelize) {
     {
       sequelize: db,
       modelName: "Package",
+      timestamps: true,
     }
   );
 

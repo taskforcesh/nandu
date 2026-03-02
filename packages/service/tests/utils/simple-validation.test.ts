@@ -6,8 +6,6 @@ describe('Package Name Validation - URL Encoding Issue', () => {
     // This is the specific case from your error
     const urlEncodedName = '@taskforcesh%2fconnector-pro';
     const result = isValidPackageName(urlEncodedName);
-    console.log(`Testing: ${urlEncodedName}`);
-    console.log(`Result: ${result}`);
     expect(result).toBe(false);
   });
 
@@ -15,24 +13,39 @@ describe('Package Name Validation - URL Encoding Issue', () => {
     // This should work
     const decodedName = '@taskforcesh/connector-pro';
     const result = isValidPackageName(decodedName);
-    console.log(`Testing: ${decodedName}`);
-    console.log(`Result: ${result}`);
     expect(result).toBe(true);
   });
 
-  test('should test the regex directly', () => {
-    const packageName = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
+  test('should validate specific URL encoding scenarios', () => {
+    const packageNameRegex = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
     
-    const tests = [
-      '@taskforcesh/connector-pro',
-      '@taskforcesh%2fconnector-pro',
-      'connector-pro',
-      'connector%2dpro'
+    const testCases = [
+      { name: '@taskforcesh/connector-pro', expected: true },
+      { name: '@taskforcesh%2fconnector-pro', expected: false },
+      { name: 'connector-pro', expected: true },
+      { name: 'connector%2dpro', expected: false }
     ];
 
-    tests.forEach(name => {
-      const result = packageName.test(name);
-      console.log(`${name} -> ${result}`);
+    testCases.forEach(({ name, expected }) => {
+      const result = packageNameRegex.test(name);
+      expect(result).toBe(expected);
     });
+  });
+
+  test('URL decoding handles encoded _id in request body', () => {
+    const encodedName = '@taskforcesh%2fbullmq-pro';
+    const decodedName = '@taskforcesh/bullmq-pro';
+    
+    // Test that decodeURIComponent works for _id field
+    expect(decodeURIComponent(encodedName)).toBe(decodedName);
+    
+    // Test the pattern that would be in request body
+    const mockRequestBody = {
+      _id: encodedName,
+      name: encodedName
+    };
+    
+    expect(decodeURIComponent(mockRequestBody._id)).toBe(decodedName);
+    expect(decodeURIComponent(mockRequestBody.name)).toBe(decodedName);
   });
 });

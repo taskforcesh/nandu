@@ -28,13 +28,30 @@ export async function downloadPackage(
   storage: Storage,
   versionFile: string
 ) {
-  const srcStream = await storage.get(versionFile);
+  let srcStream: Readable;
+  try {
+    srcStream = await storage.get(versionFile);
+  } catch (err) {
+    if ((err as any)["code"] == "ENOENT" || (err as any)["Code"] == "NoSuchKey") {
+      res.status(StatusCodes.NOT_FOUND).end("file not found");
+      return;
+    }
+
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end("failed to download package");
+    return;
+  }
 
   srcStream.on("error", (err) => {
     if ((err as any)["code"] == "ENOENT") {
-      res.status(StatusCodes.NOT_FOUND).end("file not found");
+      if (!res.headersSent) {
+        res.status(StatusCodes.NOT_FOUND).end("file not found");
+      }
     } else {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      if (!res.headersSent) {
+        res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .end("failed to stream package");
+      }
     }
   });
 

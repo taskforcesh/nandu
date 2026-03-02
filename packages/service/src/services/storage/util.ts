@@ -55,8 +55,11 @@ export async function downloadPackage(
     }
   });
 
-  srcStream.pipe(res);
   res.on("error", (err) => {
+    if (typeof (srcStream as any).destroy === "function") {
+      (srcStream as any).destroy(err as any);
+    }
+
     if ((err as any)["code"] == "ENOENT") {
       if (!res.headersSent) {
         res.status(StatusCodes.NOT_FOUND).end("file not found");
@@ -69,6 +72,8 @@ export async function downloadPackage(
       }
     }
   });
+
+  srcStream.pipe(res);
 }
 
 export function getStorage() {

@@ -58,9 +58,15 @@ export async function downloadPackage(
   srcStream.pipe(res);
   res.on("error", (err) => {
     if ((err as any)["code"] == "ENOENT") {
-      res.status(StatusCodes.NOT_FOUND).end("file not found");
+      if (!res.headersSent) {
+        res.status(StatusCodes.NOT_FOUND).end("file not found");
+      }
     } else {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      if (!res.headersSent) {
+        res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .end("failed to stream package");
+      }
     }
   });
 }

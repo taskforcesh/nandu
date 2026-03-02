@@ -85,10 +85,39 @@ export const migrations = [
       }
     },
     down: async function ({ context: queryInterface }: any) {
-      await queryInterface.removeColumn("Packages", "createdAt");
-      await queryInterface.removeColumn("Packages", "updatedAt");
-      await queryInterface.removeColumn("Versions", "createdAt");
-      await queryInterface.removeColumn("Versions", "updatedAt");
+      // Remove timestamps from Packages table
+      let packagesTable;
+      try {
+        packagesTable = await queryInterface.describeTable("Packages");
+      } catch (err) {
+        // Table doesn't exist, skip
+        packagesTable = null;
+      }
+      if (packagesTable) {
+        if (packagesTable.createdAt) {
+          await queryInterface.removeColumn("Packages", "createdAt");
+        }
+        if (packagesTable.updatedAt) {
+          await queryInterface.removeColumn("Packages", "updatedAt");
+        }
+      }
+
+      // Remove timestamps from Versions table
+      let versionsTable;
+      try {
+        versionsTable = await queryInterface.describeTable("Versions");
+      } catch (err) {
+        // Table doesn't exist, skip
+        versionsTable = null;
+      }
+      if (versionsTable) {
+        if (versionsTable.createdAt) {
+          await queryInterface.removeColumn("Versions", "createdAt");
+        }
+        if (versionsTable.updatedAt) {
+          await queryInterface.removeColumn("Versions", "updatedAt");
+        }
+      }
     },
   },
 ];

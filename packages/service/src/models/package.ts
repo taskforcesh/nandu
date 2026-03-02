@@ -39,10 +39,12 @@ export class Package extends Model {
     let earliest: Date | null = null;
     let latest: Date | null = null;
     
+    // Note: pkg.versions contains VersionModel instances from Sequelize include,
+    // not plain Version interface objects, so we use any for runtime properties
     pkg.versions.forEach((version: any) => {
       const createdAt = version.createdAt;
       if (createdAt) {
-        const timestamp = new Date(createdAt);
+        const timestamp = createdAt instanceof Date ? createdAt : new Date(createdAt);
         time[version.version] = timestamp.toISOString();
         
         if (!earliest || timestamp < earliest) {
@@ -58,8 +60,21 @@ export class Package extends Model {
     const pkgCreatedAt = pkg.getDataValue("createdAt");
     const pkgUpdatedAt = pkg.getDataValue("updatedAt");
     
-    time.created = (earliest || (pkgCreatedAt && new Date(pkgCreatedAt)) || new Date()).toISOString();
-    time.modified = (latest || (pkgUpdatedAt && new Date(pkgUpdatedAt)) || new Date()).toISOString();
+    // Use the earliest version timestamp or package creation time
+    if (earliest) {
+      time.created = earliest.toISOString();
+    } else if (pkgCreatedAt) {
+      const pkgCreated = pkgCreatedAt instanceof Date ? pkgCreatedAt : new Date(pkgCreatedAt);
+      time.created = pkgCreated.toISOString();
+    }
+    
+    // Use the latest version timestamp or package update time
+    if (latest) {
+      time.modified = latest.toISOString();
+    } else if (pkgUpdatedAt) {
+      const pkgUpdated = pkgUpdatedAt instanceof Date ? pkgUpdatedAt : new Date(pkgUpdatedAt);
+      time.modified = pkgUpdated.toISOString();
+    }
 
     return {
       ...pkg.toJSON(),

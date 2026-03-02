@@ -2,17 +2,16 @@
 # This file is used to specify vulnerability IDs that should be ignored by the scanner.
 
 # List of vulnerability IDs to ignore.
-# Add any vulnerability IDs you wish to ignore into this list.
+# Add one [[IgnoredVulns]] table per advisory.
 # Example:
-# IgnoredVulns = [
-#   "GHSA-abcd-1234-5678",
-#   "CVE-2023-12345"
-# ]
+# [[IgnoredVulns]]
+# id = "GHSA-abcd-1234-5678"
+# reason = "Explain why this advisory is currently accepted"
 
-# Vulnerabilities that are ignored because they are patched via git commits
+# Vulnerabilities currently ignored with audit rationale
 [[IgnoredVulns]]
 id = "GHSA-9965-vmph-33xx"
-reason = "CVE-2025-56200 - validator package previously patched via git commit cbef5088"
+reason = "CVE-2025-56200 - validator is pinned to released fixed version 13.15.22 via root Yarn resolutions"
 
 [[IgnoredVulns]]
 id = "GHSA-2g4f-4pwh-qvx6"

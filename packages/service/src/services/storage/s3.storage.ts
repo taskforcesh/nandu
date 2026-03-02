@@ -36,9 +36,23 @@ export class S3Storage<T> implements Storage {
       Key: pathName,
     });
 
-    const { Body } = await client.send(command);
+    let body;
+    try {
+      const response = await client.send(command);
+      body = response.Body;
+    } catch (error) {
+      const err = error as any;
+      if (err?.name === "NoSuchKey" || err?.Code === "NoSuchKey") {
+        const notFoundError = new Error("file not found") as Error & {
+          code?: string;
+        };
+        notFoundError.code = "ENOENT";
+        throw notFoundError;
+      }
+      throw error;
+    }
 
-    return <Readable>Body;
+    return <Readable>body;
   }
 
   async remove(pathName: string): Promise<void> {

@@ -2,14 +2,37 @@
 # This file is used to specify vulnerability IDs that should be ignored by the scanner.
 
 # List of vulnerability IDs to ignore.
-# Add any vulnerability IDs you wish to ignore into this list.
+# Add one [[IgnoredVulns]] table per advisory.
 # Example:
-# IgnoredVulns = [
-#   "GHSA-abcd-1234-5678",
-#   "CVE-2023-12345"
-# ]
+# [[IgnoredVulns]]
+# id = "GHSA-abcd-1234-5678"
+# reason = "Explain why this advisory is currently accepted"
 
-# Vulnerabilities that are ignored because they are patched via git commits
-IgnoredVulns = [
-  "GHSA-9965-vmph-33xx"  # CVE-2025-56200 - validator package fixed via git commit cbef5088
-]
+# Vulnerabilities currently ignored with audit rationale
+[[IgnoredVulns]]
+id = "GHSA-9965-vmph-33xx"
+reason = "CVE-2025-56200 - validator is pinned to released fixed version 13.15.22 via root Yarn resolutions"
+
+[[IgnoredVulns]]
+id = "GHSA-2g4f-4pwh-qvx6"
+reason = "ajv@8.13.0 is introduced transitively via umzug/rushstack chain; no upstream upgrade path currently available in this dependency graph"
+
+[[IgnoredVulns]]
+id = "GHSA-5c6j-r48x-rmvq"
+reason = "serialize-javascript@6.0.2 is pulled by mocha in CLI dev tooling only; upstream has not moved this transitive dependency"
+
+[[IgnoredVulns]]
+id = "GHSA-34x7-hfp2-rc4v"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
+
+[[IgnoredVulns]]
+id = "GHSA-83g3-92jg-28cx"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
+
+[[IgnoredVulns]]
+id = "GHSA-8qq5-rm4j-mr97"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
+
+[[IgnoredVulns]]
+id = "GHSA-r6q2-hw4h-h46w"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"

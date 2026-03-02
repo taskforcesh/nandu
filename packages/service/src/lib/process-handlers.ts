@@ -58,10 +58,17 @@ export function registerGlobalProcessHandlers(logger: pino.Logger) {
   });
 
   process.on("unhandledRejection", (reason) => {
-    logger.error(
-      { rejection: normalizeUnknown(reason) },
-      "Unhandled promise rejection intercepted"
-    );
+    const rejection = normalizeUnknown(reason);
+
+    if (reason instanceof Error) {
+      logger.error(
+        { err: reason, rejection },
+        "Unhandled promise rejection intercepted"
+      );
+      return;
+    }
+
+    logger.error({ rejection }, "Unhandled promise rejection intercepted");
   });
 
   process.on("multipleResolves", (type, _promise, reason) => {

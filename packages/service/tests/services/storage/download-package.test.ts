@@ -104,4 +104,46 @@ describe("downloadPackage", () => {
     expect(res.status).not.toHaveBeenCalled();
     expect(res.end).not.toHaveBeenCalled();
   });
+
+  test("registers response error handler before piping and destroys source stream on response error", async () => {
+    const callOrder: string[] = [];
+    let responseErrorHandler: ((err: unknown) => void) | undefined;
+
+    const srcStream = {
+      on: mock(() => {
+        callOrder.push("src.on");
+        return srcStream;
+      }),
+      pipe: mock(() => {
+        callOrder.push("src.pipe");
+      }),
+      destroy: mock(() => undefined),
+    } as any;
+
+    const storage = {
+      get: mock(() => Promise.resolve(srcStream)),
+    } as any;
+
+    const res = {
+      headersSent: true,
+      status: mock(() => res),
+      end: mock(() => res),
+      on: mock((event: string, handler: (err: unknown) => void) => {
+        if (event === "error") {
+          callOrder.push("res.on");
+          responseErrorHandler = handler;
+        }
+        return res;
+      }),
+    } as any;
+
+    await downloadPackage(res, storage, "set-value-4.1.0.tgz");
+
+    expect(callOrder.indexOf("res.on")).toBeGreaterThan(-1);
+    expect(callOrder.indexOf("src.pipe")).toBeGreaterThan(-1);
+    expect(callOrder.indexOf("res.on")).toBeLessThan(callOrder.indexOf("src.pipe"));
+
+    responseErrorHandler?.(new Error("socket closed"));
+    expect(srcStream.destroy).toHaveBeenCalledTimes(1);
+  });
 });

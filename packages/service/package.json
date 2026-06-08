@@ -37,7 +37,7 @@
     "@nandu/dashboard": "workspace:*",
     "@types/nodemailer": "^6.4.6",
     "@types/nodemailer-mailgun-transport": "^1.4.3",
-    "axios": "^1.15.2",
+    "axios": "^1.17.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",

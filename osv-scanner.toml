@@ -36,3 +36,7 @@ reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite
 [[IgnoredVulns]]
 id = "GHSA-r6q2-hw4h-h46w"
 reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
+
+[[IgnoredVulns]]
+id = "GHSA-w5hq-g745-h8pq"
+reason = "uuid@8.3.2 is currently required transitively by sequelize/nyc and no compatible upstream replacement is available in this dependency graph"

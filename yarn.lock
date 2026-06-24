@@ -1989,7 +1989,7 @@ __metadata:
     http-status-codes: "npm:^2.1.4"
     is-jwt: "npm:^1.0.0"
     jsonwebtoken: "npm:^9.0.2"
-    nodemailer: "npm:^8.0.5"
+    nodemailer: "npm:^9.0.1"
     nodemailer-mailgun-transport: "npm:^2.1.5"
     nodemon: "npm:^3.0.2"
     passport: "npm:^0.6.0"
@@ -2003,7 +2003,7 @@ __metadata:
     tslib: "npm:^2.3.1"
     typescript: "npm:4.9.4"
     umzug: "npm:^3.8.2"
-    uuid: "npm:^8.3.2"
+    uuid: "npm:^14.0.0"
     whatwg-fetch: "npm:^3.6.2"
   languageName: unknown
   linkType: soft
@@ -17749,9 +17749,9 @@ __metadata:
   linkType: hard
 
 "undici@npm:^6.23.0, undici@npm:^6.25.0":
-  version: 6.25.0
-  resolution: "undici@npm:6.25.0"
-  checksum: 10c0/2597cc6689bdb02c210c557b1f85febbfda65becae6e6fc1061508e2f33734d25207f81cd8af56ada9956329eb3a7bd7431e87dcfeceba20ee87059b57dcf985
+  version: 6.27.0
+  resolution: "undici@npm:6.27.0"
+  checksum: 10c0/f88c3dae3957dbf9d93cb481440aced317bd3c4941b5914fea5efba516d51138988cdb5c76006f0bb1337e41d56c3443351055d492e73af2428521c37ba2a76f
   languageName: node
   linkType: hard
 
@@ -18032,6 +18032,15 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: 10c0/02ba649de1b7ca8854bfe20a82f1dfbdda3fb57a22ab4a8972a63a34553cf7aa51bc9081cf7e001b035b88186d23689d69e71b510e610a09a4c66f68aa95b672
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "uuid@npm:14.0.0"
+  bin:
+    uuid: dist-node/bin/uuid
+  checksum: 10c0/a57ae7794c45005c1a9208989196c5baf79a7679c30f43c1bee9033a2c4d113a2cea216fa6fcc9663b08b0d55635df1a7c6eb7e7f3d21c3e50688c698fa39a50
   languageName: node
   linkType: hard
 

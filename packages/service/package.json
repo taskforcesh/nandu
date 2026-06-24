@@ -47,7 +47,7 @@
     "http-status-codes": "^2.1.4",
     "is-jwt": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^8.0.5",
+    "nodemailer": "^9.0.1",
     "nodemailer-mailgun-transport": "^2.1.5",
     "passport": "^0.6.0",
     "pg": "^8.19.0",
@@ -57,7 +57,7 @@
     "sqlite3": "^5.1.7",
     "tslib": "^2.3.1",
     "umzug": "^3.8.2",
-    "uuid": "^8.3.2",
+    "uuid": "^14.0.1",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {

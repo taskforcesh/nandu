@@ -57,7 +57,7 @@
     "sqlite3": "^5.1.7",
     "tslib": "^2.3.1",
     "umzug": "^3.8.2",
-    "uuid": "^8.3.2",
+    "uuid": "^11.1.1",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
@@ -67,7 +67,6 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "*",
     "@types/sqlite3": "^3.1.7",
-    "@types/uuid": "^8.3.1",
     "@types/validator": "^13.6.6",
     "eslint-visitor-keys": "^3.3.0",
     "nodemon": "^3.0.2",

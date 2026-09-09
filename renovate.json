@@ -1,0 +1,87 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":enableVulnerabilityAlerts"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "pin",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 9am"]
+  },
+  "separateMajorMinor": true,
+  "packageRules": [
+    {
+      "description": "Run non-security dependency updates once per day by default",
+      "matchPackageNames": ["*"],
+      "schedule": ["before 9am"]
+    },
+    {
+      "description": "Use chore commit type for dev dependency updates",
+      "matchDepTypes": ["devDependencies"],
+      "semanticCommitType": "chore"
+    },
+    {
+      "matchCategories": ["js", "node"],
+      "groupName": "Node.js dependencies",
+      "groupSlug": "nodejs"
+    },
+    {
+      "matchCategories": ["js", "node"],
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "Node.js dev dependencies",
+      "groupSlug": "nodejs-dev"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "CI dependencies",
+      "groupSlug": "ci"
+    },
+    {
+      "matchCategories": ["docker"],
+      "groupName": "Docker dependencies",
+      "groupSlug": "docker"
+    },
+    {
+      "matchCategories": ["js", "node"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "Node.js dependencies (major)",
+      "groupSlug": "nodejs-major"
+    },
+    {
+      "matchCategories": ["js", "node"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "Node.js dev dependencies (major)",
+      "groupSlug": "nodejs-dev-major"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "CI dependencies (major)",
+      "groupSlug": "ci-major"
+    },
+    {
+      "matchCategories": ["docker"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "Docker dependencies (major)",
+      "groupSlug": "docker-major"
+    },
+    {
+      "description": "Keep peer dependency ranges compatible instead of pinning them",
+      "matchDepTypes": ["peerDependencies"],
+      "rangeStrategy": "widen"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security", "osv"],
+    "groupName": "security patches",
+    "groupSlug": "security-patches",
+    "commitMessageSuffix": "[SECURITY]"
+  },
+  "osvVulnerabilityAlerts": true,
+  "prCreation": "immediate"
+}

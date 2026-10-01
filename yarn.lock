@@ -14186,7 +14186,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pacote@npm:15.2.0":
+"pacote@npm:^15.0.0, pacote@npm:^15.0.8, pacote@npm:^15.2.0":
   version: 15.2.0
   resolution: "pacote@npm:15.2.0"
   dependencies:
@@ -14214,7 +14214,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pacote@npm:19.0.2":
+"pacote@npm:^19.0.0, pacote@npm:^19.0.1":
   version: 19.0.2
   resolution: "pacote@npm:19.0.2"
   dependencies:
@@ -14241,7 +14241,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pacote@npm:20.0.1":
+"pacote@npm:^20.0.0":
   version: 20.0.1
   resolution: "pacote@npm:20.0.1"
   dependencies:
@@ -14268,7 +14268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pacote@npm:21.5.1":
+"pacote@npm:^21.0.0, pacote@npm:^21.0.2, pacote@npm:^21.5.0":
   version: 21.5.1
   resolution: "pacote@npm:21.5.1"
   dependencies:

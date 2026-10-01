@@ -38,4 +38,4 @@ jobs:
       - name: Run OSV Scanner
         uses: google/osv-scanner/actions/scanner@v1
         with:
-          scan-args: --skip-git --recursive .
+          scan-args: --skip-git --config osv-scanner.toml --recursive .

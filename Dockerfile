@@ -1,5 +1,5 @@
 # Base Node.js image
-FROM node:22-bookworm-slim AS builder
+FROM node:22-bullseye-slim AS builder
 
 # Set version argument (will be passed from GitHub Actions)
 ARG VERSION=dev
@@ -36,7 +36,7 @@ RUN yarn workspace @nandu/dashboard run build
 RUN cd packages/service && yarn build
 
 # Final image
-FROM node:22-bookworm-slim
+FROM node:22-bullseye-slim
 
 # Set version argument for the final image
 ARG VERSION=dev

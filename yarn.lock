@@ -10215,10 +10215,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ip-address@npm:10.7.2":
-  version: 10.7.2
-  resolution: "ip-address@npm:10.7.2"
-  checksum: 10c0/290b9c63289b2a89a442dac19eff88d919e65cd41d1a720fa963be736e126f3b0cf4f88f6056b06abbf4a95300dc9ce5362a773e012ef30e0400074d175b9d31
+"ip-address@npm:10.7.3":
+  version: 10.7.3
+  resolution: "ip-address@npm:10.7.3"
+  checksum: 10c0/145d9848f315a0375437d206dee763e2dd654063e8c5d6270a329e249cfad30b4ae760b237bb1991abfe67276f542310a89fca891ddf76f934e397e0dda1bf3b
   languageName: node
   linkType: hard
 
@@ -14815,23 +14815,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-selector-parser@npm:6.1.3":
-  version: 6.1.3
-  resolution: "postcss-selector-parser@npm:6.1.3"
+"postcss-selector-parser@npm:6.1.4":
+  version: 6.1.4
+  resolution: "postcss-selector-parser@npm:6.1.4"
   dependencies:
     cssesc: "npm:^3.0.0"
     util-deprecate: "npm:^1.0.2"
-  checksum: 10c0/ffe8e6e63f44f384b204eba61b10920845130332264aa11356213d740b6bdd1ffedcd6c909e5542ecb374940ba5b973e38c0efd2ffaa9f180e227ae15c85507f
+  checksum: 10c0/996f3290dee08ecb073d5f396d1134e619494cfd83140aec07a29618ee1e76d370769a8959d4c0cfefb24aa96dcffa4e7c4937dd881e03b735d50cba959ceb19
   languageName: node
   linkType: hard
 
-"postcss-selector-parser@npm:7.1.3":
-  version: 7.1.3
-  resolution: "postcss-selector-parser@npm:7.1.3"
+"postcss-selector-parser@npm:7.1.6":
+  version: 7.1.6
+  resolution: "postcss-selector-parser@npm:7.1.6"
   dependencies:
     cssesc: "npm:^3.0.0"
     util-deprecate: "npm:^1.0.2"
-  checksum: 10c0/5ae5f56bd1f208c02b5d38193ac2efe0864296cd971862d654c7976b8c08016df4d604b57e4228eb27dce03a480d013b7d9075087278ee68d32589f0f2270f76
+  checksum: 10c0/fc8279859896b96ef25b24d0289b2bfff7bce6647b247aa983939ff872e226663788d1ea57bddf9d1695119c071e5cdcb8b2a364ed4313502efe4b0319879154
   languageName: node
   linkType: hard
 

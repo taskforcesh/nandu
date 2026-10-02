@@ -40,3 +40,7 @@ reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite
 [[IgnoredVulns]]
 id = "GHSA-w5hq-g745-h8pq"
 reason = "uuid is pinned to fixed version 11.1.1 via root Yarn resolutions and the @nandu/service direct dependency"
+
+[[IgnoredVulns]]
+id = "GHSA-w4pp-8pjf-rmxw"
+reason = "Pacote v21 consumers are pinned to fixed 21.5.1. Legacy npm tooling still requires Pacote v15, v19, and v20, for which no fixed compatible releases are available; do not force an incompatible major override."

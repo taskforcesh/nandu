@@ -34,8 +34,40 @@ id = "GHSA-8qq5-rm4j-mr97"
 reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
 
 [[IgnoredVulns]]
+id = "CVE-2026-73566"
+reason = "Accepted residual finding: tar@6.2.1 is required by consumers constrained to tar v6, and no patched tar v6 release is published; tar v7 consumers use fixed 7.5.22"
+
+[[IgnoredVulns]]
 id = "GHSA-r6q2-hw4h-h46w"
 reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
+
+[[IgnoredVulns]]
+id = "GHSA-23hp-3jrh-7fpw"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; no patched tar v6 release is available"
+
+[[IgnoredVulns]]
+id = "GHSA-8x88-c5mf-7j5w"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; no patched tar v6 release is available"
+
+[[IgnoredVulns]]
+id = "GHSA-9ppj-qmqm-q256"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; no patched tar v6 release is available"
+
+[[IgnoredVulns]]
+id = "GHSA-gvwx-54wh-qm9j"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; no patched tar v6 release is available"
+
+[[IgnoredVulns]]
+id = "GHSA-qffp-2rhf-9h96"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; no patched tar v6 release is available"
+
+[[IgnoredVulns]]
+id = "GHSA-vmf3-w455-68vh"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; no patched tar v6 release is available"
+
+[[IgnoredVulns]]
+id = "GHSA-w8wr-v893-vjvp"
+reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; no patched tar v6 release is available"
 
 [[IgnoredVulns]]
 id = "GHSA-w5hq-g745-h8pq"
@@ -43,4 +75,4 @@ reason = "uuid is pinned to fixed version 11.1.1 via root Yarn resolutions and t
 
 [[IgnoredVulns]]
 id = "GHSA-w4pp-8pjf-rmxw"
-reason = "Pacote v21 consumers are pinned to fixed 21.5.1. Legacy npm tooling still requires Pacote v15, v19, and v20, for which no fixed compatible releases are available; do not force an incompatible major override."
+reason = "pacote@15, 19, and 20 are required by the legacy npm 9/10 release-tooling chains; the advisory's first patched version, 21.5.1, is a breaking major upgrade"

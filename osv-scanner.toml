@@ -34,6 +34,10 @@ id = "GHSA-8qq5-rm4j-mr97"
 reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
 
 [[IgnoredVulns]]
+id = "CVE-2026-73566"
+reason = "Accepted residual finding: tar@6.2.1 is required by consumers constrained to tar v6, and no patched tar v6 release is published; tar v7 consumers use fixed 7.5.22"
+
+[[IgnoredVulns]]
 id = "GHSA-r6q2-hw4h-h46w"
 reason = "tar@6.2.1 remains transitively required by sqlite3/npm tooling; sqlite3 is already at latest available version"
 

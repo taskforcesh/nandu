@@ -76,3 +76,11 @@ reason = "uuid is pinned to fixed version 11.1.1 via root Yarn resolutions and t
 [[IgnoredVulns]]
 id = "GHSA-w4pp-8pjf-rmxw"
 reason = "pacote@15, 19, and 20 are required by the legacy npm 9/10 release-tooling chains; the advisory's first patched version, 21.5.1, is a breaking major upgrade"
+
+[[IgnoredVulns]]
+id = "GHSA-vfj7-8cjw-p6xm"
+reason = "braces@3.0.3 is the latest published npm release; no patched version is currently available"
+
+[[IgnoredVulns]]
+id = "GHSA-ch52-4w7c-c8xp"
+reason = "http-cache-semantics@4.2.0 is the latest published npm release; no patched version is currently available"

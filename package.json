@@ -60,7 +60,7 @@
     "nodemailer": "10.0.9",
     "qs": "6.16.0",
     "rollup": "4.59.0",
-    "postcss": "8.5.23",
+    "postcss": "8.5.28",
     "postcss-selector-parser@npm:^6.0.10": "6.1.4",
     "postcss-selector-parser@npm:^7.0.0": "7.1.6",
     "seroval": "1.5.3",

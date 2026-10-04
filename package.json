@@ -21,7 +21,7 @@
     "browserslist": "4.29.3",
     "esbuild": "0.28.1",
     "form-data": "npm:form-data@4.0.6",
-    "validator": "13.15.22",
+    "validator": "13.15.35",
     "glob": "10.5.0",
     "ip-address": "10.7.3",
     "js-yaml": "4.3.2",

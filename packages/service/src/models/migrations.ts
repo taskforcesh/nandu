@@ -33,4 +33,91 @@ export const migrations = [
       await queryInterface.removeColumn("Users", "passwordResetExpires");
     },
   },
+  {
+    name: "20251117-add-timestamps-to-packages-and-versions",
+    up: async function ({ context: queryInterface }: any) {
+      // Add timestamps to Packages table
+      let packagesTable;
+      try {
+        packagesTable = await queryInterface.describeTable("Packages");
+      } catch (err) {
+        // Table doesn't exist yet, skip
+        return;
+      }
+
+      if (!packagesTable.createdAt) {
+        await queryInterface.addColumn("Packages", "createdAt", {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW,
+        });
+      }
+      if (!packagesTable.updatedAt) {
+        await queryInterface.addColumn("Packages", "updatedAt", {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW,
+        });
+      }
+
+      // Add timestamps to Versions table
+      let versionsTable;
+      try {
+        versionsTable = await queryInterface.describeTable("Versions");
+      } catch (err) {
+        // Table doesn't exist yet, skip
+        return;
+      }
+
+      if (!versionsTable.createdAt) {
+        await queryInterface.addColumn("Versions", "createdAt", {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW,
+        });
+      }
+      if (!versionsTable.updatedAt) {
+        await queryInterface.addColumn("Versions", "updatedAt", {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW,
+        });
+      }
+    },
+    down: async function ({ context: queryInterface }: any) {
+      // Remove timestamps from Packages table
+      let packagesTable;
+      try {
+        packagesTable = await queryInterface.describeTable("Packages");
+      } catch (err) {
+        // Table doesn't exist, skip
+        packagesTable = null;
+      }
+      if (packagesTable) {
+        if (packagesTable.createdAt) {
+          await queryInterface.removeColumn("Packages", "createdAt");
+        }
+        if (packagesTable.updatedAt) {
+          await queryInterface.removeColumn("Packages", "updatedAt");
+        }
+      }
+
+      // Remove timestamps from Versions table
+      let versionsTable;
+      try {
+        versionsTable = await queryInterface.describeTable("Versions");
+      } catch (err) {
+        // Table doesn't exist, skip
+        versionsTable = null;
+      }
+      if (versionsTable) {
+        if (versionsTable.createdAt) {
+          await queryInterface.removeColumn("Versions", "createdAt");
+        }
+        if (versionsTable.updatedAt) {
+          await queryInterface.removeColumn("Versions", "updatedAt");
+        }
+      }
+    },
+  },
 ];

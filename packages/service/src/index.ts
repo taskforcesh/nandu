@@ -5,6 +5,7 @@ import pino from "pino";
 import { authToken } from "./middleware";
 import { initDb } from "./models/db";
 import { handleHealthCheck } from "./services/healthcheck";
+import { registerGlobalProcessHandlers } from "./lib/process-handlers";
 
 import RateLimit from "express-rate-limit";
 
@@ -26,6 +27,7 @@ export async function startServer(port: number = 4567) {
   const pkg = require(`${getPkgJsonDir()}/package.json`);
 
   const logger = pino();
+  registerGlobalProcessHandlers(logger);
 
   const app = express() as Application;
 

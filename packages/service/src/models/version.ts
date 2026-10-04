@@ -105,6 +105,7 @@ export default function (db: Sequelize) {
     {
       sequelize: db,
       modelName: "Version",
+      timestamps: true,
       // Other model options go here
     }
   );

@@ -2,12 +2,37 @@
 # This file is used to specify vulnerability IDs that should be ignored by the scanner.
 
 # List of vulnerability IDs to ignore.
-# Add any vulnerability IDs you wish to ignore into this list.
+# Add one [[IgnoredVulns]] table per advisory.
 # Example:
-# IgnoredVulns = [
-#   "GHSA-abcd-1234-5678",
-#   "CVE-2023-12345"
-# ]
+# [[IgnoredVulns]]
+# id = "GHSA-abcd-1234-5678"
+# reason = "Explain why this advisory is currently accepted"
 
-# By default, no vulnerabilities are ignored.
-IgnoredVulns = []
+# Vulnerabilities currently ignored with audit rationale
+[[IgnoredVulns]]
+id = "GHSA-9965-vmph-33xx"
+reason = "CVE-2025-56200 - validator is pinned to released fixed version 13.15.22 via root Yarn resolutions"
+
+[[IgnoredVulns]]
+id = "GHSA-2g4f-4pwh-qvx6"
+reason = "ajv@8.13.0 is introduced transitively via umzug/rushstack chain; no upstream upgrade path currently available in this dependency graph"
+
+[[IgnoredVulns]]
+id = "GHSA-5c6j-r48x-rmvq"
+reason = "serialize-javascript@6.0.2 is pulled by mocha in CLI dev tooling only; upstream has not moved this transitive dependency"
+
+[[IgnoredVulns]]
+id = "GHSA-w5hq-g745-h8pq"
+reason = "uuid is pinned to fixed version 11.1.1 via root Yarn resolutions and the @nandu/service direct dependency"
+
+[[IgnoredVulns]]
+id = "GHSA-w4pp-8pjf-rmxw"
+reason = "pacote@15, 19, and 20 are required by the legacy npm 9/10 release-tooling chains; the advisory's first patched version, 21.5.1, is a breaking major upgrade"
+
+[[IgnoredVulns]]
+id = "GHSA-vfj7-8cjw-p6xm"
+reason = "braces@3.0.3 is required by chokidar and micromatch; no patched npm release is available"
+
+[[IgnoredVulns]]
+id = "GHSA-ch52-4w7c-c8xp"
+reason = "http-cache-semantics@4.2.0 is required by cacheable-request and make-fetch-happen; no patched npm release is available"

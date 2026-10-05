@@ -41,7 +41,7 @@ services:
       start_period: 10s
 
   postgres:
-    image: postgres:14-alpine
+    image: postgres:18-alpine
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-nandu}

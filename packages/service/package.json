@@ -49,7 +49,7 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^10.0.9",
     "nodemailer-mailgun-transport": "^2.1.5",
-    "passport": "^0.6.0",
+    "passport": "^0.7.0",
     "pg": "^8.19.0",
     "pino": "^9.6.0",
     "range_check": "^2.0.4",

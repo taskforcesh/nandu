@@ -63,7 +63,7 @@
     "postcss": "8.5.28",
     "postcss-selector-parser@npm:^6.0.10": "6.1.4",
     "postcss-selector-parser@npm:^7.0.0": "7.1.6",
-    "seroval": "1.5.3",
+    "seroval": "1.6.3",
     "sigstore": "4.1.1",
     "serialize-javascript": "7.0.5",
     "tar@npm:^6.0.2": "7.5.22",

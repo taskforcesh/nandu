@@ -32,7 +32,3 @@ reason = "pacote@15, 19, and 20 are required by the legacy npm 9/10 release-tool
 [[IgnoredVulns]]
 id = "GHSA-vfj7-8cjw-p6xm"
 reason = "braces@3.0.3 is required by chokidar and micromatch; no patched npm release is available"
-
-[[IgnoredVulns]]
-id = "GHSA-hp3w-g68c-fv3c"
-reason = "sprintf-js is required by @rushstack/ts-command-line's argparse@1.x chain; npm reports all published versions through 1.1.3 affected with no patched release"

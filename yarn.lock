@@ -3528,6 +3528,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rushstack/ts-command-line@patch:@rushstack/ts-command-line@npm%3A4.19.1#./.yarn/patches/@rushstack-ts-command-line-npm-4.19.1-64daf5bb82.patch::locator=nandu%40workspace%3A.":
+  version: 4.19.1
+  resolution: "@rushstack/ts-command-line@patch:@rushstack/ts-command-line@npm%3A4.19.1#./.yarn/patches/@rushstack-ts-command-line-npm-4.19.1-64daf5bb82.patch::version=4.19.1&hash=b5bf71&locator=nandu%40workspace%3A."
+  dependencies:
+    "@rushstack/terminal": "npm:0.10.0"
+    "@types/argparse": "npm:1.0.38"
+    argparse: "npm:~1.0.9"
+    string-argv: "npm:~0.3.1"
+  checksum: 10c0/86992f0d46aa7cedaae90d7ee7724f87132aeac1fb67e33de4d22d618fce60a551362a257eb19da7bfeae37a0271207ded05bf661b1f9dcd793a0f7ce2e1d896
+  languageName: node
+  linkType: hard
+
 "@sec-ant/readable-stream@npm:^0.4.1":
   version: 0.4.1
   resolution: "@sec-ant/readable-stream@npm:0.4.1"

@@ -11,6 +11,9 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+    outputs:
+      service_version: ${{ steps.service_release.outputs.version }}
+      service_tag: ${{ steps.service_release.outputs.tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,11 +39,29 @@ jobs:
           chmod +x ./build.sh
           ./build.sh
         
+      - name: Record existing service release tags
+        run: git tag --list '@nandu/service@*' | sort > "$RUNNER_TEMP/service-tags-before.txt"
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx multi-semantic-release
+
+      # Detect whether a new @nandu/service version was released, so that a
+      # semantically versioned Docker image can be built from the release tag.
+      - name: Detect service release
+        id: service_release
+        run: |
+          git tag --list '@nandu/service@*' | sort > "$RUNNER_TEMP/service-tags-after.txt"
+          tag=$(comm -13 "$RUNNER_TEMP/service-tags-before.txt" "$RUNNER_TEMP/service-tags-after.txt" | sort -V | tail -n 1)
+          if [[ -n "$tag" ]]; then
+            echo "New service release: $tag"
+            echo "tag=$tag" >> "$GITHUB_OUTPUT"
+            echo "version=${tag#@nandu/service@}" >> "$GITHUB_OUTPUT"
+          else
+            echo "No new service release"
+          fi
 
       - name: Archive yarn failure logs
         uses: actions/upload-artifact@v4
@@ -48,3 +69,15 @@ jobs:
         with:
           name: yarn-logs
           path: ~/.yarn/log
+
+  docker:
+    name: Docker Image
+    needs: release
+    if: needs.release.outputs.service_version != ''
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/docker.yml
+    with:
+      version: ${{ needs.release.outputs.service_version }}
+      ref: refs/tags/${{ needs.release.outputs.service_tag }}

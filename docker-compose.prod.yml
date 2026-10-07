@@ -2,6 +2,7 @@ version: '3'
 
 services:
   nandu:
+    # Pin a release version (e.g. ghcr.io/taskforcesh/nandu:1.2.3) or digest for production deployments
     image: ghcr.io/taskforcesh/nandu:latest
     restart: always
     ports:

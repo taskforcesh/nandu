@@ -17,6 +17,18 @@ on:
   release:
     types: [published]
   
+  # Called by the release workflow after a new @nandu/service release
+  workflow_call:
+    inputs:
+      version:
+        description: 'Semantic version of the release (e.g. 1.2.3)'
+        type: string
+        required: true
+      ref:
+        description: 'Git ref (release tag) to build the image from'
+        type: string
+        required: true
+
   # Manual trigger
   workflow_dispatch:
     inputs:
@@ -36,6 +48,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Resolve source revision
+        id: rev
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -49,29 +67,34 @@ jobs:
             latest=auto # Sets 'latest' to highest semver on release, or to default branch tag
           tags: |
             # For pushes to branches (e.g., 'main' when pushed to main)
-            type=ref,event=branch
-            # For all builds, tag with the long Git SHA (e.g., 'abcdef12345...')
-            type=sha,format=long
+            type=ref,event=branch,enable=${{ inputs.version == '' }}
+            # Tag with the long Git SHA of the built commit (e.g., 'sha-abcdef12345...')
+            type=raw,value=sha-${{ steps.rev.outputs.sha }}
 
-            # Semantic versioning tags from Git tags (e.g., v1.2.3, 1.2.3).
-            # These are primarily used for 'release' events or direct Git tag pushes.
-            # docker/metadata-action automatically uses github.ref (the Git tag) for these.
-            type=semver,pattern={{version}}      # e.g., 1.2.3 from Git tag v1.2.3
-            type=semver,pattern={{vversion}}     # e.g., v1.2.3 from Git tag v1.2.3
-            type=semver,pattern={{major}}.{{minor}} # e.g., 1.2 from Git tag v1.2.3
-            type=semver,pattern=v{{major}}.{{minor}}# e.g., v1.2 from Git tag v1.2.3
-            type=semver,pattern={{major}}         # e.g., 1 from Git tag v1.2.3
-            type=semver,pattern=v{{major}}        # e.g., v1 from Git tag v1.2.3
+            # Immutable semantic version tags for releases (e.g., 1.2.3, v1.2.3, 1.2, v1.2, 1, v1).
+            # The version comes from the release workflow (workflow_call) or from a semver Git tag.
+            type=semver,pattern={{version}},value=${{ inputs.version }}
+            type=semver,pattern=v{{version}},value=${{ inputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ inputs.version }}
+            type=semver,pattern=v{{major}}.{{minor}},value=${{ inputs.version }}
+            type=semver,pattern={{major}},value=${{ inputs.version }}
+            type=semver,pattern=v{{major}},value=${{ inputs.version }}
+          labels: |
+            org.opencontainers.image.revision=${{ steps.rev.outputs.sha }}
       
       # Determine if we should publish
       - name: Set publishing flag
         id: publish
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
         run: |
           # Publish if:
           # 1. Push to main branch
           # 2. Release is published
           # 3. Manual workflow run with publish=true
-          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || \
+          # 4. Called by the release workflow with a release version
+          if [[ -n "$RELEASE_VERSION" ]] || \
+             [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || \
              [[ "${{ github.event_name }}" == "release" ]] || \
              [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.publish }}" == "true" ]]; then
             echo "should_publish=true" >> $GITHUB_OUTPUT
@@ -89,6 +112,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build Docker image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -98,7 +122,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            VERSION=${{ github.ref_name }}
+            VERSION=${{ inputs.version || github.ref_name }}
       
       # Summarize what we did
       - name: Workflow summary
@@ -107,7 +131,9 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Repository:** ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Event:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Ref:** ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Ref:** ${{ inputs.ref || github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ steps.rev.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version:** ${{ steps.meta.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Images Built:**" >> $GITHUB_STEP_SUMMARY
           
           # List all the tags we built
@@ -118,6 +144,8 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           if [[ "${{ steps.publish.outputs.should_publish }}" == "true" ]]; then
             echo "✅ **Published to GitHub Container Registry**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Digest:** \`ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
           else
             echo "ℹ️ **Build only (not published)**" >> $GITHUB_STEP_SUMMARY
           fi

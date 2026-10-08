@@ -36,6 +36,14 @@ on:
         description: 'Publish to GitHub Container Registry'
         type: boolean
         default: false
+      version:
+        description: 'Service version to publish (e.g. 1.2.3)'
+        type: string
+        required: false
+      ref:
+        description: 'Git ref for the service release tag'
+        type: string
+        required: false
 
 jobs:
   build:
@@ -46,6 +54,18 @@ jobs:
       packages: write # Needed for publishing to GHCR
     
     steps:
+      - name: Validate manual release inputs
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_REF: ${{ inputs.ref }}
+        run: |
+          if [[ -n "$RELEASE_VERSION" && -z "$RELEASE_REF" ]] || \
+             [[ -z "$RELEASE_VERSION" && -n "$RELEASE_REF" ]]; then
+            echo "Provide both version and ref to recover a service release."
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:

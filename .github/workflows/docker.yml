@@ -65,6 +65,10 @@ jobs:
             echo "Provide both version and ref to recover a service release."
             exit 1
           fi
+          if [[ -n "$RELEASE_VERSION" && "$RELEASE_REF" != "refs/tags/@nandu/service@$RELEASE_VERSION" ]]; then
+            echo "Ref must be refs/tags/@nandu/service@<version> matching the supplied version."
+            exit 1
+          fi
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -113,7 +117,7 @@ jobs:
           # 2. Release is published
           # 3. Manual workflow run with publish=true
           # 4. Called by the release workflow with a release version
-          if [[ -n "$RELEASE_VERSION" ]] || \
+          if [[ -n "$RELEASE_VERSION" && "${{ github.event_name }}" != "workflow_dispatch" ]] || \
              [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || \
              [[ "${{ github.event_name }}" == "release" ]] || \
              [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.publish }}" == "true" ]]; then

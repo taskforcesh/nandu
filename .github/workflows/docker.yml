@@ -88,7 +88,7 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           flavor: |
-            latest=auto # Sets 'latest' to highest semver on release, or to default branch tag
+            latest=${{ github.event_name != 'workflow_dispatch' || inputs.version == '' }}
           tags: |
             # For pushes to branches (e.g., 'main' when pushed to main)
             type=ref,event=branch,enable=${{ inputs.version == '' }}
@@ -99,10 +99,10 @@ jobs:
             # The version comes from the release workflow (workflow_call) or from a semver Git tag.
             type=semver,pattern={{version}},value=${{ inputs.version }}
             type=semver,pattern=v{{version}},value=${{ inputs.version }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ inputs.version }}
-            type=semver,pattern=v{{major}}.{{minor}},value=${{ inputs.version }}
-            type=semver,pattern={{major}},value=${{ inputs.version }}
-            type=semver,pattern=v{{major}},value=${{ inputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ inputs.version }},enable=${{ github.event_name != 'workflow_dispatch' || inputs.version == '' }}
+            type=semver,pattern=v{{major}}.{{minor}},value=${{ inputs.version }},enable=${{ github.event_name != 'workflow_dispatch' || inputs.version == '' }}
+            type=semver,pattern={{major}},value=${{ inputs.version }},enable=${{ github.event_name != 'workflow_dispatch' || inputs.version == '' }}
+            type=semver,pattern=v{{major}},value=${{ inputs.version }},enable=${{ github.event_name != 'workflow_dispatch' || inputs.version == '' }}
           labels: |
             org.opencontainers.image.revision=${{ steps.rev.outputs.sha }}
       

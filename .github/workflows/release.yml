@@ -14,6 +14,7 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+      id-token: write # Needed for npm trusted publishing (OIDC)
     outputs:
       service_version: ${{ steps.service_release.outputs.version }}
       service_tag: ${{ steps.service_release.outputs.tag }}
@@ -25,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Enable Corepack
         run: corepack enable
@@ -45,6 +46,9 @@ jobs:
       - name: Record existing service release tags
         run: git tag --list '@nandu/service@*' | sort > "$RUNNER_TEMP/service-tags-before.txt"
 
+      # npm publishing uses trusted publishing (OIDC): each @nandu/* package must have this
+      # repository and the `release.yml` workflow configured as a trusted publisher on npmjs.com.
+      # NPM_TOKEN is only used as a fallback when the OIDC token exchange is not possible.
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

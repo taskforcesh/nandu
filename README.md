@@ -122,6 +122,15 @@ To start the server, you need to provide the following environment variables:
     export NPM_REGISTRY_HOST=
 ```
 
+### Docker image
+
+A Docker image is published to `ghcr.io/taskforcesh/nandu` for every release of `@nandu/service`, tagged with its
+semantic version (`1.2.3`, `v1.2.3`, `1.2`, `v1.2`, `1`, `v1`), `latest` and `sha-<commit>`. Every push to `main`
+is also published as `main` and `sha-<commit>`.
+
+For production deployments, pin the full semantic version (e.g. `ghcr.io/taskforcesh/nandu:1.2.3`) or the image
+digest (`ghcr.io/taskforcesh/nandu@sha256:...`) instead of a mutable tag such as `latest` or `main`.
+
 
 ## License
 

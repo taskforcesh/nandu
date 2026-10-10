@@ -22,6 +22,7 @@
     "esbuild": "0.28.1",
     "fast-copy": "4.1.2",
     "form-data": "npm:form-data@4.0.6",
+    "handlebars": "4.7.10",
     "validator": "13.15.35",
     "glob": "10.5.0",
     "http-cache-semantics": "4.3.0",

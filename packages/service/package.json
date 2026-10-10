@@ -43,7 +43,7 @@
     "express": "^4.17.1",
     "express-jwt": "^7.7.5",
     "express-rate-limit": "^7.5.0",
-    "handlebars": "^4.7.7",
+    "handlebars": "^4.7.10",
     "http-status-codes": "^2.1.4",
     "is-jwt": "^1.0.0",
     "jsonwebtoken": "^9.0.2",

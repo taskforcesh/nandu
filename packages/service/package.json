@@ -93,7 +93,7 @@
       [
         "@semantic-release/exec",
         {
-          "prepareCmd": "yarn version --new-version ${nextRelease.version} --no-git-tag-version"
+          "prepareCmd": "npm pkg set version=${nextRelease.version}"
         }
       ],
       [

@@ -8,7 +8,7 @@
   },
   "bugs": "https://github.com/taskforcesh/nandu/issues",
   "dependencies": {
-    "@nandu/service": "workspace:*",
+    "@nandu/service": "1.3.2",
     "@npmcli/config": "^2.4.0",
     "@oclif/core": "^4.5.0",
     "@oclif/plugin-help": "^6.2.31",

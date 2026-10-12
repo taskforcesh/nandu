@@ -34,7 +34,7 @@
     "@aws-sdk/abort-controller": "^3.0.0",
     "@aws-sdk/client-s3": "^3.41.0",
     "@aws-sdk/lib-storage": "^3.41.0",
-    "@nandu/dashboard": "workspace:*",
+    "@nandu/dashboard": "1.0.0",
     "@types/nodemailer": "^6.4.6",
     "@types/nodemailer-mailgun-transport": "^1.4.3",
     "axios": "^1.17.0",

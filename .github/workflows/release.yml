@@ -53,6 +53,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Yarn manages workspace dependencies; npm version must not reinstall them.
+          npm_config_workspaces_update: 'false'
         run: npx multi-semantic-release
 
       # Detect whether a new @nandu/service version was released, so that a

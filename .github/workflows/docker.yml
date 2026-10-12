@@ -147,6 +147,7 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             VERSION=${{ inputs.version || github.ref_name }}
+            SERVICE_VERSION=${{ inputs.version }}
       
       # Summarize what we did
       - name: Workflow summary

@@ -3,6 +3,7 @@ FROM node:22-bookworm-slim AS builder
 
 # Set version argument (will be passed from GitHub Actions)
 ARG VERSION=dev
+ARG SERVICE_VERSION
 
 # Set working directory
 WORKDIR /app
@@ -29,6 +30,8 @@ RUN ls -la /app/.yarn || echo "No .yarn directory"
 # Copy only the necessary source code
 COPY packages/service ./packages/service/
 COPY packages/dashboard ./packages/dashboard/
+
+RUN if [ -n "$SERVICE_VERSION" ]; then npm pkg set --prefix packages/service "version=$SERVICE_VERSION"; fi
 
 # Build service and dashboard packages
 RUN yarn workspace @nandu/dashboard run build

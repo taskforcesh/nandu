@@ -1,0 +1,21 @@
+diff --git a/lib/providers/CommandLineParser.js b/lib/providers/CommandLineParser.js
+index 29a3bf151c1edb67da8dd2810703fe41739d32ef..4295a50920b3cce9ad2a64c2254c7d500d142394 100644
+--- a/lib/providers/CommandLineParser.js
++++ b/lib/providers/CommandLineParser.js
+@@ -182,10 +182,12 @@ class CommandLineParser extends CommandLineParameterProvider_1.CommandLineParame
+             };
+             function patchFormatUsageForArgumentParser(argumentParser) {
+                 const originalFormatUsage = argumentParser.formatUsage.bind(argumentParser);
+-                argumentParser.formatUsage = () => {
+-                    postParse();
+-                    return originalFormatUsage();
+-                };
++                Object.defineProperty(argumentParser, 'formatUsage', {
++                    value: () => {
++                        postParse();
++                        return originalFormatUsage();
++                    }
++                });
+             }
+             this._preParse();
+             patchFormatUsageForArgumentParser(this._argumentParser);

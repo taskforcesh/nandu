@@ -38,6 +38,7 @@
     "ajv@npm:6.12.6": "6.14.0",
     "ajv@npm:8.13.0": "8.18.0",
     "ajv@npm:8.17.1": "8.18.0",
+    "argparse@npm:~1.0.9": "2.0.1",
     "diff@^4.0.0": "4.0.4",
     "diff@^5.0.0": "5.2.2",
     "diff@^8.0.0": "8.0.3",
@@ -80,7 +81,8 @@
     "tar": "7.5.22",
     "undici": "6.28.1",
     "uuid": "11.1.1",
-    "vite": "7.3.6"
+    "vite": "7.3.6",
+    "@rushstack/ts-command-line@npm:4.19.1": "patch:@rushstack/ts-command-line@npm%3A4.19.1#./.yarn/patches/@rushstack-ts-command-line-npm-4.19.1-64daf5bb82.patch"
   },
   "devDependencies": {
     "@qiwi/multi-semantic-release": "^7.1.2",

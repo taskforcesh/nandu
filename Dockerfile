@@ -13,6 +13,7 @@ RUN corepack enable && corepack prepare yarn@stable --activate
 
 # Copy root package files
 COPY package.json yarn.lock ./
+COPY .yarn/patches ./.yarn/patches
 
 # Copy only the service and dashboard package.json files
 # (Dashboard is needed as it's served by the service)
@@ -64,6 +65,7 @@ RUN mkdir -p /app/logs /app/storage/db /app/storage/packages && \
 # Copy all package.json files to maintain the monorepo structure
 COPY --from=builder --chown=node:node /app/package.json ./
 COPY --from=builder --chown=node:node /app/yarn.lock ./
+COPY --from=builder --chown=node:node /app/.yarn/patches ./.yarn/patches
 COPY --from=builder --chown=node:node /app/packages/service/package.json ./packages/service/
 COPY --from=builder --chown=node:node /app/packages/dashboard/package.json ./packages/dashboard/
 

@@ -2006,7 +2006,7 @@ __metadata:
     solid-transition-group: "npm:^0.0.10"
     tailwindcss: "npm:^4.1.6"
     typescript: "npm:4.9.5"
-    vite: "npm:^7.1.11"
+    vite: "npm:^7.3.7"
     vite-plugin-solid: "npm:^2.2.6"
     whatwg-fetch: "npm:^3.6.2"
     yup: "npm:^0.32.11"
@@ -8394,7 +8394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.16.0":
+"follow-redirects@npm:1.16.1":
   version: 1.16.1
   resolution: "follow-redirects@npm:1.16.1"
   peerDependenciesMeta:

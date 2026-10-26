@@ -3,9 +3,9 @@
 // @semantic-release/npm. multi-semantic-release discards the plugin's log output, so this
 // step also makes authentication failures diagnosable.
 //
-// If a package cannot be published to npm, npm publishing is disabled for that package in
-// the working tree (never committed) so that the git tag, GitHub release and the semantically
-// versioned Docker image are still created instead of failing the whole release.
+// If a package cannot be published to npm, npm publishing is disabled for all workspaces in
+// the working tree (never committed) so that dependent packages are not published with
+// unresolvable versions, while git tags, GitHub releases and Docker images are still created.
 import { appendFileSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { verifyConditions } from '@semantic-release/npm'
@@ -23,6 +23,7 @@ const logger = {
 }
 
 const summary = []
+const packages = []
 
 for (const workspace of workspaces) {
   const dir = resolve(root, workspace)
@@ -56,16 +57,23 @@ for (const workspace of workspaces) {
   }
 
   console.log('::endgroup::')
+  packages.push({ manifest, manifestPath, plugins, index, pluginConfig, errors })
+}
 
-  if (errors.length === 0) {
+const unavailablePackages = packages.filter(({ errors }) => errors.length > 0)
+
+for (const { manifest, manifestPath, plugins, index, pluginConfig, errors } of packages) {
+  if (unavailablePackages.length === 0) {
     console.log(`npm publishing is available for ${manifest.name}`)
     summary.push(`- ✅ \`${manifest.name}\`: npm publishing enabled`)
     continue
   }
 
-  const reasons = errors.map(error => String(error.message).replace(/\s+/g, ' ').trim()).join('; ')
+  const reasons = errors.length > 0
+    ? errors.map(error => String(error.message).replace(/\s+/g, ' ').trim()).join('; ')
+    : `npm publishing is unavailable for ${unavailablePackages.map(({ manifest }) => manifest.name).join(', ')}`
   console.log(`::warning title=npm publishing disabled for ${manifest.name}::${reasons} ` +
-    'The release still creates the git tag, GitHub release and Docker image, but does not publish to npm. ' +
+    'The release still creates git tags, GitHub releases and Docker images, but does not publish to npm. ' +
     'Configure npm trusted publishing for this repository and the release.yml workflow.')
 
   plugins[index] = [NPM_PLUGIN, { ...pluginConfig, npmPublish: false }]

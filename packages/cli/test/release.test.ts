@@ -14,6 +14,14 @@ describe('release configuration', () => {
     expect(preflight).to.include('Configure npm trusted publishing')
   })
 
+  it('disables npm publishing for every workspace if any credential check fails', () => {
+    const preflight = readFileSync(resolve('../..', '.github/scripts/check-npm-publishing.mjs'), 'utf8')
+
+    expect(preflight).to.include('const unavailablePackages = packages.filter(({ errors }) => errors.length > 0)')
+    expect(preflight).to.include('if (unavailablePackages.length === 0)')
+    expect(preflight).to.include('npmPublish: false')
+  })
+
   for (const name of ['cli', 'service', 'dashboard']) {
     const manifest = JSON.parse(readFileSync(resolve('..', name, 'package.json'), 'utf8'))
     const {plugins} = manifest.release

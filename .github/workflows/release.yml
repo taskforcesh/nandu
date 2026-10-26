@@ -49,6 +49,13 @@ jobs:
       # npm publishing uses trusted publishing (OIDC): each @nandu/* package must have this
       # repository and the `release.yml` workflow configured as a trusted publisher on npmjs.com.
       # NPM_TOKEN is only used as a fallback when the OIDC token exchange is not possible.
+      # Packages without working npm credentials are released without npm publishing (with a
+      # warning), so that missing npm credentials don't block tags and versioned Docker images.
+      - name: Check npm publishing credentials
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: node .github/scripts/check-npm-publishing.mjs
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-// Verifies npm publishing credentials (OIDC trusted publishing or NPM_TOKEN) for every
+// Verifies npm publishing credentials (OIDC trusted publishing) for every
 // workspace package released by multi-semantic-release, using the same checks as
 // @semantic-release/npm. multi-semantic-release discards the plugin's log output, so this
 // step also makes authentication failures diagnosable.
@@ -66,7 +66,7 @@ for (const workspace of workspaces) {
   const reasons = errors.map(error => String(error.message).replace(/\s+/g, ' ').trim()).join('; ')
   console.log(`::warning title=npm publishing disabled for ${manifest.name}::${reasons} ` +
     'The release still creates the git tag, GitHub release and Docker image, but does not publish to npm. ' +
-    'Configure npm trusted publishing for this repository and the release.yml workflow, or provide a valid NPM_TOKEN.')
+    'Configure npm trusted publishing for this repository and the release.yml workflow.')
 
   plugins[index] = [NPM_PLUGIN, { ...pluginConfig, npmPublish: false }]
   writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)

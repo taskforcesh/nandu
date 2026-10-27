@@ -3,6 +3,25 @@ import {readFileSync} from 'node:fs'
 import {resolve} from 'node:path'
 
 describe('release configuration', () => {
+  it('uses OIDC without an npm token fallback', () => {
+    const workflow = readFileSync(resolve('../..', '.github/workflows/release.yml'), 'utf8')
+    const preflight = readFileSync(resolve('../..', '.github/scripts/check-npm-publishing.mjs'), 'utf8')
+
+    expect(workflow).to.include('id-token: write')
+    expect(workflow).to.include('node .github/scripts/check-npm-publishing.mjs')
+    expect(workflow).not.to.include('NPM_TOKEN')
+    expect(preflight).not.to.include('NPM_TOKEN')
+    expect(preflight).to.include('Configure npm trusted publishing')
+  })
+
+  it('disables npm publishing for every workspace if any credential check fails', () => {
+    const preflight = readFileSync(resolve('../..', '.github/scripts/check-npm-publishing.mjs'), 'utf8')
+
+    expect(preflight).to.include('const unavailablePackages = packages.filter(({ errors }) => errors.length > 0)')
+    expect(preflight).to.include('if (unavailablePackages.length === 0)')
+    expect(preflight).to.include('npmPublish: false')
+  })
+
   for (const name of ['cli', 'service', 'dashboard']) {
     const manifest = JSON.parse(readFileSync(resolve('..', name, 'package.json'), 'utf8'))
     const {plugins} = manifest.release

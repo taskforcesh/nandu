@@ -48,11 +48,15 @@ jobs:
 
       # npm publishing uses trusted publishing (OIDC): each @nandu/* package must have this
       # repository and the `release.yml` workflow configured as a trusted publisher on npmjs.com.
-      # NPM_TOKEN is only used as a fallback when the OIDC token exchange is not possible.
+      # If any package lacks working npm credentials, all packages are released without npm
+      # publishing (with a warning), so dependent packages cannot reference unpublished versions.
+      # Missing credentials don't block tags and versioned Docker images.
+      - name: Check npm publishing credentials
+        run: node .github/scripts/check-npm-publishing.mjs
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Yarn manages workspace dependencies; npm version must not reinstall them.
           npm_config_workspaces_update: 'false'
         run: npx multi-semantic-release

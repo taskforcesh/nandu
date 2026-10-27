@@ -72,7 +72,7 @@
     "nodemon": "^3.0.2",
     "pino-pretty": "^13.0.0",
     "ts-node": "^10.4.0",
-    "typescript": "4.9.5"
+    "typescript": "^5.3.3"
   },
   "publishConfig": {
     "access": "public"

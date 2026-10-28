@@ -1602,7 +1602,7 @@ __metadata:
     sqlite3: "npm:^5.1.7"
     ts-node: "npm:^10.4.0"
     tslib: "npm:^2.3.1"
-    typescript: "npm:4.9.5"
+    typescript: "npm:^5.3.3"
     umzug: "npm:^3.8.2"
     uuid: "npm:^11.1.1"
     whatwg-fetch: "npm:^3.6.2"

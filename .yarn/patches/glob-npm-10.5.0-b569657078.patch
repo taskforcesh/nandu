@@ -1,0 +1,84 @@
+diff --git a/dist/commonjs/processor.js b/dist/commonjs/processor.js
+index ee3bb4397e0b2d3aaff9b1e2053ac13a2af9f31b..8c80e487b01cd778092217315c287627d426d2a7 100644
+--- a/dist/commonjs/processor.js
++++ b/dist/commonjs/processor.js
+@@ -191,7 +191,7 @@ class Processor {
+                     }
+                 }
+             }
+-            else if (p instanceof RegExp) {
++            else if (p instanceof RegExp || (p && typeof p === 'object')) {
+                 this.subwalks.add(t, pattern);
+             }
+         }
+@@ -219,8 +219,8 @@ class Processor {
+                 if (p === minimatch_1.GLOBSTAR) {
+                     results.testGlobstar(e, pattern, rest, absolute);
+                 }
+-                else if (p instanceof RegExp) {
+-                    results.testRegExp(e, p, rest, absolute);
++                else if (p instanceof RegExp || (p && typeof p === 'object')) {
++                    results.testMatcher(e, p, rest, absolute);
+                 }
+                 else {
+                     results.testString(e, p, rest, absolute);
+@@ -270,13 +270,13 @@ class Processor {
+                 /* c8 ignore stop */
+                 this.subwalks.add(ep, rest);
+             }
+-            else if (rp instanceof RegExp) {
+-                this.testRegExp(e, rp, rest.rest(), absolute);
++            else if (rp instanceof RegExp || (rp && typeof rp === 'object')) {
++                this.testMatcher(e, rp, rest.rest(), absolute);
+             }
+         }
+     }
+-    testRegExp(e, p, rest, absolute) {
+-        if (!p.test(e.name))
++    testMatcher(e, p, rest, absolute) {
++        if (!(p instanceof RegExp ? p.test(e.name) : p.testUnchecked(e.name)))
+             return;
+         if (!rest) {
+             this.matches.add(e, absolute, false);
+diff --git a/dist/esm/processor.js b/dist/esm/processor.js
+index f874892ffed0c4affb2e0c2c17895e9ebe2a9afd..fc7f62763a38e878bbbd5d46c76acd3909a40462 100644
+--- a/dist/esm/processor.js
++++ b/dist/esm/processor.js
+@@ -185,7 +185,7 @@ export class Processor {
+                     }
+                 }
+             }
+-            else if (p instanceof RegExp) {
++            else if (p instanceof RegExp || (p && typeof p === 'object')) {
+                 this.subwalks.add(t, pattern);
+             }
+         }
+@@ -213,8 +213,8 @@ export class Processor {
+                 if (p === GLOBSTAR) {
+                     results.testGlobstar(e, pattern, rest, absolute);
+                 }
+-                else if (p instanceof RegExp) {
+-                    results.testRegExp(e, p, rest, absolute);
++                else if (p instanceof RegExp || (p && typeof p === 'object')) {
++                    results.testMatcher(e, p, rest, absolute);
+                 }
+                 else {
+                     results.testString(e, p, rest, absolute);
+@@ -264,13 +264,13 @@ export class Processor {
+                 /* c8 ignore stop */
+                 this.subwalks.add(ep, rest);
+             }
+-            else if (rp instanceof RegExp) {
+-                this.testRegExp(e, rp, rest.rest(), absolute);
++            else if (rp instanceof RegExp || (rp && typeof rp === 'object')) {
++                this.testMatcher(e, rp, rest.rest(), absolute);
+             }
+         }
+     }
+-    testRegExp(e, p, rest, absolute) {
+-        if (!p.test(e.name))
++    testMatcher(e, p, rest, absolute) {
++        if (!(p instanceof RegExp ? p.test(e.name) : p.testUnchecked(e.name)))
+             return;
+         if (!rest) {
+             this.matches.add(e, absolute, false);

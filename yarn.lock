@@ -7820,6 +7820,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@patch:glob@npm%3A10.5.0#./.yarn/patches/glob-npm-10.5.0-b569657078.patch::locator=nandu%40workspace%3A.":
+  version: 10.5.0
+  resolution: "glob@patch:glob@npm%3A10.5.0#./.yarn/patches/glob-npm-10.5.0-b569657078.patch::version=10.5.0&hash=843676&locator=nandu%40workspace%3A."
+  dependencies:
+    foreground-child: "npm:^3.1.0"
+    jackspeak: "npm:^3.1.2"
+    minimatch: "npm:^9.0.4"
+    minipass: "npm:^7.1.2"
+    package-json-from-dist: "npm:^1.0.0"
+    path-scurry: "npm:^1.11.1"
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: 10c0/a18f20dfc742bc1201cddfa2f05b2a3da6925981bf5da3aeabdbff38af89523109c9dd34a3787eddfbc96ab2b72c32fbf281d75b7f805fe412bcdd9e47f72811
+  languageName: node
+  linkType: hard
+
 "globals@npm:^13.19.0, globals@npm:^13.24.0":
   version: 13.24.0
   resolution: "globals@npm:13.24.0"

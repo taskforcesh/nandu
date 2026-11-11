@@ -20,7 +20,7 @@ jobs:
       service_tag: ${{ steps.service_release.outputs.tag }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Setup Node.js
